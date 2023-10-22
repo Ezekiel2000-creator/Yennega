@@ -1,0 +1,25 @@
+{
+  "name": "myapp",
+  "version": "0.0.0",
+  "private": true,
+  "scripts": {
+    "start": "node ./bin/www"
+  },
+  "dependencies": {
+    "bcrypt": "^5.1.1",
+    "cookie-parser": "~1.4.3",
+    "debug": "~2.6.9",
+    "ejs": "~3.1.7",
+    "express": "^4.18.2",
+    "express-fileupload": "^1.1.1-alpha.1",
+    "express-session": "^1.15.6",
+    "express-status-monitor": "^1.2.3",
+    "http-errors": "~1.6.2",
+    "jsonwebtoken": "^9.0.2",
+    "moment": "^2.29.4",
+    "mongoose": "^5.4.10",
+    "morgan": "~1.9.0",
+    "nodemailer": "^6.9.5",
+    "nodemon": "^3.0.1"
+  }
+}

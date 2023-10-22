@@ -1,0 +1,207 @@
+<% if  (typeof isAdded !== 'undefined' && isAdded) { %>
+	<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.0.16/dist/sweetalert2.min.js"></script>
+	<script>
+	 console.log("iiiiiiiiiii")
+	 Swal.fire({
+      title: 'Produit ajouté au panier !',
+      text: 'Que souhaitez-vous faire maintenant ?',
+      icon: 'success',
+      showCancelButton: true,
+      confirmButtonText: 'Mon panier',
+      cancelButtonText: 'Continuer vos achats'
+    }).then((result) => {
+		if (result.isConfirmed) {
+        // Redirigez l'utilisateur vers la page de son panier ici
+        window.location.href = '/cart'; // Utilisez window.location.href pour la redirection
+      } else if (result.dismiss === Swal.DismissReason.cancel) {
+        // Redirigez l'utilisateur vers la page de la boutique ou de la liste de produits ici
+        window.location.href = '/articles'; // Utilisez window.location.href pour la redirection
+      }
+    });
+   </script>
+<% } %>
+<script>
+	
+    document.getElementById('clear-cart-btn').addEventListener('click', function(e) {
+	e.preventDefault();
+	fetch('/empty-cart', {
+		method: 'POST',
+		headers: {
+		'Content-Type': 'application/json'
+		}
+	})
+	.then(response => {
+		if (response.ok) {
+		// Si la requête a réussi, rediriger vers la page /cart
+		window.location.href = '/cart';
+		} else {
+		throw new Error('Something went wrong');
+		}
+	})
+	.catch((error) => {
+		console.error('Error:', error);
+	});
+	});
+// ____________________________________________________________________________________________
+
+function deleteProduct(productId) {
+	// Envoyer une requête au serveur pour supprimer le produit
+	fetch(`/cart/${productId}`, {
+		method: 'DELETE',
+	})
+	.then(response => {
+		if (response.ok) {
+		// Si la requête a réussi, rediriger vers la page /cart
+		location.reload();
+		} else {
+		throw new Error('Something went wrong');
+		location.reload();
+		}
+	})
+	.then((data) => {
+	// Traiter la réponse du serveur
+	console.log(data);
+	// Mettre à jour l'affichage du panier
+	// ...
+	})
+	.catch((error) => {
+	console.error('Une erreur s\'est produite :', error);
+	});
+};
+// ___________________________________________________________________________________
+function updateProfile(event) {
+    // Empêche le formulaire d'être soumis normalement
+    event.preventDefault();
+
+    // Récupère les valeurs du formulaire
+    const Customer_first_name = document.querySelector('#reg-fname').value;
+    const Customer_last_name = document.querySelector('#reg-lname').value;
+    const day = document.querySelector('select[name="day"]').value;
+    const month = document.querySelector('select[name="month"]').value;
+    const year = document.querySelector('select[name="year"]').value;
+    const Customer_gender = document.querySelector('select[name="Customer_gender"]').value;
+
+    // Crée un objet avec les valeurs du formulaire
+    const data = { Customer_first_name, Customer_last_name, day, month, year, Customer_gender };
+
+    // Envoie une requête à l'API
+    fetch('/updateCustomer', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(data),
+    })
+    .then(response => response.json())
+    .then(data => {
+        console.log('Successsssssssssssssssssssssssssssssssssssssssssssssssssss:', data);
+		window.location.href = "/user/dash-my-profile"
+		
+    })
+    .catch((error) => {
+        console.error('Error:', error);
+    });
+};
+// _____________________________________________________________________________________
+function submitReview(event) {
+   
+    console.log("LLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLL" )
+    let name = document.getElementById("reviewer-name").value;
+    let email = document.getElementById("reviewer-email").value;
+    let comment = document.getElementById("reviewer-text").value;
+    let product_id =  document.getElementById("product_id").value;
+    
+    let ratingElements = document.getElementsByName("rating");
+    let rating;
+    for(let i = 0; i < ratingElements.length; i++){
+        if(ratingElements[i].checked){
+            rating = ratingElements[i].value;
+            break;
+        }
+    }
+
+    let reviewData = {
+        name: name,
+        email: email,
+        rating: rating,
+        comment: comment,
+        product_id: product_id
+    };
+	console.log("LLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLL",reviewData )
+
+    fetch('/reviews', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(reviewData),
+    })
+    .then(response => response.json())
+    .then(data => {
+        console.log('Success:', data);
+    })
+    .catch((error) => {
+        console.error('Error:', error);
+    });
+};
+// __________________________________________________________________________________________
+
+var initialReviewsState = [];
+
+function showAllReviews() {
+    const button = document.getElementById('toggleReviews');
+  const reviews = document.querySelectorAll('.review-o');
+  
+  if (button.textContent === 'Voir tous les avis') {
+    // Enregistrer l'état initial des avis
+    initialReviewsState = Array.from(reviews).map(review => review.style.display);
+    
+    // Afficher tous les avis et changer le texte du bouton en "Voir moins"
+    reviews.forEach(function(review) {
+      review.style.display = 'block';
+    });
+    button.textContent = 'Voir moins';
+  } else {
+    // Restaurer l'état initial des avis et changer le texte du bouton en "Voir tous les avis"
+    reviews.forEach(function(review, index) {
+      review.style.display = initialReviewsState[index];
+    });
+    button.textContent = 'Voir tous les avis';
+  }
+}
+
+window.ga = function() {
+		ga.q.push(arguments)
+	}
+ga.q = [];
+ga.l = +new Date;
+ga('create', 'UA-XXXXX-Y', 'auto');
+ga('send', 'pageview') 
+</script>
+<script src="https://www.google-analytics.com/analytics.js" async defer></script>
+
+<!--====== Vendor Js ======-->
+<script src="/js/vendor.js"></script>
+
+<!--====== jQuery Shopnav plugin ======-->
+<script src="/js/jquery.shopnav.js"></script>
+
+<!--====== App ======-->
+<script src="/js/app.js"></script>
+
+<!--====== Noscript ======-->
+<noscript>
+	<div class="app-setting">
+		<div class="container">
+			<div class="row">
+				<div class="col-12">
+					<div class="app-setting__wrap">
+						<h1 class="app-setting__h1">JavaScript is disabled in your browser.</h1>
+
+						<span class="app-setting__text">Please enable JavaScript in your browser or upgrade to a JavaScript-capable browser.</span>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</noscript>

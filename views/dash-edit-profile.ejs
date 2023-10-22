@@ -1,0 +1,218 @@
+<!DOCTYPE html>
+<html class="no-js" lang="en">
+    <%- include("partials/head") %>
+<body class="config">
+    <div class="preloader is-active">
+        <div class="preloader__wrap">
+
+            <img class="preloader__img" src="images/preloader.png" alt=""></div>
+    </div>
+
+    <!--====== Main App ======-->
+    <div id="app">
+
+        <!--====== Main Header ======-->
+        <%- include("partials/header") %>
+        <!--====== End - Main Header ======-->
+
+
+        <!--====== App Content ======-->
+        <div class="app-content">
+
+            <!--====== Section 1 ======-->
+            <div class="u-s-p-y-60">
+
+                <!--====== Section Content ======-->
+                <div class="section__content">
+                    <div class="container">
+                        <div class="breadcrumb">
+                            <div class="breadcrumb__wrap">
+                                <ul class="breadcrumb__list">
+                                    <li class="has-separator">
+
+                                        <a href="/accueil">Accueil</a></li>
+                                    <li class="is-marked">
+
+                                        <a href="dash-edit-profile.html">My Account</a></li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!--====== End - Section 1 ======-->
+
+
+            <!--====== Section 2 ======-->
+            <div class="u-s-p-b-60">
+
+                <!--====== Section Content ======-->
+                <div class="section__content">
+                    <div class="dash">
+                        <div class="container">
+                            <div class="row">
+                                <div class="col-lg-3 col-md-12">
+
+                                    <!--====== Dashboard Features ======-->
+                                    <%- include("partials/dashboard_features") %>
+                                    <!--====== End - Dashboard Features ======-->
+                                </div>
+                                <div class="col-lg-9 col-md-12">
+                                    <div class="dash__box dash__box--shadow dash__box--radius dash__box--bg-white">
+                                        <div class="dash__pad-2">
+                                            <h1 class="dash__h1 u-s-m-b-14">Edit Profile</h1>
+
+                                            <span class="dash__text u-s-m-b-30">Looks like you haven't update your profile</span>
+                                            <div class="dash__link dash__link--secondary u-s-m-b-30">
+
+                                                <a data-modal="modal" data-modal-id="#dash-newsletter">Subscribe Newsletter</a></div>
+                                            <div class="row">
+                                                <div class="col-lg-12">
+                                                    <form class="dash-edit-p" onsubmit="updateProfile(event)">
+                                                        <div class="gl-inline">
+                                                            <div class="u-s-m-b-30">
+
+                                                                <label class="gl-label" for="reg-fname">PRENOMS *</label>
+
+                                                                <input class="input-text input-text--primary-style" type="text" id="reg-fname" name="Customer_first_name" value="<%= user.Customer_first_name %>"></div>
+                                                            <div class="u-s-m-b-30">
+
+                                                                <label class="gl-label" for="reg-lname">NOM *</label>
+
+                                                                <input class="input-text input-text--primary-style" type="text" id="reg-lname" name="Customer_last_name" value="<%= user.Customer_last_name %>"></div>
+                                                        </div>
+                                                        <div class="gl-inline">
+                                                            <div class="u-s-m-b-30">
+
+                                                                <!--====== Date of Birth Select-Box ======-->
+
+                                                                <span class="gl-label">JOUR DE NAISSANCE</span>
+                                                                <div class="gl-dob">
+                                                                    <select class="select-box select-box--primary-style" name="day">
+                                                                        <option selected>Jour</option>
+                                                                        <% for(let i = 1; i <= 31; i++) { %>
+                                                                            <option 
+                                                                              value="<%= i %>"
+                                                                            >
+                                                                              <%= i %>      
+                                                                            </option>
+                                                                        
+                                                                          <% } %>
+                                                                    </select>
+                                                                    
+                                                                    <select class="select-box select-box--primary-style" name="month">
+                                                                        <option selected>Mois</option>
+                                                                        <option value="1">Janvier</option>
+                                                                        <option value="2">Février</option>
+                                                                        <option value="3">Mars</option>
+                                                                        <option value="4">Avril</option>
+                                                                        <option value="5">Mai</option>
+                                                                        <option value="6">Juin</option>
+                                                                        <option value="7">Juillet</option>
+                                                                        <option value="8">Août</option>
+                                                                        <option value="09">Septembre</option>
+                                                                        <option value="10">Octobre</option>
+                                                                        <option value="11">Novembre</option>
+                                                                        <option value="12">Décembre</option>
+                                                                    </select>
+                                        
+                                                                    <select class="select-box select-box--primary-style" name="year">
+                                                                        <option selected>Année</option>
+                                                                        <% for(let i = 1960; i <= 2010; i++) { %>
+    
+                                                                            <option 
+                                                                              value="<%= i %>"    
+                                                                            >
+                                                                              <%= i %>
+                                                                            </option>
+                                                                        
+                                                                        <% } %>
+                                                                    </select>
+                                                                </div>
+                                                                <!--====== End - Date of Birth Select-Box ======-->
+                                                            </div>
+                                                            <div class="u-s-m-b-30">
+
+                                                                <label class="gl-label" for="gender">Sexe</label>
+                                                                <select class="select-box select-box--primary-style u-w-100" id="gender" name="Customer_gender">
+                                                                    <option selected><%= user.Customer_gender %></option>
+                                                                    <option value="Homme">Homme</option>
+                                                                    <option value="Femme">Femme</option>
+                                                                </select>
+                                                            </div>
+                                                        </div>
+                                                        <div class="gl-inline">
+                                                            <div class="u-s-m-b-30">
+                                                                <h2 class="dash__h2 u-s-m-b-8">E-mail</h2>
+
+                                                                <span class="dash__text"><%= user.Customer_email %></span>
+                                                                <div class="dash__link dash__link--secondary">
+
+                                                                    <a href="#"></a></div>
+                                                            </div>
+                                                            <div class="u-s-m-b-30">
+                                                                <h2 class="dash__h2 u-s-m-b-8">Phone</h2>
+
+                                                                <span class="dash__text">Please enter your mobile</span>
+                                                                <div class="dash__link dash__link--secondary">
+
+                                                                    <a href="#">Add</a></div>
+                                                            </div>
+                                                        </div>
+
+                                                        <button class="btn btn--e-brand-b-2" type="submit">SAVE</button>
+                                                    </form>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!--====== End - Section Content ======-->
+            </div>
+            <!--====== End - Section 2 ======-->
+        </div>
+
+        <!--====== Main Footer ======-->
+        <%- include("partials/footer") %>
+
+        <!--====== Modal Section ======-->
+
+
+        <!--====== Unsubscribe or Subscribe Newsletter ======-->
+        <div class="modal fade" id="dash-newsletter">
+            <div class="modal-dialog modal-dialog-centered">
+                <div class="modal-content modal--shadow">
+                    <div class="modal-body">
+                        <form class="d-modal__form">
+                            <div class="u-s-m-b-15">
+                                <h1 class="gl-modal-h1">Newsletter Subscription</h1>
+
+                                <span class="gl-modal-text">I have read and understood</span>
+
+                                <a class="d_modal__link" href="dash-edit-profile.html">Ludus Privacy Policy</a>
+                            </div>
+                            <div class="gl-modal-btn-group">
+
+                                <button class="btn btn--e-brand-b-2" type="submit">SUBSCRIBE</button>
+
+                                <button class="btn btn--e-grey-b-2" type="button" data-dismiss="modal">CANCEL</button></div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!--====== Unsubscribe or Subscribe Newsletter ======-->
+        <!--====== End - Modal Section ======-->
+    </div>
+    <!--====== End - Main App ======-->
+
+
+    <!--====== Google Analytics: change UA-XXXXX-Y to be your site's ID ======-->
+    <%- include("partials/scripts") %>
+</body>
+</html>

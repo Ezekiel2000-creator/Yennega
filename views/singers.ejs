@@ -1,0 +1,30 @@
+<html>
+	<%- include("partials/head") %>
+	<body class="config">
+		<%- include("partials/header") %>
+		<div class="container">
+		<ul>
+			<% singer.forEach((singer) =>{ %>
+				<li><%=`${singer.singer}-${singer.title}-${singer.image}`%></li>
+			<% }) %>
+		</ul>
+		<form id="imageForm"  action="/singers" method="POST">
+			<label for="image">Choisissez une image :</label>
+			<input type="file" id="image" name="image" accept="image/*" required>
+
+			<label for="name">Nom :</label>
+			<input id="singer" name="singer" required>
+
+			<label for="description">Description :</label>
+			<input id="title" name="title" required>
+
+			<label for="price">Prix :</label>
+			<input type="number" id="price" name="price" step="0.01" required>
+
+			<button type="submit">Importer</button>
+		</form>
+		</div>
+		<%- include("partials/footer") %>
+		<%- include("partials/scripts") %>	
+	</body>body>
+</html>

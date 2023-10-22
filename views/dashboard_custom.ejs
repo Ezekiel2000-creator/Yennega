@@ -1,0 +1,205 @@
+<!DOCTYPE html>
+<html class="no-js" lang="en">
+    <%- include("partials/head") %>
+<body class="config">
+    <div class="preloader is-active">
+        <div class="preloader__wrap">
+
+            <img class="preloader__img" src="images/preloader.png" alt=""></div>
+    </div>
+
+    <!--====== Main App ======-->
+    <div id="app">
+
+        <!--====== Main Header ======-->
+        <%- include("partials/header") %>
+        <!--====== End - Main Header ======-->
+
+
+        <!--====== App Content ======-->
+        <div class="app-content">
+
+            <!--====== Section 1 ======-->
+            <div class="u-s-p-y-60">
+
+                <!--====== Section Content ======-->
+                <div class="section__content">
+                    <div class="container">
+                        <div class="breadcrumb">
+                            <div class="breadcrumb__wrap">
+                                <ul class="breadcrumb__list">
+                                    <li class="has-separator">
+
+                                        <a href="index.html">Home</a></li>
+                                    <li class="is-marked">
+
+                                        <a href="dashboard.html">My Account</a></li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!--====== End - Section 1 ======-->
+
+
+            <!--====== Section 2 ======-->
+            <div class="u-s-p-b-60">
+
+                <!--====== Section Content ======-->
+                <div class="section__content">
+                    <div class="dash">
+                        <div class="container">
+                            <div class="row">
+                                <div class="col-lg-3 col-md-12">
+
+                                    <!--====== Dashboard Features ======-->
+                                    <%- include("partials/dashboard_features") %>
+                                    <!--====== End - Dashboard Features ======-->
+                                </div>
+                                <div class="col-lg-9 col-md-12">
+                                    <div class="dash__box dash__box--shadow dash__box--radius dash__box--bg-white u-s-m-b-30">
+                                        <div class="dash__pad-2">
+                                            <h1 class="dash__h1 u-s-m-b-14">Gérer mon compte</h1>
+
+                                            <span class="dash__text u-s-m-b-30">A partir de votre tableau de bord vous pouvez être en mesure de consulter vos récentes activités
+                                                 et les informations concernant votre compte. Sélectionnez un de ces liens ci-dessous pour voir ou modifier vos informations</span>
+                                            <div class="row">
+                                                <div class="col-lg-4 u-s-m-b-30">
+                                                    <div class="dash__box dash__box--bg-grey dash__box--shadow-2 u-h-100">
+                                                        <div class="dash__pad-3">
+                                                            <h2 class="dash__h2 u-s-m-b-8">PROFIL PERSONNEL</h2>
+                                                            <div class="dash__link dash__link--secondary u-s-m-b-8">
+
+                                                                <a href="dash-edit-profile.html">Modifier</a></div>
+
+                                                            <span class="dash__text"><%= user.Customer_first_name%> <%= user.Customer_last_name%></span>
+
+                                                            <span class="dash__text"><%= user.Customer_email%></span>
+                                                            <div class="dash__link dash__link--secondary u-s-m-t-8">
+
+                                                                <a data-modal="modal" data-modal-id="#dash-newsletter">Subscribe Newsletter</a></div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="col-lg-4 u-s-m-b-30">
+                                                    <div class="dash__box dash__box--bg-grey dash__box--shadow-2 u-h-100">
+                                                        <div class="dash__pad-3">
+                                                            <h2 class="dash__h2 u-s-m-b-8">Carnet d'addresse</h2>
+
+                                                            <span class="dash__text-2 u-s-m-b-8">Addresse de livraison par défaut</span>
+                                                            <div class="dash__link dash__link--secondary u-s-m-b-8">
+
+                                                                <a href="dash-address-book.html">Modifier</a></div>
+
+                                                            <span class="dash__text">4247 Ashford Drive Virginia - VA-20006 - USA</span>
+
+                                                            <span class="dash__text">(+0) 900901904</span>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="col-lg-4 u-s-m-b-30">
+                                                    <div class="dash__box dash__box--bg-grey dash__box--shadow-2 u-h-100">
+                                                        <div class="dash__pad-3">
+                                                            <h2 class="dash__h2 u-s-m-b-8">BILLING ADDRESS</h2>
+
+                                                            <span class="dash__text-2 u-s-m-b-8">Default Billing Address</span>
+
+                                                            <span class="dash__text">4247 Ashford Drive Virginia - VA-20006 - USA</span>
+
+                                                            <span class="dash__text">(+0) 900901904</span>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="dash__box dash__box--shadow dash__box--bg-white dash__box--radius">
+                                        <h2 class="dash__h2 u-s-p-xy-20">Commandes récentes</h2>
+                                        <div class="dash__table-wrap gl-scroll">
+                                            <table class="dash__table">
+                                                <thead>
+                                                    <tr>
+                                                        <th>Commande #</th>
+                                                        <th>Effectuée le</th>
+                                                        <th>Nmbr de produits</th>
+                                                        <th>Total</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                    <% orders.forEach(order=> { %>
+                                                        <tr>
+                                                            <td>#<%= order.id %></td>
+                                                            <td><%= moment(order.date).format('DD/MM/YYYY à HH:mm') %></td>
+                                                            <td>
+                                                                <div class="dash__table-img-wrap">
+                                                                    <%= order.cart.length %>
+                                                                </div>
+                                                            </td>
+                                                            <td>
+                                                                <div class="dash__table-total">
+
+                                                                    <span>$<%= order.total %></span>
+                                                                    <div class="dash__link dash__link--brand">
+
+                                                                        <a href="dash-manage-order.html">VOIR</a></div>
+                                                                </div>
+                                                            </td>
+                                                        </tr>
+                                                    <%})%>
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!--====== End - Section Content ======-->
+            </div>
+            <!--====== End - Section 2 ======-->
+        </div>
+        <!--====== End - App Content ======-->
+
+
+        <!--====== Main Footer ======-->
+        <%- include("partials/footer") %>
+
+        <!--====== Modal Section ======-->
+
+
+        <!--====== Unsubscribe or Subscribe Newsletter ======-->
+        <div class="modal fade" id="dash-newsletter">
+            <div class="modal-dialog modal-dialog-centered">
+                <div class="modal-content modal--shadow">
+                    <div class="modal-body">
+                        <form class="d-modal__form">
+                            <div class="u-s-m-b-15">
+                                <h1 class="gl-modal-h1">Newsletter Subscription</h1>
+
+                                <span class="gl-modal-text">I have read and understood</span>
+
+                                <a class="d_modal__link" href="dashboard.html">Ludus Privacy Policy</a>
+                            </div>
+                            <div class="gl-modal-btn-group">
+
+                                <button class="btn btn--e-brand-b-2" type="submit">SUBSCRIBE</button>
+
+                                <button class="btn btn--e-grey-b-2" type="button" data-dismiss="modal">CANCEL</button></div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!--====== Unsubscribe or Subscribe Newsletter ======-->
+        <!--====== End - Modal Section ======-->
+    </div>
+    <!--====== End - Main App ======-->
+
+
+    <!--====== Google Analytics: change UA-XXXXX-Y to be your site's ID ======-->
+    <%- include("partials/scripts") %>
+</body>
+</html>

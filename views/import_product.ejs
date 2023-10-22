@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+	<%- include("partials/head") %>
+	<body class="config">
+		<%- include("partials/header") %>
+		<div class="container">
+			<h1>Importez une nouvelle image</h1>
+			<form action="/accueil" method="POST" id="imageForm">
+				<label for="image">Choisissez une image :</label>
+				<input type="file" id="image" name="image" accept="image/*" required>
+
+				<label for="name">Nom :</label>
+				<input type="text" id="name" name="name" required>
+
+				<label for="description">Description :</label>
+				<input id="description" name="description" required>
+				
+				<label for="category">Catégorie :</label>
+				<input id="category" name="category" required>
+				
+				<label for="vendor">vendeur :</label>
+				<input id="vendor" name="vendor" required>
+
+				<label for="price">Prix :</label>
+				<input type="number" id="price" name="price" step="0.01" required>
+
+				<button type="submit">Importer</button>
+			</form>
+		</div>
+		<%- include("partials/footer") %>
+		<%- include("partials/scripts") %>	
+	</body>
+</html>
