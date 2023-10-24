@@ -1,9 +1,8 @@
 var mongoose= require('mongoose');
+const mongoosePaginate = require('mongoose-paginate-v2');
 var schema=mongoose.Schema;
 var Productdetails  = new schema({
     Product_id     : String,
-    Customer_id    : String,
-    Cate_id        : String,
     Pro_name       : String,
     Pro_image      : String,
     Pro_quantity   : Number,
@@ -27,6 +26,11 @@ var Productdetails  = new schema({
     Rate:{
         type: Number,
         default: 0
+    },
+    Rater:{
+        type: Number,
+        default: 0
     }
 });
+Productdetails.plugin(mongoosePaginate);
 module.exports=mongoose.model('Product',Productdetails);

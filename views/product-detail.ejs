@@ -108,11 +108,27 @@
 												<span class="pd-detail__discount">(76% OFF)</span><del class="pd-detail__del">$<%=`${products.Pro_ammount}`%></del></div>
 										</div>
 										<div class="u-s-m-b-15">
-											<div class="pd-detail__rating gl-rating-style"><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star-half-alt"></i>
+											<div class="pd-detail__rating gl-rating-style">
+												<% let fullStars = Math.floor(products.Rate); %>
+												<% let halfStar = products.Rate % 1 !== 0 ? 1 : 0; %>
+												<% let emptyStars = 5 - fullStars - halfStar; %>
+
+												<% for(let i = 0; i < fullStars; i++) { %>
+												<i class="fas fa-star"></i> <!-- Étoile pleine -->
+												<% } %>
+
+												<% if(halfStar) { %>
+												<i class="fas fa-star-half-alt"></i> <!-- Étoile à moitié pleine -->
+												<% } %>
+
+												<% for(let i = 0; i < emptyStars; i++) { %>
+												<i class="far fa-star"></i> <!-- Étoile vide -->
+												<% } %>
 
 												<span class="pd-detail__review u-s-m-l-4">
 
-													<a data-click-scroll="#view-review">23 Avis</a></span></div>
+													<a data-click-scroll="#view-review">(<%=`${products.Rater}`%> Avis)</a>
+												</span></div>
 										</div>
 										<div class="u-s-m-b-15">
 											<div class="pd-detail__inline">
@@ -133,15 +149,7 @@
 
 													<span class="pd-detail__click-count">(222)</span></span></div>
 										</div>
-										<div class="u-s-m-b-15">
-											<div class="pd-detail__inline">
-
-												<span class="pd-detail__click-wrap"><i class="far fa-envelope u-s-m-r-6"></i>
-
-													<a href="signin.html">Email me When the price drops</a>
-
-													<span class="pd-detail__click-count">(20)</span></span></div>
-										</div>
+										
 										<div class="u-s-m-b-15">
 											<ul class="pd-social-list">
 												<li>
@@ -329,9 +337,6 @@
 															<% } %>
 														</div>
 														<div class="review-o__rating gl-rating-style u-s-m-b-8">
-															<% let fullStars = Math.floor(products.Rate); %>
-															<% let halfStar = products.Rate % 1 !== 0 ? 1 : 0; %>
-															<% let emptyStars = 5 - fullStars - halfStar; %>
 
 															<% for(let i = 0; i < fullStars; i++) { %>
 															<i class="fas fa-star"></i> <!-- Étoile pleine -->

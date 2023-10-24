@@ -5,3 +5,4 @@ var category  = new schema({
     cate_name   : String  
 });
 module.exports=mongoose.model('Category',category);
+ 

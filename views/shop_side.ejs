@@ -26,16 +26,16 @@
 								<div class="shop-w-master">
 									<h1 class="shop-w-master__heading u-s-m-b-30"><i class="fas fa-filter u-s-m-r-8"></i>
 
-										<span>FILTERS</span></h1>
+										<span>FILTRES</span></h1>
 									<div class="shop-w-master__sidebar">
 										<div class="u-s-m-b-30">
 											<div class="shop-w shop-w--style">
 												<div class="shop-w__intro-wrap">
-													<h1 class="shop-w__h">CATEGORY</h1>
+													<h1 class="shop-w__h">CATEGORIES</h1>
 
 													<span class="fas fa-minus shop-w__toggle" data-target="#s-category" data-toggle="collapse"></span>
 												</div>
-												<div class="shop-w__wrap collapse show" id="s-category">
+												<!-- <div class="shop-w__wrap collapse show" id="s-category">
 													<ul class="shop-w__category-list gl-scroll">
 														<li class="has-list">
 
@@ -605,7 +605,25 @@
 
 															<span class="category-list__text u-s-m-l-6">(0)</span></li>
 													</ul>
-												</div>
+												</div> -->
+											    <div class="shop-w__wrap collapse show" id="s-category">
+													<ul class="shop-w__category-list gl-scroll">
+														<% categories.forEach(function(category) { %>
+															<li class="has-list">
+																<a href="/articles?categoryId=<%= category._id %>"><%= category.name %></a>
+																<span class="js-shop-category-span is-expanded fas fa-plus u-s-m-l-6"></span>
+																<ul style="display:block">
+																	<% category.subcategories.forEach(function(subcategory) { %>
+																		<li>
+																			<a href="/articles?subcategoryId=<%= subcategory._id %>"><%= subcategory.subcate_name %></a>
+																		</li>
+																	<% }) %>
+																</ul>
+															</li>
+														<% }) %>
+													</ul>
+												</div>												
+												
 											</div>
 										</div>
 										<div class="u-s-m-b-30">
@@ -947,17 +965,30 @@
 								<div class="shop-p">
 									<div class="shop-p__toolbar u-s-m-b-30">
 										<div class="shop-p__meta-wrap u-s-m-b-60">
+											<% if(query) { %>
 
-											<span class="shop-p__meta-text-1">FOUND 18 RESULTS</span>
-											<div class="shop-p__meta-text-2">
+												<span class="shop-p__meta-text-1">
+												  <%= products.length %> RESULTATS POUR "<%= search %>"
+												</span>
+												<div class="shop-p__meta-text-2">
 
-												<span>Related Searches:</span>
+													<span>Recherches liées:</span>
 
-												<a class="gl-tag btn--e-brand-shadow" href="#">men's clothing</a>
+													<a class="gl-tag btn--e-brand-shadow" href="#">men's clothing</a>
 
-												<a class="gl-tag btn--e-brand-shadow" href="#">mobiles & tablets</a>
+													<a class="gl-tag btn--e-brand-shadow" href="#">mobiles & tablets</a>
 
-												<a class="gl-tag btn--e-brand-shadow" href="#">books & audible</a></div>
+													<a class="gl-tag btn--e-brand-shadow" href="#">books & audible</a>
+												</div>
+											  
+											  <% } else { %>
+											  
+												<span class="shop-p__meta-text-1">
+												  All Products
+												</span>
+											  
+											  <% } %>
+											
 										</div>
 										<div class="shop-p__tool-style">
 											<div class="tool-style__group u-s-m-b-8">
@@ -987,6 +1018,8 @@
 									</div>
 									<div class="shop-p__collection">
 										<div class="row is-grid-active">
+											<% let i = 0; %>
+											<% let j = 0; %>
 											<% products.forEach((products) =>{ %>
 												<div class="col-lg-4 col-md-6 col-sm-6">
 													<div class="product-m">
@@ -995,13 +1028,14 @@
 																<img class="aspect__img" src="/Pro_upload/<%=`${products.Pro_image}`%>" alt="">
 															</a>
 															<div class="product-m__quick-look">
-																<a class="fas fa-search" data-modal="modal" data-modal-id="#quick-look" data-tooltip="tooltip" data-placement="top" title="Quick Look" type="button" data-dismiss="modal" data-title="<%= `${products.title}` %>" data-description="<%= `${products.description}` %>" data-price="<%= `${products.price}` %>"></a>
+																<a class="fas fa-search" data-modal="modal" data-modal-id="#quick-look-<%= i %>" data-tooltip="tooltip" data-placement="top" title="Quick Look" type="button" data-dismiss="modal" ></a>
+															    <% i++; %>
 															</div>
-															<form action="/add-to-cart" method="POST">
+															<form class="pd-detail__form" action="/add-to-cart" method="POST">
 																<div class="product-m__add-cart">
 																	<input type="hidden" name="productID" value="<%= `${products.id}` %>">
 																	<input type="hidden" name="quantity" value="1">
-																	<button class="btn--e-brand" data-modal="modal" type="submit">Add to Cart</button>
+																	<button class="btn--e-brand" data-modal="modal" type="submit">Ajouter au panier</button>
 																</div>
 														    </form>
 														</div>
@@ -1044,7 +1078,8 @@
 														</div>
 													</div>
 												</div>
-												<div class="modal fade" id="quick-look">
+												<div class="modal fade quick-look" id="quick-look-<%= j%>">
+													
 													<div class="modal-dialog modal-dialog-centered">
 														<div class="modal-content modal--shadow">
 									
@@ -1098,7 +1133,7 @@
 																				<div id="js-product-detail-modal-thumbnail">
 																					<div>
 									
-																						<img class="u-img-fluid" src="/Pro_upload/<%=`${products.Pro_image}`%>" alt=""></div>
+																						<img class="u-img-fluid" src="images/product/product-d-2.jpg" alt=""></div>
 																					<div>
 									
 																						<img class="u-img-fluid" src="images/product/product-d-2.jpg" alt=""></div>
@@ -1131,18 +1166,29 @@
 																					<span class="pd-detail__discount">(76% OFF)</span><del class="pd-detail__del">$<%=`${products.Pro_rentprice}`%></del></div>
 																			</div>
 																			<div class="u-s-m-b-15">
-																				<div class="pd-detail__rating gl-rating-style"><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star-half-alt"></i>
+																				<div class="pd-detail__rating gl-rating-style">
+																					<% for(let i = 0; i < fullStars; i++) { %>
+																					<i class="fas fa-star"></i> <!-- Étoile pleine -->
+																					<% } %>
+						
+																					<% if(halfStar) { %>
+																					<i class="fas fa-star-half-alt"></i> <!-- Étoile à moitié pleine -->
+																					<% } %>
+						
+																					<% for(let i = 0; i < emptyStars; i++) { %>
+																					<i class="far fa-star"></i> <!-- Étoile vide -->
+																					<% } %>
 									
 																					<span class="pd-detail__review u-s-m-l-4">
 									
-																						<a href="product-detail.html">23 Reviews</a></span></div>
+																						<a href="product-detail.html"><%=`${products.Rater}`%> Avis</a></span></div>
 																			</div>
 																			<div class="u-s-m-b-15">
 																				<div class="pd-detail__inline">
 									
-																					<span class="pd-detail__stock"><%=`${products.Pro_quantity}`%> in stock</span>
+																					<span class="pd-detail__stock"><%=`${products.Pro_quantity}`%> en stock</span>
 									
-																					<span class="pd-detail__left">Only <%=`${products.Pro_quantity}`%> left</span></div>
+																					<span class="pd-detail__left">Il ne reste plus que <%=`${products.Pro_quantity}`%></span></div>
 																			</div>
 																			<div class="u-s-m-b-15">
 									
@@ -1152,18 +1198,12 @@
 									
 																					<span class="pd-detail__click-wrap"><i class="far fa-heart u-s-m-r-6"></i>
 									
-																						<a href="signin.html">Add to Wishlist</a>
+																						<a href="signin.html">Ajouter à ma liste de souhait</a>
 									
 																						<span class="pd-detail__click-count">(222)</span></span></div>
 																			</div>
 																			<div class="u-s-m-b-15">
-																				<div class="pd-detail__inline">
-									
-																					<span class="pd-detail__click-wrap"><i class="far fa-envelope u-s-m-r-6"></i>
-									
-																						<a href="signin.html">Email me When the price drops</a>
-									
-																						<span class="pd-detail__click-count">(20)</span></span></div>
+																				
 																			</div>
 																			<div class="u-s-m-b-15">
 																				<ul class="pd-social-list">
@@ -1201,27 +1241,72 @@
 																						</div>
 																						<div class="u-s-m-b-15">
 									
-																							<button class="btn btn--e-brand-b-2" type="submit">Add to Cart</button></div>
+																							<button class="btn btn--e-brand-b-2" type="submit">Ajouter au panier</button></div>
 																					</div>
 																				</form>
 																			</div>
 																			<div class="u-s-m-b-15">
 									
-																				<span class="pd-detail__label u-s-m-b-8">Product Policy:</span>
+																				<span class="pd-detail__label u-s-m-b-8">Politique du produit:</span>
 																				<ul class="pd-detail__policy-list">
 																					<li><i class="fas fa-check-circle u-s-m-r-8"></i>
 									
-																						<span>Buyer Protection.</span></li>
+																						<span>Protection de l'acheteur.</span></li>
 																					<li><i class="fas fa-check-circle u-s-m-r-8"></i>
 									
-																						<span>Full Refund if you don't receive your order.</span></li>
+																						<span>Remboursement complète si la commande n'a pas été livrée.</span></li>
 																					<li><i class="fas fa-check-circle u-s-m-r-8"></i>
 									
-																						<span>Returns accepted if product not as described.</span></li>
+																						<span>Retour de produit accepté si le produit ne correspond pas à la description.</span></li>
 																				</ul>
 																			</div>
 																		</div>
 																		<!--====== End - Product Right Side Details ======-->
+																	</div>
+																</div>
+															</div>
+														</div>
+													</div>
+													<% j++;%>
+												</div>
+												<div class="modal fade" id="add-to-cart">
+													<div class="modal-dialog modal-dialog-centered">
+														<div class="modal-content modal-radius modal-shadow">
+									
+															<button class="btn dismiss-button fas fa-times" type="button" data-dismiss="modal"
+																	data-name="Nom du produit" data-description="Description du produit" 
+																	data-price="Prix du produit" ></button>
+															<div class="modal-body">
+																<div class="row">
+																	<div class="col-lg-6 col-md-12">
+																		<div class="success u-s-m-b-30">
+																			<div class="success__text-wrap"><i class="fas fa-check"></i>
+									
+																				<span>Produit ajouté au panier avec succès</span></div>
+																			<div class="success__img-wrap">
+									
+																				<img class="u-img-fluid" src="images/product/electronic/product1.jpg" alt=""></div>
+																			<div class="success__info-wrap">
+									
+																				<span class="success__name"><%= `${products.Pro_name}` %></span>
+									
+																				<span class="success__quantity">Quantité: 1</span>
+									
+																				<span class="success__price">$<%= `${products.Pro_rentprice}` %></span></div>
+																		</div>
+																	</div>
+																	<div class="col-lg-6 col-md-12">
+																		<div class="s-option">
+									
+																			<span class="s-option__text">1 item (s) in your cart</span>
+																			<div class="s-option__link-box">
+									
+																				<a class="s-option__link btn--e-white-brand-shadow" data-dismiss="modal">CONTINUER VOS ACHATS</a>
+									
+																				<a class="s-option__link btn--e-white-brand-shadow" href="/cart">VOIR LE PANIER</a>
+									
+																				<a class="s-option__link btn--e-brand-shadow" href="/user/checkout">PROCEDER AU PAYEMENT</a></div>
+																		</div>
 																	</div>
 																</div>
 															</div>
@@ -1232,27 +1317,22 @@
 										</div>
 									</div>
 									<div class="u-s-p-y-60">
-
 										<!--====== Pagination ======-->
 										<ul class="shop-p__pagination">
-											<li class="is-active">
-
-												<a href="shop-side-version-2.html">1</a></li>
-											<li>
-
-												<a href="shop-side-version-2.html">2</a></li>
-											<li>
-
-												<a href="shop-side-version-2.html">3</a></li>
-											<li>
-
-												<a href="shop-side-version-2.html">4</a></li>
-											<li>
-
-												<a class="fas fa-angle-right" href="shop-side-version-2.html"></a></li>
+											<% for(let i = 1; i <= totalPages; i++) { %>
+												<li class="<% if(i === parseInt(currentPage)) { %>is-active<% } %>">
+													<a href="?page=<%= i %>"><%= i %></a>
+												</li>
+											<% } %>
+											<% if(currentPage < totalPages) { %>
+												<li>
+													<a class="fas fa-angle-right" href="?page=<%= parseInt(currentPage) + 1 %>"></a>
+												</li>
+											<% } %>
 										</ul>
 										<!--====== End - Pagination ======-->
 									</div>
+									
 								</div>
 							</div>
 						</div>

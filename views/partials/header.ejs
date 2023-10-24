@@ -16,13 +16,13 @@
 
 
                         <!--====== Search Form ======-->
-                        <form class="main-form">
-
+                        
+                        
+                        <form class="main-form" action="/articles" method="GET">
                             <label for="main-search"></label>
-
-                            <input class="input-text input-text--border-radius input-text--style-1" type="text" id="main-search" placeholder="Search">
-
-                            <button class="btn btn--icon fas fa-search main-search-button" type="submit"></button></form>
+                            <input class="input-text input-text--border-radius input-text--style-1" type="search" id="main-search" name="query" placeholder="Search">
+                            <button class="btn btn--icon fas fa-search main-search-button" type="submit"></button>
+                        </form>
                         <!--====== End - Search Form ======-->
 
 
@@ -1218,7 +1218,7 @@
                                                                 </div>
                                                                 <div class="mini-product__info-wrapper">
                                                                     <span class="mini-product__category">
-                                                                    <a href="shop-side-version-2.html"><%=`${carts_product.product.category}`%></a>
+                                                                    <a href="shop-side-version-2.html"><%=`${carts_product.product.Pro_subcategory}`%></a>
                                                                     </span>
                                                                     <span class="mini-product__name">
                                                                     <a href="product-detail.html"><%=`${carts_product.product.Pro_name}`%></a>

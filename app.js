@@ -29,6 +29,9 @@ var Product  = require('./Schema/Product_table');
 var Order = require('./Schema/Order_master_table');
 var Vendor = require('./Schema/Vendor');
 var Rating = require('./Schema/Rating_table');
+var Subcategory = require('./Schema/SubCategory_table');
+var Category = require('./Schema/Category_table');
+
 
 var app = express();
   
@@ -214,6 +217,13 @@ async function getVendors() {
   }
 
 }
+function shuffle(array) {
+    for (let i = array.length - 1; i > 0; i--) {
+      const j = Math.floor(Math.random() * (i + 1));
+      [array[i], array[j]] = [array[j], array[i]];
+    }
+  }
+  
 app.use(initializeUser);
 app.use(getUserCart);
 
@@ -317,53 +327,104 @@ app.get("/signin", (req, res) =>{
 
 app.get("/accueil", async (req, res) => {
 	const carts = res.locals.carts
+    const subcategories = await Subcategory.find();
+    shuffle(subcategories);
+    const randomSubcategories = subcategories.slice(0,3);
 	Product.find()
+    .populate("Pro_subcategory")
 	.exec()
 	.then ((foundProducts) => {
     console.log("foundProducts",foundProducts)
-		res.render("index",{products:foundProducts,carts})
+    
+	res.render("index",{products:foundProducts,carts,randomSubcategories})
 	})
 	.catch((error) => {
 		console.error('Error creating document:', error);
 	  });
 });
 
-app.post("/accueil", (req,res) =>{
-	console.log("BOy",req.body);
-	const newProduct = {
-		name: req.body.name,
-		description: req.body.description,
-		category: req.body.category,
-		caractéristique:req.body.description,
-		price: req.body.price,
-		seller: req.body.vendor,
-	};
-	Product.create(newProduct)
-	  .then((result) => {
-		console.log('Document created successfully:', result);
-		res.redirect("accueil");
-	  })
-	  .catch((error) => {
-		console.error('Error creating document:', error);
-		res.redirect("accueil");
-	  });
+// app.post("/accueil", (req,res) =>{
+// 	console.log("BOy",req.body);
+// 	const newProduct = {
+// 		name: req.body.name,
+// 		description: req.body.description,
+// 		category: req.body.category,
+// 		caractéristique:req.body.description,
+// 		price: req.body.price,
+// 		seller: req.body.vendor,
+// 	};
+// 	Product.create(newProduct)
+// 	  .then((result) => {
+// 		console.log('Document created successfully:', result);
+// 		res.redirect("accueil");
+// 	  })
+// 	  .catch((error) => {
+// 		console.error('Error creating document:', error);
+// 		res.redirect("accueil");
+// 	  });
 
-});
+// });
 // Route handler
 app.get("/articles", async (req, res) => {
-  const userID = req.user ? req.user.id : undefined;
-  console.log("user", userID);
-  const carts = res.locals.carts;
-  console.log("carts", carts);
-  try {
-      let foundProducts = await Product.find().populate('Pro_subcategory').exec();
-      console.log("Pro_subcategory", foundProducts);
-      res.render("shop_side", {products: foundProducts, carts});
-  } catch (error) {
+    const userID = req.user ? req.user.id : undefined;
+    console.log("user", userID);
+    const carts = res.locals.carts;
+    console.log("carts", carts);
+    try {
+      const options = {
+        page: req.query.page || 1, // Le numéro de la page
+        limit: 3 // Le nombre de produits par page
+      };
+      const skip = (options.page - 1) * options.limit;
+  
+      const categoryId = req.query.categoryId;
+      const subcategoryId = req.query.subcategoryId;
+  
+      var subcategories = await Subcategory.find().populate('_category');
+      var categoriesMap = {};
+      subcategories.forEach(function(subcategory) {
+        var categoryId = subcategory._category._id.toString();
+        if (!categoriesMap[categoryId]) {
+          categoriesMap[categoryId] = {
+            name: subcategory._category.cate_name,
+            subcategories: []
+          };
+        }
+        categoriesMap[categoryId].subcategories.push(subcategory);
+      });
+      var categories = Object.values(categoriesMap);
+  
+      let foundProducts;
+      let query = {};
+      if (req.query.query) {
+        var search = req.query.query;
+        query.$or = [
+          { Pro_name: { $regex: req.query.query, $options: 'i' } },
+          { Pro_description: { $regex: req.query.query, $options: 'i' } }
+        ];
+      }
+      if (categoryId) {
+        query['Pro_subcategory._category'] = mongoose.Types.ObjectId(categoryId);
+      }
+      if (subcategoryId) {
+        query.Pro_subcategory = mongoose.Types.ObjectId(subcategoryId);
+      }
+      foundProducts = await Product.find(query)
+        .skip(skip)
+        .limit(options.limit)
+        .populate("Pro_subcategory")
+        .exec();
+  
+      const totalProducts = await Product.countDocuments(query);
+      const totalPages = Math.ceil(totalProducts / options.limit);
+  
+      res.render("shop_side", {products: foundProducts, carts, totalPages, currentPage: options.page, query, categories, search});
+    } catch (error) {
       console.error('Error founding products:', error);
       res.redirect("/accueil");
-  }
-});
+    }
+  });
+  
 
 
 app.get("/articles/:id", requireAuth, async (req, res) => {

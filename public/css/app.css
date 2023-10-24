@@ -1826,11 +1826,11 @@ input::-ms-clear {
     font-weight: 600;
     font-size: 13px; }
 
-#quick-look .modal-dialog {
+.quick-look .modal-dialog {
   width: 100%;
   max-width: 991px; }
 
-#quick-look .modal-body {
+.quick-look .modal-body {
   padding: 1.875rem; }
 
 .new-l--center {
@@ -5390,7 +5390,9 @@ input::-ms-clear {
       background-color: transparent;
       color: #333333; }
   .shop-p__pagination > li.is-active > a {
-    background-color: #f7f7f7; }
+    background-color: #f7f7f1;
+    color: #ff4509;
+    text-decoration: underline; }
   .shop-p__pagination > li:not(.is-active) > a:hover {
     color: #ff4500;
     text-decoration: underline; }
