@@ -6416,4 +6416,53 @@ input::-ms-clear {
 
 #js-product-detail-modal-thumbnail:hover .pt-prev, #js-product-detail-modal-thumbnail:hover .pt-next {
   opacity: .8; }
-
+.form-container {
+  display: flex;
+  flex-direction: column;
+  width: 50vw;;
+  margin: 0 auto;
+  padding: 1em;
+  border: 1px solid #ccc;
+  border-radius: 1em;
+}
+.form-group {
+  margin-bottom: 20px;
+}
+.form-group label {
+  font-weight: bold;
+  display: block;
+  margin-bottom: 10px;
+}
+.form-group input, .form-group select {
+  width: 100%;
+  padding: 10px;
+  font-size: 16px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+}
+.form-group input[type="file"] {
+  padding: 3px;
+}
+.form-group img {
+  height: 100px;
+  margin-top: 10px;
+}
+.form-group button {
+  padding: 10px;
+  font-size: 16px;
+  background: #007BFF;
+  color: #fff;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
+.form-group .checkbox {
+  display: flex;
+  align-items: center;
+}
+.form-group .checkbox input {
+  margin-right: 10px;
+}
+.form-group button:disabled {
+  background: #ccc;
+}

@@ -1,5 +1,6 @@
 <% if  (typeof isAdded !== 'undefined' && isAdded) { %>
 	<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.0.16/dist/sweetalert2.min.js"></script>
+  
 	<script>
 	 console.log("iiiiiiiiiii")
 	 Swal.fire({
@@ -20,6 +21,46 @@
     });
    </script>
 <% } %>
+<script src="https://cdn.jsdelivr.net/npm/vue@2"></script>
+<script>
+  new Vue({
+      el: "#app",
+      data: {
+          name: "",
+          phone: "+226",
+          commerceRegister: null,
+          ifu: "",
+          type: "",
+          idCard: null,
+          terms: false
+      },
+      methods: {
+          submit() {
+              if (!this.terms) {
+                  alert("Veuillez accepter les conditions d'utilisation avant de soumettre.");
+              } else {
+                  // Soumettez le formulaire
+              }
+          },
+          previewImage(event) {
+              const file = event.target.files[0];
+              if (file) {
+                  this.idCard = URL.createObjectURL(file);
+              }
+          },
+          previewCommerceRegister(event) {
+          const file = event.target.files[0];
+          if (file) {
+              if (file.type === "application/pdf") {
+                  this.commerceRegister = URL.createObjectURL(file);
+              } else {
+                  alert("Veuillez télécharger un fichier PDF valide.");
+              }
+          }
+        }
+      }
+  });
+</script>
 <script>
 	
     document.getElementById('clear-cart-btn').addEventListener('click', function(e) {
@@ -169,6 +210,7 @@ function showAllReviews() {
     button.textContent = 'Voir tous les avis';
   }
 }
+// _____________________________________________________________________________________________
 
 window.ga = function() {
 		ga.q.push(arguments)

@@ -177,7 +177,7 @@ const getUserCart = async (req, res, next) => {
   
     for (const productId of productIds) {
     try {
-      const product = await Product.findById(productId);
+      const product = await Product.findById(productId).populate("Pro_subcategory");
       carts.push({
       product,
       quantity: quantities[productId]
@@ -777,8 +777,57 @@ app.post("/reviews", requireAuth, async (req, res) => {
     res.status(500).json({ error }); 
   }
 });
+app.get("/vendor/request", requireAuth, async (req, res) => {
+    try {
 
+        // Get logged in user id from request
+        const userId = req.user.id;
+    
+        // Find Customer record by id
+        let user = await Customer.findById(userId);
+        console.log("userRFRRRRRRRRRRRRRRRRRRR",user)
+    
+        // Find any Orders where user id matches
+        let orders = await Order.find({user: userId});
+        console.log("ordersRRRRRRRRRRRRRRRRRRRRRRRRRRRRR",orders)
+    
+        res.status(200).render("Vendor_request",{
+          user: user,
+          orders: orders,
+          moment: moment
+        });
+    
+      } catch (error) {
+        res.status(500).json({ message: error.message });
+      }
+  
+  });
+app.post("/vendor/request", requireAuth, async (req, res) => {
 
+try {
+
+    // Get logged in user id from request
+    const userId = req.user.id;
+
+    // Find Customer record by id
+    let user = await Customer.findById(userId);
+    console.log("userRFRRRRRRRRRRRRRRRRRRR",user)
+
+    // Find any Orders where user id matches
+    let orders = await Order.find({user: userId});
+    console.log("ordersRRRRRRRRRRRRRRRRRRRRRRRRRRRRR",orders)
+
+    res.status(200).render("dash-edit-profile",{
+    user: user,
+    orders: orders,
+    moment: moment
+    });
+
+} catch (error) {
+    res.status(500).json({ message: error.message });
+}
+
+});
 
 app.post('/signout', (req, res) => {
 	try {

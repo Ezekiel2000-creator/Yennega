@@ -71,14 +71,12 @@
                                                             <h2 class="dash__h2 u-s-m-b-8">PROFIL PERSONNEL</h2>
                                                             <div class="dash__link dash__link--secondary u-s-m-b-8">
 
-                                                                <a href="dash-edit-profile.html">Modifier</a></div>
+                                                                <a href="/user/dash-edit-profile">Modifier</a></div>
 
                                                             <span class="dash__text"><%= user.Customer_first_name%> <%= user.Customer_last_name%></span>
 
                                                             <span class="dash__text"><%= user.Customer_email%></span>
-                                                            <div class="dash__link dash__link--secondary u-s-m-t-8">
-
-                                                                <a data-modal="modal" data-modal-id="#dash-newsletter">Subscribe Newsletter</a></div>
+                                                            
                                                         </div>
                                                     </div>
                                                 </div>
@@ -101,13 +99,28 @@
                                                 <div class="col-lg-4 u-s-m-b-30">
                                                     <div class="dash__box dash__box--bg-grey dash__box--shadow-2 u-h-100">
                                                         <div class="dash__pad-3">
-                                                            <h2 class="dash__h2 u-s-m-b-8">BILLING ADDRESS</h2>
+                                                            <h2 class="dash__h2 u-s-m-b-8">STATUT</h2>
+                                                            <span class="dash__text-2 u-s-m-b-8">Votre statut d'utilisation</span>
+                                                            <div class="dash__link dash__link--secondary u-s-m-b-8">
 
-                                                            <span class="dash__text-2 u-s-m-b-8">Default Billing Address</span>
+                                                                <a href="/vendor/request">Changer de statut</a>
+                                                            </div>
+                                                            <div class="dash__pad-1" >
+                                                                <span class="dash__w-icon dash__w-icon-style-2"
+                                                                 style="justify-content: center; display: inline-flex; align-content: center; flex-wrap: wrap;">
+                                                                    <i class="fas fa-store"></i>
+                                                                </span>
 
-                                                            <span class="dash__text">4247 Ashford Drive Virginia - VA-20006 - USA</span>
+                                                                <span class="dash__text">Vendeur</span>
+                                                                <span class="dash__w-icon dash__w-icon-style-2"
+                                                                 style="justify-content: center; display: inline-flex; align-content: center; flex-wrap: wrap;">
+                                                                    <i class="fas fa-user"></i>
+                                                                </span>
 
-                                                            <span class="dash__text">(+0) 900901904</span>
+                                                                <span class="dash__text">Utilisateur</span>
+                                                            </div>
+                                                            
+
                                                         </div>
                                                     </div>
                                                 </div>
