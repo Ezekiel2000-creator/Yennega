@@ -12,6 +12,7 @@ const bcrypt = require('bcrypt');
 const moment = require('moment');
 const statusMonitor = require('express-status-monitor');
 
+
 var indexRouter = require('./routes/index');
 var usersRouter = require('./routes/users');
 var adminRouter = require('./routes/Admin');
@@ -22,6 +23,7 @@ var productRouter  = require('./routes/Product');
 var inqueryRouter  = require('./routes/Inquery');
 var orderRouter  = require('./routes/Order_master');
 var vendorRouter  = require('./routes/Vendor');
+var vendorRouter  = require('./routes/Vendor');
 
 var Cart  = require('./Schema/Cart');
 var Customer  = require('./Schema/Customer_table');
@@ -30,6 +32,7 @@ var Order = require('./Schema/Order_master_table');
 var Vendor = require('./Schema/Vendor');
 var Rating = require('./Schema/Rating_table');
 var Subcategory = require('./Schema/SubCategory_table');
+const VendorRequest = require('./Schema/Vendor_request');
 var Category = require('./Schema/Category_table');
 
 
@@ -55,7 +58,8 @@ app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 app.use(express.static("public"));
 app.use(session({ secret:'keyboard cat', resave:false,saveUninitialized:true}));
-app.use(fileupload())
+app.use(fileupload());
+app.use('/public/vendorRequest', express.static('public/vendorRequest'));
 app.use('/', indexRouter);
 app.use('/users', usersRouter);
 app.use('/admin', adminRouter);
@@ -107,8 +111,8 @@ const generateRandomCode = () => {
   
   return code;
   }
-  const randomCode = generateRandomCode();
-  console.log(randomCode);
+const randomCode = generateRandomCode();
+console.log(randomCode);
 
 const requireAuth = (req, res, next) => {
   const token = req.cookies.token;
@@ -622,10 +626,10 @@ app.get("/user/dashboard", requireAuth, async (req, res) => {
 
     // Get logged in user id from request
     const userId = req.user.id;
-
+    let vendorRequest = await VendorRequest.findOne({user: mongoose.Types.ObjectId(userId)});
+    console.log("userRFRRRRRRRRRRRRRRRRRRR",vendorRequest,vendorRequest.id);
     // Find Customer record by id
     let user = await Customer.findById(userId);
-    console.log("userRFRRRRRRRRRRRRRRRRRRR",user)
 
     // Find any Orders where user id matches
     let orders = await Order.find({user: userId});
@@ -634,7 +638,8 @@ app.get("/user/dashboard", requireAuth, async (req, res) => {
     res.status(200).render("dashboard_custom",{
       user: user,
       orders: orders,
-      moment: moment
+      moment: moment,
+      vendorRequest:vendorRequest,
     });
 
   } catch (error) {
@@ -782,7 +787,7 @@ app.get("/vendor/request", requireAuth, async (req, res) => {
 
         // Get logged in user id from request
         const userId = req.user.id;
-    
+        
         // Find Customer record by id
         let user = await Customer.findById(userId);
         console.log("userRFRRRRRRRRRRRRRRRRRRR",user)
@@ -794,7 +799,7 @@ app.get("/vendor/request", requireAuth, async (req, res) => {
         res.status(200).render("Vendor_request",{
           user: user,
           orders: orders,
-          moment: moment
+          moment: moment,
         });
     
       } catch (error) {
@@ -803,30 +808,42 @@ app.get("/vendor/request", requireAuth, async (req, res) => {
   
   });
 app.post("/vendor/request", requireAuth, async (req, res) => {
+  if (!req.files || Object.keys(req.files).length === 0) {
+    return res.status(400).send('No files were uploaded.');
+  }
+  var user = req.user.id;
+  let idCardFile = req.files.idCardFile;
+  let commerceRegisterFile = req.files.commerceRegisterFile;
 
-try {
+  // Vous pouvez utiliser la méthode mv() pour déplacer le fichier vers un répertoire spécifique sur votre serveur
+  idCardFile.mv('public/Vendor_request/' + idCardFile.name, function(err) {
+    if (err) return res.status(500).send(err);
+  });
 
-    // Get logged in user id from request
-    const userId = req.user.id;
+  commerceRegisterFile.mv('public/Vendor_request/' + commerceRegisterFile.name, function(err) {
+    if (err) return res.status(500).send(err);
+  });
 
-    // Find Customer record by id
-    let user = await Customer.findById(userId);
-    console.log("userRFRRRRRRRRRRRRRRRRRRR",user)
-
-    // Find any Orders where user id matches
-    let orders = await Order.find({user: userId});
-    console.log("ordersRRRRRRRRRRRRRRRRRRRRRRRRRRRRR",orders)
-
-    res.status(200).render("dash-edit-profile",{
+  // Créez une nouvelle instance de votre modèle avec les données reçues
+  const vendorApplication = new VendorRequest({
+    name: req.body.name,
+    phone: req.body.phone,
+    commerceRegisterNumber: req.body.commerceRegisterNumber,
+    ifu: req.body.ifu,
+    type: req.body.type,
+    idCardFile: 'public/Vendor_request/' + idCardFile.name,
+    commerceRegisterFile: 'public/Vendor_request/' + commerceRegisterFile.name,
+    termsAccepted: req.body.termsAccepted,
     user: user,
-    orders: orders,
-    moment: moment
-    });
+    request_state: "pending",
+  });
 
-} catch (error) {
-    res.status(500).json({ message: error.message });
-}
-
+  try {
+    const savedVendorApplication = await vendorApplication.save();
+    res.json(savedVendorApplication);
+  } catch (err) {
+    res.status(500).json({ message: err.message });
+  }
 });
 
 app.post('/signout', (req, res) => {

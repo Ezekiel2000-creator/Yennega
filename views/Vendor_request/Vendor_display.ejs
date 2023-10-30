@@ -1,0 +1,75 @@
+<%-include('header')-%>
+<div class="main-panel">
+    <div class="content-wrapper">
+      <div class="page-header">
+        <h3 class="page-title" style="margin-left:200px;padding-top:20px">
+          <b>Liste des demandes d'inscription (Vendeur)</b>
+        </h3>
+        </div>
+        <div class="col-lg-12 stretch-card">
+          <div class="card">
+            <div class="card-body">
+              <div class="table-responsive">
+                    <table class="table table-bordered">
+                            <thead>
+                                <tr>
+                                    <th>id</th>        
+                                    <th>Nom d'utilisateur</th>
+                                    <th>Nom de la structure</th>     
+                                    <th>Numéro de téléphone</th>
+                                    <th>Date</th>               
+                                    <th>Etat de la requête</th>  
+                                </tr>
+                            </thead>
+                            <tbody>
+                              <% let n=0; vendor_Requests.forEach(request => { %>
+                          
+                                <tr>
+                                    <td><%= n += 1 %></td>
+                                    <td><%= request.user.Customer_first_name %> <%= request.user.Customer_last_name %></td>
+                                    <td><%= request.name %></td>
+                                    <td><%= request.phone %></td>
+                                    <td><%= request.date %></td>
+                                    <% if (request.request_state === "pending") { %>
+                                        <td>En cours</td>
+                                    <% } else if (request.request_state === "validated") { %>
+                                        <td>Validé</td>
+                                    <% } else if(request.request_state === "rejected") { %>
+                                        <td>Rejeté</td>
+                                    <% } %>
+                                    <td>
+                                        <a href="show/<%= request._id %>"><img title="montrer" src="/images/icons/show.png"></a>
+                                        <a href="edit/<%= request._id %>"><img title="modifier" src="/images/icons/edit.png"></a>
+                                        <a href="delete/<%= request._id %>"><img title="supprimer" src="/images/icons/delete.png"></a>
+                                    </td>
+                                </tr>
+                            
+                            <% }) %>
+                            
+                            </tbody>
+                    </table>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <script src="../../vendors/js/vendor.bundle.base.js"></script>
+    <script src="../../vendors/js/vendor.bundle.addons.js"></script>
+    <!-- endinject -->
+    <!-- Plugin js for this page-->
+    <!-- End plugin js for this page-->
+    <!-- inject:js -->
+    <script src="../../js/off-canvas.js"></script>
+    <script src="../../js/hoverable-collapse.js"></script>
+    <script src="../../js/misc.js"></script>
+    <script src="../../js/settings.js"></script>
+    <script src="../../js/todolist.js"></script>
+    <!-- endinject -->
+    <!-- Custom js for this page-->
+    <!-- End custom js for this page-->
+</body>
+
+
+<!-- Mirrored from www.urbanui.com/gleam/pages/tables/basic-table.html by HTTrack Website Copier/3.x [XR&CO'2014], Mon, 10 Sep 2018 06:27:35 GMT -->
+</html>

@@ -19,13 +19,13 @@
           <div class="card bg-gradient-danger border-0 text-white p-3">
             <div class="card-body">
               <div class="d-flex align-items-start">
-                <i class="mdi"></i>
+                <i class="mdi mdi-account-multiple mdi-48px"></i>
                 <div class="ml-4">
                   <a style="color: white" class="nav-link"href="/customer/data_display">
-                  <h2 class="mb-2"><%=customer_array.length %></h2>
-                  <h4 class="mb-0">Total Customers</h4>
+                    <h2 class="mb-2"><%=customer_array.length %></h2>
+                    <h4 class="mb-0">Total Utilisateurs</h4>
+                  </a>
                 </div>
-              </a>
               </div>
             </div>
           </div>
@@ -34,10 +34,10 @@
           <div class="card bg-gradient-info border-0 text-white p-3">
             <div class="card-body">
               <div class="d-flex align-items-start">
-                <i class="mdi mdi-cards-outline mdi-48px"></i>
+                <i class="mdi mdi-cards-playing-outline mdi-48px"></i>
                 <div class="ml-4">
                   <h2 class="mb-2"><%=category_array.length %></h2>
-                  <h4 class="mb-0">Total Category</h4>
+                  <h4 class="mb-0">Total Vendeurs</h4>
                 </div>
               </div>
             </div>
@@ -47,10 +47,10 @@
           <div class="card bg-gradient-success border-0 text-white p-3">
             <div class="card-body">
               <div class="d-flex align-items-start">
-                <i class="mdi mdi-chart-line mdi-48px"></i>
+                <i class="mdi mdi-cart mdi-48px"></i>
                 <div class="ml-4">
                   <h2 class="mb-2">83,900</h2>
-                  <h4 class="mb-0">Total Visit</h4>
+                  <h4 class="mb-0">Total Commandes</h4>
                 </div>
               </div>
             </div>
@@ -65,7 +65,7 @@
                 <div class="card-body d-flex flex-column justify-content-center">
                   <div class="d-flex mb-3 align-items-center">
                     <h3 class="mb-0">14,0000</h3>
-                    <span class="ml-auto">Overall Sales</span>
+                    <span class="ml-auto">Vente totale</span>
                   </div>
                   <div class="progress progress-sm">
                     <div class="progress-bar bg-gradient-danger" role="progressbar" aria-valuenow="35" style="width: 35%" aria-valuemin="0" aria-valuemax="100"></div>
@@ -79,7 +79,7 @@
                 <div class="card-body d-flex flex-column justify-content-center">
                   <div class="d-flex mb-3 align-items-center">
                     <h3 class="mb-0">34,789</h3>
-                    <span class="ml-auto">Active installations</span>
+                    <span class="ml-auto">Demandes d'inscription</span>
                   </div>
                   <div class="progress progress-sm">
                     <div class="progress-bar bg-gradient-info" role="progressbar" aria-valuenow="76" style="width: 76%" aria-valuemin="0" aria-valuemax="100"></div>
@@ -132,16 +132,17 @@
             <div class="col-12 grid-margin stretch-card">
               <div class="card">
                 <div class="card-body">
-                  <h4 class="card-title">New Candidates</h4>
+                  <h4 class="card-title">Nouvelles demandes d'inscription(Vendeur)
+                    <span class="float-right text-primary text-small">
+                      Voir tout
+                    </span>
+                  </h4>
                   <div class="table-responsive">
                     <table class="table">
                       <thead>
                         <tr>
                           <th>
-                            Select
-                          </th>
-                          <th>
-                            Candidate Name
+                            Nom d'utilisateur
                           </th>
                           <th>
                             Candidate ID
@@ -150,21 +151,13 @@
                             Stream
                           </th>
                           <th>
-                            Eligibility
+                            Statut de la demande
                           </th>
                         </tr>
                       </thead>
                       <tbody>
                         <tr>
                           <td>
-                            <div class="form-check">
-                              <label class="form-check-label">
-                                <input type="checkbox" class="form-check-input">
-                              </label>
-                            </div>
-                          </td>
-                          <td>
-                            <img src="images/faces/face12.jpg" alt="image" class="img-sm rounded-circle mr-2"/>
                             Gary Edison
                           </td>
                           <td>
@@ -271,53 +264,7 @@
                 </div>
               </div>
             </div>
-            <div class="col-12 grid-margin stretch-card">
-              <div class="card card-weather bg-gradient-primary text-white">
-                <div class="card-body">
-                  <div class="d-flex mb-4">
-                    <h4 class="card-title text-white mb-0">New York</h4>
-                    <span class="ml-auto">Sky is clear</span>
-                  </div>
-                  <div class="d-flex justify-content-between">
-                    <div class="weather-daily">
-                      <p class="weather-day">SUN</p>
-                      <i class="mdi mdi-weather-fog"></i>
-                      <p class="weather-temp">81</p>
-                    </div>
-                    <div class="weather-daily">
-                      <p class="weather-day">MON</p>
-                      <i class="mdi mdi-weather-fog"></i>
-                      <p class="weather-temp">77</p>
-                    </div>
-                    <div class="weather-daily">
-                      <p class="weather-day">TUE</p>
-                      <i class="mdi mdi-weather-fog"></i>
-                      <p class="weather-temp">49</p>
-                    </div>
-                    <div class="weather-daily">
-                      <p class="weather-day">WED</p>
-                      <i class="mdi mdi-weather-fog"></i>
-                      <p class="weather-temp">87</p>
-                    </div>
-                    <div class="weather-daily today">
-                      <p class="weather-day">THU</p>
-                      <i class="mdi mdi-weather-fog"></i>
-                      <p class="weather-temp">81</p>
-                    </div>
-                    <div class="weather-daily">
-                      <p class="weather-day">FRI</p>
-                      <i class="mdi mdi-weather-fog"></i>
-                      <p class="weather-temp">74</p>
-                    </div>
-                    <div class="weather-daily">
-                      <p class="weather-day">SAT</p>
-                      <i class="mdi mdi-weather-fog"></i>
-                      <p class="weather-temp">68</p>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
+    
             <div class="col-12 grid-margin stretch-card">
               <div class="card">
                 <div class="card-body">

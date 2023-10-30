@@ -30,10 +30,10 @@
                                 <ul class="breadcrumb__list">
                                     <li class="has-separator">
 
-                                        <a href="index.html">Home</a></li>
+                                        <a href="/accueil">Accueil</a></li>
                                     <li class="is-marked">
 
-                                        <a href="dashboard.html">My Account</a></li>
+                                        <a href="/user/dashboard">Gérer mon compte</a></li>
                                 </ul>
                             </div>
                         </div>
@@ -103,21 +103,35 @@
                                                             <span class="dash__text-2 u-s-m-b-8">Votre statut d'utilisation</span>
                                                             <div class="dash__link dash__link--secondary u-s-m-b-8">
 
-                                                                <a href="/vendor/request">Changer de statut</a>
-                                                            </div>
+                                                                <% if(vendorRequest.request_state === 'pending') { %>
+                                                              
+                                                                  <a class="dash__h2 u-s-m-b-8">Votre demande est en cours de traitement</a>
+                                                              
+                                                                <% } else if(vendorRequest.request_state === 'rejected') { %>
+                                                              
+                                                                  <a href="/vendor/request">Demande rejettée (Relancer ma demande)</a>
+                                                              
+                                                                <% } else { %>
+                                                              
+                                                                  <a href="/vendor/request">Changer de statut</a>
+                                                              
+                                                                <% } %>
+                                                              
+                                                              </div>
                                                             <div class="dash__pad-1" >
-                                                                <span class="dash__w-icon dash__w-icon-style-2"
-                                                                 style="justify-content: center; display: inline-flex; align-content: center; flex-wrap: wrap;">
-                                                                    <i class="fas fa-store"></i>
-                                                                </span>
-
-                                                                <span class="dash__text">Vendeur</span>
-                                                                <span class="dash__w-icon dash__w-icon-style-2"
-                                                                 style="justify-content: center; display: inline-flex; align-content: center; flex-wrap: wrap;">
-                                                                    <i class="fas fa-user"></i>
-                                                                </span>
-
-                                                                <span class="dash__text">Utilisateur</span>
+                                                                <% if(user.isVendor === 'true') { %>
+                                                                    <span class="dash__w-icon dash__w-icon-style-2"
+                                                                    style="justify-content: center; display: inline-flex; align-content: center; flex-wrap: wrap;">
+                                                                        <i class="fas fa-store"></i>
+                                                                    </span>
+                                                                    <span class="dash__text">Vendeur</span>
+                                                                <% } else { %>
+                                                                    <span class="dash__w-icon dash__w-icon-style-2"
+                                                                    style="justify-content: center; display: inline-flex; align-content: center; flex-wrap: wrap;">
+                                                                        <i class="fas fa-user"></i>
+                                                                    </span>
+                                                                    <span class="dash__text">Utilisateur</span>
+                                                                <% } %>
                                                             </div>
                                                             
 

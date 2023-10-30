@@ -79,12 +79,16 @@
                                                                 <input type="tel" id="phone" v-model="phone" required>
                                                             </div>
                                                             <div class="form-group">
+                                                                <label for="commerceRegisterNmbr">Numéro du Registre de Commerce:</label>
+                                                                <input type="text" id="commerceRegisterNmbr" v-model="commerceRegisterNumber" required>
+                                                            </div>
+                                                            <div class="form-group">
                                                                 <label for="commerceRegister">Registre de Commerce (PDF) :</label>
-                                                                <input type="file" id="commerceRegister" @change="previewCommerceRegister" accept=".pdf" required>
+                                                                <input type="file" id="commerceRegister" ref="commerceRegister" @change="previewCommerceRegister" accept=".pdf" required>
                                                                 <iframe v-if="commerceRegister" :src="commerceRegister"></iframe>
                                                             </div>
                                                             <div class="form-group">
-                                                                <label for="ifu">Code IFU :</label>
+                                                                <label for="ifu">Numéro IFU :</label>
                                                                 <input type="text" id="ifu" v-model="ifu" required>
                                                             </div>
                                                             <div class="form-group">
@@ -97,7 +101,7 @@
                                                             </div>
                                                             <div class="form-group">
                                                                 <label for="idCard">Carte d'identité :</label>
-                                                                <input type="file" id="idCard" @change="previewImage" required>
+                                                                <input type="file" id="idCard" ref="idCard" @change="previewImage" required>
                                                                 <img v-if="idCard" :src="idCard" alt="Preview">
                                                             </div>
                                                             <div class="form-group checkbox">
@@ -109,6 +113,21 @@
                                                             </div>
                                                         </form>
                                                     </div>
+                                                    <div id="successModal" class="modal" tabindex="-1" role="dialog">
+                                                        <div class="modal-dialog" role="document">
+                                                          <div class="modal-content">
+                                                            <div class="modal-header">
+                                                              <h5 class="modal-title">Inscription réussie</h5>
+                                                            </div>
+                                                            <div class="modal-body">
+                                                              <p>La demande d'inscription a été envoyée avec succès. Nous vous enverrons un mail lorsque votre dossier sera traité.</p>
+                                                            </div>
+                                                            <div class="modal-footer">
+                                                              <button type="button" class="btn btn-secondary" data-dismiss="modal">Fermer</button>
+                                                            </div>
+                                                          </div>
+                                                        </div>
+                                                    </div>                                                      
                                                 </div>
                                             </div> 
                                         </div>
