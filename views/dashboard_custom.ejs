@@ -102,24 +102,21 @@
                                                             <h2 class="dash__h2 u-s-m-b-8">STATUT</h2>
                                                             <span class="dash__text-2 u-s-m-b-8">Votre statut d'utilisation</span>
                                                             <div class="dash__link dash__link--secondary u-s-m-b-8">
-
-                                                                <% if(vendorRequest.request_state === 'pending') { %>
-                                                              
-                                                                  <a class="dash__h2 u-s-m-b-8">Votre demande est en cours de traitement</a>
-                                                              
-                                                                <% } else if(vendorRequest.request_state === 'rejected') { %>
-                                                              
-                                                                  <a href="/vendor/request">Demande rejettée (Relancer ma demande)</a>
-                                                              
+                                                                <% if (vendorRequest) { %>
+                                                                  <% if (vendorRequest.request_state === 'pending') { %>
+                                                                    <a class="dash__h2 u-s-m-b-8">Votre demande est en cours de traitement</a>
+                                                                  <% } else if (vendorRequest.request_state === 'rejected') { %>
+                                                                    <a href="/vendor/request">Demande rejetée (Relancer ma demande)</a>
+                                                                  <% } else { %>
+                                                                    <a >Approuvé <i class="fas fa-check"></i></a>
+                                                                  <% } %>
                                                                 <% } else { %>
-                                                              
                                                                   <a href="/vendor/request">Changer de statut</a>
-                                                              
                                                                 <% } %>
-                                                              
                                                               </div>
+                                                              
                                                             <div class="dash__pad-1" >
-                                                                <% if(user.isVendor === 'true') { %>
+                                                                <% if(user.isVendor === true) { %>
                                                                     <span class="dash__w-icon dash__w-icon-style-2"
                                                                     style="justify-content: center; display: inline-flex; align-content: center; flex-wrap: wrap;">
                                                                         <i class="fas fa-store"></i>

@@ -97,8 +97,11 @@
                                                 </div>
                                                 <div class="col-lg-4 u-s-m-b-30">
                                                     <h2 class="dash__h2 u-s-m-b-8">Statut</h2>
-
+                                                    <% if (user.isVendor===true) { %>
                                                     <span class="dash__text">Vendeur</span>
+                                                    <% } else {%>
+                                                        <span class="dash__text">Utilisateur</span>
+                                                    <%  }%>
                                                 </div>
                                             </div>
                                             <div class="row">

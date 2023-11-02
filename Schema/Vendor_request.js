@@ -1,6 +1,6 @@
 const mongoose = require('mongoose');
-
-const vendorApplicationSchema = new mongoose.Schema({
+var schema=mongoose.Schema;
+var vendorApplicationSchema = new schema({
   name: {
     type: String,
     required: true

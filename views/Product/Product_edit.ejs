@@ -12,57 +12,110 @@
             <div class="row">
                 <div class="col-lg-12">
                     <div class="card">
-                    <div class="card-body">
-                        <h4 class="card-title">Product Edit Form</h4>
-                        <form method="POST" id="uploadform" ref='uploadform' enctype="multipart/form-data">
-                            <label for="Product_id" class=" form-control-label">Product_Id</label>
-                            <input type="text" placeholder="Enter Product id" name="Product_id" value="<%=product_array.Product_id %>"  class="form-control">
-
-                            <label for="Pro_name" class=" form-control-label">Product Name</label>
-                            <input type="text" placeholder="Enter Product Name" name="Pro_name"class="form-control" value="<%=product_array.Pro_name %>">
-
-                            <label for="Product_image" class=" form-control-label">Product_Image</label>
-                            <img name="past_image"  src="/Pro_upload/<%=product_array.Pro_image%>" width="100px"alt="img">
-                            <input type="file" name="Pro_image" class="form-control">
-                            <input type="text" value="<%=product_array.Pro_image%>" name="past_image" class="form-control" hidden>
-
-                            <label for="Pro_quantity" class=" form-control-label">Product Quantity</label>
-                            <input type="Number" placeholder="Enter Product Quantity" name="Pro_quantity" class="form-control" value="<%=product_array.Pro_quantity %>">
-
-                            <label for="Pro_rentprice" class=" form-control-label">Product Rentprice</label>
-                            <input type="Number" placeholder="Enter Product Rent Price" name="Pro_rentprice" class="form-control" value="<%=product_array.Pro_rentprice %>">
-
-                            <label for="Pro_ammount" class=" form-control-label">Product Amount</label>
-                            <input type="Number" placeholder="Enter Product Amount " name="Pro_ammount" class="form-control" value="<%=product_array.Pro_ammount %>">
-
-                            <label for="Pro_descriptioin" class=" form-control-label"> Détails du produit </label>
-                            <input type="text" placeholder="Veuillez entrer les détails concernant le produit" name="Pro_description" class="form-control" value="<%=product_array.Pro_description %>">
-
-                            <label for="Pro_subcategory" class=" form-control-label"> Catégorie du produit </label>
+                      <div class="card-body">
+                        <h4 class="card-title">Modifier le produit</h4>
+                  
+                        <form method="POST" id="uploadform" ref="uploadform" enctype="multipart/form-data" class="form-row">
+                          <div class="col-md-6">
+                            <label for="Product_id" class="form-control-label">ID du produit</label>
+                            <input
+                              type="text"
+                              placeholder="Entrez l'ID du produit"
+                              name="Product_id"
+                              value="<%=product_array.Product_id %>"
+                              class="form-control"
+                              readonly
+                            />
+                  
+                            <label for="Pro_name" class="form-control-label">Nom du produit</label>
+                            <input
+                              type="text"
+                              placeholder="Entrez le nom du produit"
+                              name="Pro_name"
+                              value="<%=product_array.Pro_name %>"
+                              class="form-control"
+                            />
+                  
+                            <label for="Product_image" class="form-control-label">Image du produit</label>
+                            <img
+                              name="past_image"
+                              src="/Pro_upload/<%=product_array.Pro_image%>"
+                              width="100px"
+                              alt="img"
+                            />
+                            <input
+                              type="file"
+                              name="Pro_image"
+                              class="form-control"
+                              accept="image/*"
+                            />
+                            <input
+                              type="text"
+                              value="<%=product_array.Pro_image%>"
+                              name="past_image"
+                              class="form-control"
+                              hidden
+                            />
+                  
+                            <label for="Pro_descriptioin" class="form-control-label">Détails du produit</label>
+                            <textarea
+                              placeholder="Veuillez entrer les détails concernant le produit"
+                              name="Pro_description"
+                              class="form-control"
+                            ><%=product_array.Pro_description %></textarea>
+                          </div>
+                  
+                          <div class="col-md-6">
+                            <label for="Pro_subcategory" class="form-control-label">Catégorie du produit</label>
                             <select name="Pro_subcategory" class="form-control">
-                                <% categories.forEach(categorie => { %>
-                                    <option value="<%= categorie._id %>"><%= categorie.subcate_name %></option>
-                                <% }); %>
+                              <% categories.forEach(categorie => { %>
+                              <option value="<%= categorie._id %>"><%= categorie.subcate_name %></option>
+                              <% }); %>
                             </select>
-
-                            <label for="Pro_vendor" class=" form-control-label">Vendeur</label>
+                  
+                            <label for="Pro_vendor" class="form-control-label">Vendeur</label>
                             <select name="Pro_vendor" class="form-control">
-                                <% vendors.forEach(vendor => { %>
-                                    <option value="<%= vendor._id %>"><%= vendor.Customer_first_name %> <%= vendor.Customer_last_name %></option>
-                                <% }); %>
+                              <% vendors.forEach(vendor => { %>
+                              <option value="<%= vendor._id %>"><%= vendor.Customer_first_name %> <%= vendor.Customer_last_name %></option>
+                              <% }); %>
                             </select>
-
-                            <button type="submit" class="btn btn-primary btn-sm">
-                                <i class="fa fa-dot-circle-o"></i> Submit
-                            </button>
-                            <button type="reset" class="btn btn-danger btn-sm">
-                                <i class="fa fa-ban"></i> Reset
-                            </button>
-                            
-                            </form>
-                    </div>
-                    </div>
+                  
+                            <label for="Pro_quantity" class="form-control-label">Quantité du produit</label>
+                            <input
+                              type="Number"
+                              placeholder="Entrez la quantité du produit"
+                              name="Pro_quantity"
+                              class="form-control"
+                              value="<%=product_array.Pro_quantity %>"
+                            />
+                  
+                            <label for="Pro_rentprice" class="form-control-label">Prix de vente</label>
+                            <input
+                              type="Number"
+                              placeholder="Entrez le prix de vente"
+                              name="Pro_rentprice"
+                              class="form-control"
+                              value="<%=product_array.Pro_rentprice %>"
+                            />
+                  
+                            <label for="Pro_ammount" class="form-control-label">Prix de vente de comparaison</label>
+                            <input
+                              type="Number"
+                              placeholder="Entrez le prix de vente de comparaison"
+                              name="Pro_ammount"
+                              class="form-control"
+                              value="<%=product_array.Pro_ammount %>"
+                            />
+                          </div>
+                  
+                          <div class="form-group mt-5">
+                            <button type="submit" class="btn btn-primary">Valider</button>
+                            <button type="reset" class="btn btn-light">Réinitialiser</button>
+                         </div>
+                        </div>
+                    </div> 
                 </div>
+                  
             </div>
         </div>
             <!-- content-wrapper ends -->

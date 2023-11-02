@@ -1,0 +1,159 @@
+<%-include('header')-%>
+            <!-- HEADER DESKTOP-->   
+            <!-- MAIN CONTENT-->
+<div class="main-content">
+                <div class="section__content section__content--p30">
+                        <a href="/vendorRequest/data_display" ><img src="/images/icons/back.png" width="20px" style="margin-left: 20px;margin-top: 20px; margin-bottom: 20px" title="back"alt="back"></a>
+                    <div class="container-fluid">
+                        <h1> Détails de la demande d'inscription de <%=vendor_Request.user.Customer_first_name%> <%=vendor_Request.user.Customer_last_name%> </h1>
+                            <div class="row">
+                                    <div class="table-responsive m-b-40">
+                                            <table class="table table-bordered table-data">
+                                                    
+                                                    <tr>
+                                                        <td>N° de la requête</td>
+                                                        <td><%=vendor_Request.id%></td>
+                                                    </tr>
+                                                    <tr>    
+                                                        <td>Nom d'utilisateur</td>
+                                                        <td><%=vendor_Request.user.Customer_first_name%> <%=vendor_Request.user.Customer_last_name%></td>
+                                                    </tr>
+                                                    <tr>    
+                                                        <td>Nom de l'entreprise</td>
+                                                        <td><%=vendor_Request.name%></td>
+                                                    </tr>
+                                                       
+                                                    <tr>
+                                                        <td>Numéro de téléphone</td>
+                                                        <td><%=vendor_Request.phone%></td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>N° de régistre de commerce</td>
+                                                        <td><%=vendor_Request.commerceRegisterNumber%></td>
+                                                    </tr>
+                                                    <tr>    
+                                                        <td>Régistre de commerce</td>
+                                                        <td>
+                                                            <a href="/vendorRequest/download/commerce/<%= vendor_Request._id %>">Télécharger le document</a>
+                                                        </td>
+                                                    <tr>    
+                                                        <td>N° ifu</td>
+                                                        <td><%=vendor_Request.ifu%></td>
+                                                    </tr>
+                                                    <tr>    
+                                                        <td>Carte d'identité</td>
+                                                        <td>
+                                                            <a href="/vendorRequest/download/idcard/<%= vendor_Request._id %>">Télécharger le document</a>
+                                                        </td>
+                                                    </tr>
+                                                    <tr>    
+                                                        <td>Sexe</td>
+                                                        <td><%=vendor_Request.user.Customer_gender%></td>
+                                                    </tr>
+                                                    <tr>    
+                                                        <td>Statut de la demande</td>
+                                                            <% if (vendor_Request.request_state === 'validated') {%>
+                                                                <td>Validé</td>
+                                                            <% } else if (vendor_Request.request_state === 'rejected'){ %>
+                                                                <td>Rejeté</td>
+                                                            <% } else { %>
+                                                                <td>En cours</td>
+                                                            <% } %>
+                                                    </tr>
+                                            </table>
+                                            <% if (vendor_Request.user.isVendor === false || vendor_Request.request_state === 'rejected') {%>
+                                                <div class="form-group mt-5">
+                                                    <button id="validateButton" type="button" class="btn btn-primary">Valider</button>
+                                                    <button id="rejectButton" type="button" class="btn btn-light">Rejeter</button>
+                                                </div>
+                                            <% } %>
+                                            <% if (vendor_Request.user.isVendor === true || vendor_Request.request_state === 'validated') {%>
+                                                <div class="form-group mt-5">
+                                                    <button id="fallButton" type="button" class="btn btn-light">Retirer de la liste des vendeurs</button>
+                                                </div>
+                                            <% } %>
+                                    </div>
+                            </div>
+                    </div>  
+                </div>     
+    </div>
+    <!-- Jquery JS-->
+   <!-- plugins:js -->
+   <script>
+    function validateVendor() {
+        fetch('/vendorRequest/validate/<%= vendor_Request._id %>', {
+            method: 'POST'
+        })
+        .then(response => {
+            if (response.ok) {
+                // Afficher le modal de succès
+                alert('La demande du vendeur a été validée avec succès');
+            } else {
+                // Gérer les erreurs
+                alert('Une erreur s\'est produite lors de la validation de la demande du vendeur');
+            }
+        });
+    }
+
+    function rejectVendor() {
+        fetch('/vendorRequest/reject/<%= vendor_Request._id %>', {
+            method: 'POST'
+        })
+        .then(response => {
+            if (response.ok) {
+                // Afficher le modal de succès
+                alert('La demande du vendeur a été rejetée avec succès');
+            } else {
+                // Gérer les erreurs
+                alert('Une erreur s\'est produite lors du rejet de la demande du vendeur');
+            }
+        });
+    }
+
+    function fallVendor() {
+        fetch('/vendorRequest/fall/<%= vendor_Request._id %>', {
+            method: 'POST'
+        })
+        .then(response => {
+            if (response.ok) {
+                // Afficher le modal de succès
+                alert('Le vendeur a été retiré avec succès');
+                window.location.href = '/vendorRequest/data_display';
+            } else {
+                // Gérer les erreurs
+                alert('Une erreur s\'est produite lors de l\'opération');
+            }
+        });
+    }
+
+    const validateButton = document.getElementById('validateButton');
+    if (validateButton) {
+        validateButton.addEventListener('click', validateVendor);
+    }
+
+    // Vérifier si l'élément 'rejectButton' existe avant d'ajouter l'écouteur d'événements
+    const rejectButton = document.getElementById('rejectButton');
+    if (rejectButton) {
+        rejectButton.addEventListener('click', rejectVendor);
+    }
+
+    // Vérifier si l'élément 'fallButton' existe avant d'ajouter l'écouteur d'événements
+    const fallButton = document.getElementById('fallButton');
+    if (fallButton) {
+        fallButton.addEventListener('click', fallVendor);
+    }
+</script>
+   <script src="/vendors/js/vendor.bundle.base.js"></script>
+   <script src="/vendors/js/vendor.bundle.addons.js"></script>
+   <!-- endinject -->
+   <!-- inject:js -->
+   <script src="/js/off-canvas.js"></script>
+   <script src="/js/hoverable-collapse.js"></script>
+   <script src="/js/misc.js"></script>
+   <script src="/js/settings.js"></script>
+   <script src="/js/todolist.js"></script>
+   <!-- endinject -->
+ </body>
+ <!-- Mirrored from www.urbanui.com/gleam/pages/samples/login.html by HTTrack Website Copier/3.x [XR&CO'2014], Mon, 10 Sep 2018 06:27:39 GMT -->
+ </html>
+ 

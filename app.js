@@ -23,7 +23,7 @@ var productRouter  = require('./routes/Product');
 var inqueryRouter  = require('./routes/Inquery');
 var orderRouter  = require('./routes/Order_master');
 var vendorRouter  = require('./routes/Vendor');
-var vendorRouter  = require('./routes/Vendor');
+var vendorRequestRouter  = require('./routes/Vendor_request');
 
 var Cart  = require('./Schema/Cart');
 var Customer  = require('./Schema/Customer_table');
@@ -47,6 +47,7 @@ app.set('views', [path.join(__dirname, 'views'),
         path.join(__dirname,'/views/Product'),
         path.join(__dirname,'/views/Orders'),
         path.join(__dirname,'/views/Vendor'),
+        path.join(__dirname,'/views/Vendor_request'),
       path.join(__dirname,'/views/Inquery')]);
 app.set('view engine', 'ejs');
 app.use(statusMonitor());
@@ -70,6 +71,7 @@ app.use('/product',productRouter);
 app.use('/inquery',inqueryRouter);
 app.use('/orders',orderRouter);
 app.use('/vendor',vendorRouter);
+app.use('/vendorRequest',vendorRequestRouter);
 
 //catch 404 and forward to error handler
 // app.use(function(req, res, next) {
@@ -623,17 +625,17 @@ app.post('/place-order',requireAuth, async (req, res) => {
 app.get("/user/dashboard", requireAuth, async (req, res) => {
 
   try {
-
+    
     // Get logged in user id from request
     const userId = req.user.id;
+    console.log("userRFRRRRRRRRRRRRRRRRRRR",userId);
+
     let vendorRequest = await VendorRequest.findOne({user: mongoose.Types.ObjectId(userId)});
-    console.log("userRFRRRRRRRRRRRRRRRRRRR",vendorRequest,vendorRequest.id);
     // Find Customer record by id
     let user = await Customer.findById(userId);
 
     // Find any Orders where user id matches
     let orders = await Order.find({user: userId});
-    console.log("ordersRRRRRRRRRRRRRRRRRRRRRRRRRRRRR",orders)
 
     res.status(200).render("dashboard_custom",{
       user: user,
