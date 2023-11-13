@@ -14,7 +14,7 @@ var Productdetails  = new schema({
     Pro_date       : String,
     Pro_vendor: {
         type: mongoose.Schema.Types.ObjectId,
-        ref: 'Vendor',
+        ref: 'Customer',
         required: true
       },
     Pro_rentprice  : Number,   

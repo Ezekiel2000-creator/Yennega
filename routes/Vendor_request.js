@@ -1,10 +1,14 @@
 const express = require('express');
 const router = express.Router();
 var mongoose = require('mongoose');
+const jwt = require('jsonwebtoken');
+const bcrypt = require('bcrypt');
 
+var Cart  = require('../Schema/Cart');
 const Customer = require('../Schema/Customer_table');
 const vendorRequest = require('../Schema/Vendor_request');
 const vendor = require('../Schema/Vendor');
+const Product = require('../Schema/Product_table');
 
 async function getVendors() {
 
@@ -19,7 +23,71 @@ async function getVendors() {
   }
 
 }
-
+const requireAuth = (req, res, next) => {
+  const token = req.cookies.token;
+  console.log("vvvvvvvvvvv",token);
+  
+  if (token) {
+    jwt.verify(token, 'your_secret_key', (err, decodedToken) => {
+      if (err) {
+      if (err.name === 'TokenExpiredError') {
+        return res.status(401).redirect("/signin");
+      } else {
+        return res.status(401).json({ message: 'Token invalide' });
+      }
+      }
+      req.user = decodedToken;
+      try {
+      const userCart = Cart.findOne({ user: req.user.id }).populate('items');
+    
+      if (userCart === null || userCart.items === 0) {
+        const carts = [];
+        app.locals.carts = carts;
+      }
+      } catch (error) {
+      res.status(500).json({ message: error.message });
+      }
+      next();
+    });
+    } else {
+    res.status(401).redirect("/signin");
+    }
+};
+const requireVendor = async (req, res, next) => {
+  const token = req.cookies.token;
+  
+  if (!token) {
+    req.session.returnTo = req.originalUrl;
+    return res.status(401).redirect("/signin");
+  }
+  
+  try {
+    const decodedToken = jwt.verify(token, 'your_secret_key');
+    req.user = decodedToken;
+    
+    const user = await mongoose.model('Customer').findOne({ _id: req.user.id });
+    if (!user.isVendor) {
+      return res.status(403).json({ message: 'Forbidden: User is not a vendor' });
+    }
+    
+    const products = await mongoose.model('Product').find({ Pro_vendor: user._id });
+    req.user.products = products;
+    
+    const userCart = await Cart.findOne({ user: req.user.id }).populate('items');
+    if (userCart === null || userCart.items === 0) {
+      const carts = [];
+      app.locals.carts = carts;
+    }
+    
+    next();
+  } catch (err) {
+    if (err.name === 'TokenExpiredError') {
+      return res.status(401).redirect("/signin");
+    } else {
+      return res.status(401).json({ message: 'Token invalide' });
+    }
+  }
+};
 router.get('/data_display', async (req, res) => {
   try {
     // Utilisez la méthode .find() pour récupérer les données de VendorRequest et utilisez .populate() pour peupler le champ "user"
@@ -148,4 +216,64 @@ router.post('/fall/:id', async (req, res) => {
   }
 });
 
+router.get('/my_dashboard',requireVendor, async (req, res) => {
+  
+  try {
+
+    const userID = req.user ? req.user.id : undefined;
+    console.log('userrrrrrrrr',userID)
+    const products = req.user.products;
+    console.log('Produitsssssssss',products)
+    // Récupérer le customer correspondant à l'utilisateur
+    let customer;
+    if(userID) {
+      customer = await Customer.findById(userID);
+      console.log('userrrrrrrrr',customer)
+    }
+
+    // Récupérer tous les customers
+    const customer_array = await Customer.find();
+
+    res.render('dashboard', {
+      customer,
+      customer_array,
+      products,
+    });
+
+  } catch (err) {
+    console.error(err);
+    res.status(500).send('Error occuring');
+  }
+
+});
+router.get('/my_products',requireVendor, async (req, res) => {
+  const products = products;
+
+  try {
+
+    const userID = req.user ? req.user.id : undefined;
+    console.log('userrrrrrrrr',userID)
+
+    // Récupérer le customer correspondant à l'utilisateur
+    let customer;
+    if(userID) {
+      customer = await Customer.findById(userID);
+      console.log('userrrrrrrrr',customer)
+    }
+
+    // Récupérer tous les customers
+    const customer_array = await Customer.find();
+
+    res.render('dashboard', {
+      customer,
+      customer_array,
+      products
+    });
+
+  } catch (err) {
+    console.error(err);
+    res.status(500).send('Error occuring');
+  }
+
+})
 module.exports = router;

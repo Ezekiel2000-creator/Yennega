@@ -58,7 +58,12 @@ app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 app.use(express.static("public"));
-app.use(session({ secret:'keyboard cat', resave:false,saveUninitialized:true}));
+app.use(session({
+  secret:'keyboard cat',
+  resave:false,
+  saveUninitialized:true,
+  cookie: { secure: true },
+  }));
 app.use(fileupload());
 app.use('/public/vendorRequest', express.static('public/vendorRequest'));
 app.use('/', indexRouter);
@@ -143,6 +148,7 @@ const requireAuth = (req, res, next) => {
       next();
     });
     } else {
+    req.session.returnTo = req.originalUrl;
     res.status(401).redirect("/signin");
     }
 };
@@ -316,7 +322,9 @@ app.post('/signin', async (req, res) => {
         const token = jwt.sign({ id: user._id }, 'your_secret_key', { expiresIn: '1h' });
         console.log("tokennnnn",token)
         res.cookie('token', token, { httpOnly: true } );  // Stocke le jeton dans un cookie
-        res.redirect('/accueil');  // Redirige vers /accueil
+        const returnTo = req.session.returnTo || '/accueil';
+        delete req.session.returnTo;
+        res.redirect(returnTo);  // Redirige vers /accueil
       } else {
       res.status(401).json({ message: 'Invalid email or password' });
       }

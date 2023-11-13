@@ -1,4 +1,4 @@
-<%-include('header')-%>
+<%-include('Admin_partial/header')-%>
 <div class="main-panel">
     <div class="content-wrapper">
       <div class="page-header">
@@ -40,7 +40,6 @@
                                     <% } %>
                                     <td>
                                         <a href="show/<%= request._id %>"><img title="montrer" src="/images/icons/show.png"></a>
-                                        <a href="edit/<%= request._id %>"><img title="modifier" src="/images/icons/edit.png"></a>
                                         <a href="delete/<%= request._id %>"><img title="supprimer" src="/images/icons/delete.png"></a>
                                     </td>
                                 </tr>

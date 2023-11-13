@@ -14,6 +14,7 @@ var customer_data  = new schema({
     Customer_password        :     String,
     verify                   :     { type: Boolean, default: false }, // Champ verify de type booléen avec une valeur par défaut de false
     isVendor                 :     { type: Boolean, default: false },
+    isAdmin                  :     { type: Boolean, default: false },
     code                     :     { type: String},
 });
 module.exports=mongoose.model('Customer',customer_data);
