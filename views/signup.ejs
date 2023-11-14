@@ -25,6 +25,11 @@
                   <%= errorMessage %>
                 </div>
               <% } %>
+              <% if (typeof successMessage !== 'undefined') { %>
+                <div class="alert alert-success" role="alert">
+                  <%= successMessage %>
+                </div>
+              <% } %>
             <div class="u-s-p-y-60">
 
                 <!--====== Section Content ======-->

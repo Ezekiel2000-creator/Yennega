@@ -276,14 +276,14 @@ app.post('/signup', async (req, res) => {
 	  };
   
 	  transporter.sendMail(mailOptions, (error, info) => {
-		if (error) {
-		  console.log(error);
-		  return res.status(500).json({ message: 'Failed to send verification email' });
-		} else {
-		  console.log('Email sent: ' + info.response);
-		  return res.status(201).json({ message: 'User created successfully. Please check your email for verification.' });
-		}
-	  });
+      if (error) {
+        console.log(error);
+        return res.render('signup', { errorMessage: 'Echec de l\'envoi de l\'email de vérification' });
+      } else {
+        console.log('Email sent: ' + info.response);
+        return res.render('signup', { successMessage: 'Utilisateur créé avec succès. Veuillez vérifier votre email pour la vérification.' });
+      }
+    });
 	} catch (error) {
 	  res.status(500).json({ message: error.message });
 	}
@@ -305,37 +305,38 @@ app.get("/verify/:code", async (req, res) =>{
 	}
 });
 app.post('/signin', async (req, res) => {
-	try {
-		// Supprimez le cookie contenant le token
-		res.clearCookie('token');
-	  } catch (error) {
-		res.status(500).json({ message: error.message });
-	  }
-	try {
-		console.log(req.body);
-		const { email, password } = req.body;
-		const user = await Customer.findOne({ Customer_email: email });
-    console.log("eurekkkaaa",user)
+  try {
+    // Supprimez le cookie contenant le token
+    res.clearCookie('token');
+
+    console.log(req.body);
+    const { email, password } = req.body;
+    const user = await Customer.findOne({ Customer_email: email });
+
+    if (user === null) {
+      return res.render('signin', { errorMessage: 'Email ou mot de passe incorrect' });
+    }
+
     if (user.verify) {
-      if (user && await bcrypt.compare(password, user.Customer_password)) {
-        console.log("eurekkkaaa",user)
+      const match = await bcrypt.compare(password, user.Customer_password);
+      if (match) {
         const token = jwt.sign({ id: user._id }, 'your_secret_key', { expiresIn: '1h' });
-        console.log("tokennnnn",token)
         res.cookie('token', token, { httpOnly: true } );  // Stocke le jeton dans un cookie
         const returnTo = req.session.returnTo || '/accueil';
         delete req.session.returnTo;
-        res.redirect(returnTo);  // Redirige vers /accueil
+        return res.redirect(returnTo);  // Redirige vers /accueil
       } else {
-      res.status(401).json({ message: 'Invalid email or password' });
+        return res.render('signin', { errorMessage: 'Email ou mot de passe incorrect' });
       }
+    } else {
+      return res.render('signin', { errorMessage: 'Votre compte n\'est pas encore vérifié' });
     }
-		else {
-      res.render('404')
-    }
-	} catch (error) {
-		res.status(500).json({ message: error.message });
-	}
-	});
+  } catch (error) {
+    console.error(error);
+    return res.status(500).json({ message: error.message });
+  }
+});
+
 
 app.get("/signin", (req, res) =>{
   res.render("signin");

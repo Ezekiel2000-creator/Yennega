@@ -67,13 +67,15 @@
                         <div class="row row--center">
                             <div class="col-lg-6 col-md-8 u-s-m-b-30">
                                 <div class="l-f-o">
+                                    
                                     <div class="l-f-o__pad-box">
                                         <h1 class="gl-h1">JE SUIS NOUVEAU</h1>
 
                                         <span class="gl-text u-s-m-b-30">En créant un compte sur notre boutique,
                                              vous pourrez passer plus rapidement à la caisse,
                                               stocker vos adresses de livraison, consulter et
-                                               suivre vos commandes dans votre compte et bien plus.</span>
+                                               suivre vos commandes dans votre compte et bien plus.
+                                        </span>
                                         <div class="u-s-m-b-15">
 
                                             <a class="l-f-o__create-link btn--e-transparent-brand-b-2" href="/signup">CREER UN COMPTE</a></div>
@@ -100,7 +102,7 @@
                                                 <input class="input-text input-text--primary-style" type="text" name="email" id="login-email" placeholder="Entrer votre E-mail"></div>
                                             <div class="u-s-m-b-30">
 
-                                                <label class="gl-label" for="login-password">PASSWORD *</label>
+                                                <label class="gl-label" for="login-password">MOT DE PASSE *</label>
 
                                                 <input class="input-text input-text--primary-style" type="text" name="password" id="login-password" placeholder="Entrer votre mot de passe"></div>
                                             <div class="gl-inline">
@@ -121,6 +123,11 @@
 
                                                         <label class="check-box__label" for="remember-me">Se souvenir de moi</label></div>
                                                 </div>
+                                                <% if (typeof errorMessage !== 'undefined') { %>
+                                                    <div class="alert alert-danger" role="alert">
+                                                      <%= errorMessage %>
+                                                    </div>
+                                                  <% } %>
                                                 <!--====== End - Check Box ======-->
                                             </div>
                                         </form>
