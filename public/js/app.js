@@ -659,12 +659,14 @@
 
     // Check everything including DOM elements and images loaded
     $(window).on('load',function () {
-        RESHOP.showNewsletterModal();
-        if ($primarySlider.length) {
-            // Play slider when everything is loaded
-            $primarySlider.data('owl.carousel').options.autoplay = true;
-            $primarySlider.trigger('refresh.owl.carousel');
-        }
+        // RESHOP.showNewsletterModal();
+        setTimeout(function () {
+            if ($primarySlider.length) {
+                // Play slider when everything is loaded
+                $primarySlider.data('owl.carousel').options.autoplay = true;
+                $primarySlider.trigger('refresh.owl.carousel');
+            }
+        }, 5000);
     });
 
 
