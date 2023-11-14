@@ -272,7 +272,7 @@ app.post('/signup', async (req, res) => {
 		from: 'kirouni1.0@gmail.com',
 		to: email,
 		subject: 'Email Verification',
-		html: `<p>Hi ${firstName},</p><p>Please click the following link to verify your email: <a href="http://your_verification_url/${code}">Verify Email</a></p>`
+		html: `<p>Hi ${firstName},</p><p>Please click the following link to verify your email: <a href="http://yennega.onrender.com//${code}">Verify Email</a></p>`
 	  };
   
 	  transporter.sendMail(mailOptions, (error, info) => {
@@ -387,7 +387,7 @@ app.get("/articles", async (req, res) => {
     try {
       const options = {
         page: req.query.page || 1, // Le numéro de la page
-        limit: 3 // Le nombre de produits par page
+        limit: 12 // Le nombre de produits par page
       };
       const skip = (options.page - 1) * options.limit;
   
@@ -428,7 +428,22 @@ app.get("/articles", async (req, res) => {
         .limit(options.limit)
         .populate("Pro_subcategory")
         .exec();
-  
+      const randomCategories = [];
+
+      while(randomCategories.length < 3) {
+        const random = Math.floor(Math.random() * categories.length);
+        if(!randomCategories.includes(random)) {
+          randomCategories.push(random); 
+        }
+      }
+
+      // Filtrer les catégories correspondant aux ids
+      // const randomCategoryObjects = randomCategories.map(id => {
+      //   return categories.find(category => category.id === id)
+      // });
+      if (foundProducts.length === 0) {
+        res.render("empty-search",{categories:randomCategories})
+      }
       const totalProducts = await Product.countDocuments(query);
       const totalPages = Math.ceil(totalProducts / options.limit);
   
