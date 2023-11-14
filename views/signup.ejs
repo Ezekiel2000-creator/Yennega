@@ -20,6 +20,11 @@
         <div class="app-content">
 
             <!--====== Section 1 ======-->
+            <% if (typeof errorMessage !== 'undefined') { %>
+                <div class="alert alert-danger" role="alert">
+                  <%= errorMessage %>
+                </div>
+              <% } %>
             <div class="u-s-p-y-60">
 
                 <!--====== Section Content ======-->
@@ -30,10 +35,10 @@
                                 <ul class="breadcrumb__list">
                                     <li class="has-separator">
 
-                                        <a href="index.html">Home</a></li>
+                                        <a href="/accueil">Accueil</a></li>
                                     <li class="is-marked">
 
-                                        <a href="signup.html">Signup</a></li>
+                                        <a href="/signup">S'inscrire</a></li>
                                 </ul>
                             </div>
                         </div>
@@ -52,7 +57,7 @@
                         <div class="row">
                             <div class="col-lg-12">
                                 <div class="section__text-wrap">
-                                    <h1 class="section__heading u-c-secondary">CREATE AN ACCOUNT</h1>
+                                    <h1 class="section__heading u-c-secondary">CREER UN COMPTE</h1>
                                 </div>
                             </div>
                         </div>
@@ -68,83 +73,106 @@
                             <div class="col-lg-6 col-md-8 u-s-m-b-30">
                                 <div class="l-f-o">
                                     <div class="l-f-o__pad-box">
-                                        <h1 class="gl-h1">PERSONAL INFORMATION</h1>
+                                        <h1 class="gl-h1">INFORMATIONS PERSONNELLES</h1>
                                         <form class="l-f-o__form" action="/signup" method="POST">
                                             <div class="gl-s-api">
-                                                <div class="u-s-m-b-15">
+                                                <!-- <div class="u-s-m-b-15">
 
                                                     <button class="gl-s-api__btn gl-s-api__btn--fb" type="button" ><i class="fab fa-facebook-f"></i>
 
-                                                        <span>Signup with Facebook</span></button></div>
+                                                        <span>Signup with Facebook</span>
+                                                    </button>
+                                                </div>
                                                 <div class="u-s-m-b-30">
 
                                                     <button class="gl-s-api__btn gl-s-api__btn--gplus" type="button" ><i class="fab fa-google"></i>
 
-                                                        <span>Signup with Google</span></button></div>
+                                                        <span>Signup with Google</span>
+                                                    </button>
+                                                </div> -->
                                             </div>
                                             <div class="u-s-m-b-30">
 
-                                                <label class="gl-label" for="reg-fname">FIRST NAME *</label>
+                                                <label class="gl-label" for="reg-fname">PRENOM *</label>
 
-                                                <input class="input-text input-text--primary-style" type="text" name="firstName" id="reg-fname" placeholder="First Name"></div>
+                                                <input class="input-text input-text--primary-style" type="text" name="firstName" id="reg-fname" placeholder="Votre prénom"></div>
                                             <div class="u-s-m-b-30">
 
-                                                <label class="gl-label" for="reg-lname">LAST NAME *</label>
+                                                <label class="gl-label" for="reg-lname">NOM *</label>
 
-                                                <input class="input-text input-text--primary-style" type="text" name="lastName" id="reg-lname" placeholder="Last Name"></div>
+                                                <input class="input-text input-text--primary-style" type="text" name="lastName" id="reg-lname" placeholder="Votre nom de famille"></div>
                                             <div class="gl-inline">
                                                 <div class="u-s-m-b-30">
 
                                                     <!--====== Date of Birth Select-Box ======-->
 
-                                                    <span class="gl-label">BIRTHDAY</span>
+                                                    <span class="gl-label">JOUR DE NAISSANCE</span>
                                                     <div class="gl-dob">
 														<select class="select-box select-box--primary-style" name="birthMonth">
-                                                            <option selected>Month</option>
-                                                            <option value="01">January</option>
-                                                            <option value="02">February</option>
-                                                            <option value="03">March</option>
-                                                            <option value="04">April</option>
+                                                            <option selected>Mois</option>
+                                                                <option value="1">Janvier</option>
+                                                                <option value="2">Février</option>
+                                                                <option value="3">Mars</option>
+                                                                <option value="4">Avril</option>
+                                                                <option value="5">Mai</option>
+                                                                <option value="6">Juin</option>
+                                                                <option value="7">Juillet</option>
+                                                                <option value="8">Août</option>
+                                                                <option value="09">Septembre</option>
+                                                                <option value="10">Octobre</option>
+                                                                <option value="11">Novembre</option>
+                                                                <option value="12">Décembre</option>
                                                         </select>
 														<select class="select-box select-box--primary-style" name="birthDay">
-                                                            <option selected>Day</option>
-                                                            <option value="01">01</option>
-                                                            <option value="02">02</option>
-                                                            <option value="03">03</option>
-                                                            <option value="04">04</option>
+                                                            <option selected>Jour</option>
+                                                            <% for(let i = 1; i <= 31; i++) { %>
+                                                                <option 
+                                                                  value="<%= i %>"
+                                                                >
+                                                                  <%= i %>      
+                                                                </option>
+                                                            
+                                                              <% } %>
                                                         </select>
 														<select class="select-box select-box--primary-style" name="birthYear">
-                                                            <option selected>Year</option>
-                                                            <option value="1991">1991</option>
-                                                            <option value="1992">1992</option>
-                                                            <option value="1993">1993</option>
-                                                            <option value="1994">1994</option>
+                                                            <% for(let i = 1960; i <= 2010; i++) { %>
+    
+                                                                <option 
+                                                                  value="<%= i %>"    
+                                                                >
+                                                                  <%= i %>
+                                                                </option>
+                                                            
+                                                            <% } %>
                                                         </select></div>
                                                     <!--====== End - Date of Birth Select-Box ======-->
                                                 </div>
                                                 <div class="u-s-m-b-30">
 
-                                                    <label class="gl-label" for="gender">GENDER</label><select class="select-box select-box--primary-style u-w-100" id="gender" name="gender">
+                                                    <label class="gl-label" for="gender">SEXE</label><select class="select-box select-box--primary-style u-w-100" id="gender" name="gender">
                                                         <option selected>Select</option>
-                                                        <option value="male">Male</option>
-                                                        <option value="male">Female</option>
-                                                    </select></div>
+                                                        <option value="male">Homme</option>
+                                                        <option value="male">Femme</option>
+                                                    </select>
+                                                </div>
                                             </div>
                                             <div class="u-s-m-b-30">
 
                                                 <label class="gl-label" for="reg-email">E-MAIL *</label>
 
-                                                <input class="input-text input-text--primary-style" type="text"  name="email" id="reg-email" placeholder="Enter E-mail"></div>
+                                                <input class="input-text input-text--primary-style" type="text"  name="email" id="reg-email" placeholder="Entrez vos E-mail"></div>
                                             <div class="u-s-m-b-30">
 
-                                                <label class="gl-label" for="reg-password">PASSWORD *</label>
+                                                <label class="gl-label" for="reg-password">MOT DE PASSE *</label>
 
-                                                <input class="input-text input-text--primary-style" type="text" id="reg-password" name="password"required pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}" title="Doit contenir au moins un chiffre, une lettre majuscule, une lettre minuscule, et être d'au moins 8 caractères" placeholder="Enter Password"></div>
+                                                <input class="input-text input-text--primary-style" type="text" id="reg-password"
+                                                 name="password"required pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}"
+                                                 title="Doit contenir au moins un chiffre, une lettre majuscule, une lettre minuscule, et être d'au moins 8 caractères" placeholder="Entrer le mot de passe"></div>
                                             <div class="u-s-m-b-15">
 
-                                                <button class="btn btn--e-transparent-brand-b-2" type="submit">CREATE</button></div>
+                                                <button class="btn btn--e-transparent-brand-b-2" type="submit">S'ENREGISTRER</button></div>
 
-                                            <a class="gl-link" href="#">Return to Store</a>
+                                            <a class="gl-link" href="/accueil">Retourner au magasin </a>
                                         </form>
                                     </div>
                                 </div>

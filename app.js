@@ -248,10 +248,10 @@ app.post('/signup', async (req, res) => {
 	  const verify = false;
   
 	  // Vérification de l'e-mail
-	  const existingUser = await Customer.findOne({ email });
+	  const existingUser = await Customer.findOne({ Customer_email: email });
 	  console.log("exist",existingUser)
 	  if (existingUser) {
-		return res.status(400).json({ message: 'Email already exists' });
+		  res.render('signup', { errorMessage: 'Email déjà existant' });
 	  }
     const code = generateRandomCode();
 	  console.log("exist",code)
@@ -329,7 +329,9 @@ app.post('/signin', async (req, res) => {
       res.status(401).json({ message: 'Invalid email or password' });
       }
     }
-		
+		else {
+      res.render('404')
+    }
 	} catch (error) {
 		res.status(500).json({ message: error.message });
 	}
