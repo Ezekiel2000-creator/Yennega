@@ -57,9 +57,9 @@
                                     <%- include("partials/dashboard_features") %>
                                     <!--====== End - Dashboard Features ======-->
                                 </div>
-                                <div class="col-lg-9 col-md-12" style="overflow: hidden;" >
-                                    <div class="dash__box dash__box--shadow dash__box--radius dash__box--bg-white u-s-m-b-30" style = "height: 65%; overflow:auto;" >
-                                        <div class="dash__pad-2" style = "height: auto;" >
+                                <div class="col-lg-9 col-md-12">
+                                    <div class="dash__box dash__box--shadow dash__box--radius dash__box--bg-white u-s-m-b-30">
+                                        <div class="dash__pad-2">
                                             <h1 class="dash__h1 u-s-m-b-14">Mes commandes</h1>
 
                                             <span class="dash__text u-s-m-b-30">Ici vous pouvez voir tous les produits dont vous avez passer la commande.</span>
@@ -75,7 +75,7 @@
                                                         <option>All Orders</option>
                                                     </select></div>
                                             </form>
-                                            <div class="m-order__list" style="overflow-y: scroll;height: auto;">
+                                            <div class="m-order__list" style="overflow-y: auto; max-height: 500px;">
                                                 <% orders.forEach(order=> { %>
                                                     <div class="m-order__get">
                                                         <div class="manage-o__header u-s-m-b-30">
