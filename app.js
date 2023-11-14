@@ -272,7 +272,7 @@ app.post('/signup', async (req, res) => {
 		from: 'kirouni1.0@gmail.com',
 		to: email,
 		subject: 'Email Verification',
-		html: `<p>Hi ${firstName},</p><p>Please click the following link to verify your email: <a href="http://yennega.onrender.com//${code}">Verify Email</a></p>`
+		html: `<p>Hi ${firstName},</p><p>Please click the following link to verify your email: <a href="http://yennega.onrender.com/${code}">Verify Email</a></p>`
 	  };
   
 	  transporter.sendMail(mailOptions, (error, info) => {
