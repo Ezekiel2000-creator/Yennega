@@ -4,40 +4,43 @@ var AdminLoginModel=require('../Schema/Admin_table');
 var CustomerModel=require('../Schema/Customer_table');
 var CategoryModel=require('../Schema/Category_table');
 /* GET home page. */ 
+// router.get('/', async (req, res, next) => {
+
+//   let admins;
+
+//   try {
+//     admins = await AdminLoginModel.find();
+//   } catch (err) {
+//     console.error(err);
+//   }
+
+//   if(!admins.length) {
+//     // No documents found, create a default one
+
+//     const admin = new AdminLoginModel({
+//       Admin_id: '', 
+//       Admin_name: 'Ezekiel',
+//       Admin_contact_no: 96353598,
+//       Admin_email: 'kirouni76@gmail.com',
+//       Admin_password: 'Jesuisle1@cerco',
+//     });
+
+//     try {
+//       await admin.save();
+//       admins = [admin];
+//     } catch (err) {
+//       console.error(err);
+//       return res.sendStatus(500); 
+//     }
+
+//   }
+
+//   res.render('Admin_login', { admins });
+
+// });
 router.get('/', async (req, res, next) => {
-
-  let admins;
-
-  try {
-    admins = await AdminLoginModel.find();
-  } catch (err) {
-    console.error(err);
-  }
-
-  if(!admins.length) {
-    // No documents found, create a default one
-
-    const admin = new AdminLoginModel({
-      Admin_id: '', 
-      Admin_name: 'Ezekiel',
-      Admin_contact_no: 96353598,
-      Admin_email: 'kirouni76@gmail.com',
-      Admin_password: 'Jesuisle1@cerco',
-    });
-
-    try {
-      await admin.save();
-      admins = [admin];
-    } catch (err) {
-      console.error(err);
-      return res.sendStatus(500); 
-    }
-
-  }
-
-  res.render('Admin_login', { admins });
-
-});
+  res.redirect("/accueil")
+}); 
 router.post('/login_process',function(req,res,next){
   
   AdminLoginModel.find(function(err,db_admin_array){
