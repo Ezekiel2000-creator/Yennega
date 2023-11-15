@@ -1041,10 +1041,10 @@
 														</div>
 														<div class="product-m__content">
 															<div class="product-m__category">
-																<a href="shop-side-version-2.html"><%= `${products.Pro_subcategory.subcate_name}` %></a>
+																<a href="/articles?subcategoryId=<%= products.Pro_subcategory._id %>"><%= `${products.Pro_subcategory.subcate_name}` %></a>
 															</div>
 															<div class="product-m__name">
-																<a href="product-detail.html"><%= `${products.Pro_name}` %></a>
+																<a href="/articles/<%= `${products.id}` %>"><%= `${products.Pro_name}` %></a>
 															</div>
 															<div class="product-m__rating gl-rating-style">
 																<div class="review-o__rating gl-rating-style u-s-m-b-8">

@@ -36,12 +36,14 @@
                                              Une correspondance partielle de vos mots-clés est listée ci-dessous.</span>
 
                                         <span class="empty__text-2">Recherches liées:
+                                            <% if ( typeof categories !== 'undefined' && categories.length > 0) { %>
 
-                                            <% categories.forEach(function(category) { %>
-                                                <% category.subcategories.forEach(function(subcategory) { %>                                                 
-                                                    <a href="/articles?subcategoryId=<%= subcategory._id %>"><%= subcategory.subcate_name %></a>
+                                                <% categories.forEach(function(category) { %>
+                                                    <% category.subcategories.forEach(function(subcategory) { %>                                                 
+                                                        <a href="/articles?subcategoryId=<%= subcategory._id %>"><%= subcategory.subcate_name %></a>
+                                                    <% }) %>
                                                 <% }) %>
-                                            <% }) %>
+                                            <% } %>
                                         </span>
 
                                             
