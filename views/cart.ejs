@@ -161,45 +161,98 @@
                                     <div class="row">
                                         <div class="col-lg-4 col-md-6 u-s-m-b-30">
                                             <div class="f-cart__pad-box">
-                                                <h1 class="gl-h1">ESTIMER LES FRAIS DE LIVRAISON ET LES TAXES</h1>
+                                                <h1 class="gl-h1">ESTIMER LES FRAIS DE LIVRAISON</h1>
 
-                                                <span class="gl-text u-s-m-b-30">Enter your destination to get a shipping estimate.</span>
+                                                <span class="gl-text u-s-m-b-30">Renseignez votre adresse de livraison pour avoir une estimation des frais de livraison.</span>
                                                 <div class="u-s-m-b-30">
 
                                                     <!--====== Select Box ======-->
 
-                                                    <label class="gl-label" for="shipping-country">COUNTRY *</label><select class="select-box select-box--primary-style" id="shipping-country">
-                                                        <option selected value="">Choose Country</option>
-                                                        <option value="uae">United Arab Emirate (UAE)</option>
-                                                        <option value="uk">United Kingdom (UK)</option>
-                                                        <option value="us">United States (US)</option>
+                                                    <label class="gl-label" for="shipping-country">PAYS *</label><select class="select-box select-box--primary-style" id="shipping-country">
+                                                        <option selected value="Burkina-Faso">Burkina-Faso</option>
                                                     </select>
                                                     <!--====== End - Select Box ======-->
                                                 </div>
                                                 <div class="u-s-m-b-30">
-
-                                                    <!--====== Select Box ======-->
-
-                                                    <label class="gl-label" for="shipping-state">STATE/PROVINCE *</label><select class="select-box select-box--primary-style" id="shipping-state">
-                                                        <option selected value="">Choose State/Province</option>
-                                                        <option value="al">Alabama</option>
-                                                        <option value="al">Alaska</option>
-                                                        <option value="ny">New York</option>
+                                                    <% if (typeof(cost) !== "undefined" ) { %>
+                                                        <!--====== Select Box - Ville ======-->
+                                                        <label class="gl-label" for="shipping-city">Ville *</label>
+                                                        <select class="select-box select-box--primary-style" id="shipping-city" name="city">
+                                                            <option selected value="<%=city._id%>"> <%=city.name %></option>
+                                                            <% addresses.forEach(function(address) { %>
+                                                                <option value="<%= address._id %>"><%= address.name %></option>
+                                                            <% }); %>
+                                                        </select>
+                                                        <label class="gl-label" for="shipping-locality">Localité *</label>
+                                                        <select class="select-box select-box--primary-style" id="shipping-locality" name="locality" disabled>
+                                                            <option selected value="<%=locality._id%>"><%=locality.name%></option>
+                                                            <% addresses.forEach(function(address) { %>
+                                                                <% address.localities.forEach(function(locality) { %>
+                                                                    <option data-city="<%= address._id %>" value="<%= locality._id %>"><%= locality.name %></option>
+                                                                <% }); %>
+                                                            <% }); %>
+                                                        </select>
+                                                    <% }else { %>
+                                                    <!--====== Select Box - Ville ======-->
+                                                    <label class="gl-label" for="shipping-city">Ville *</label>
+                                                    <select class="select-box select-box--primary-style" id="shipping-city" name="city">
+                                                        <option selected value="">Veuillez choisir une ville</option>
+                                                        <% addresses.forEach(function(address) { %>
+                                                            <option value="<%= address._id %>"><%= address.name %></option>
+                                                        <% }); %>
+                                                    </select>
+                                                
+                                                    <!--====== Select Box - Localité ======-->
+                                                    <label class="gl-label" for="shipping-locality">Localité *</label>
+                                                    <select class="select-box select-box--primary-style" id="shipping-locality" name="locality" disabled>
+                                                        <option selected value="">Veuillez choisir une localité</option>
+                                                        <% addresses.forEach(function(address) { %>
+                                                            <% address.localities.forEach(function(locality) { %>
+                                                                <option data-city="<%= address._id %>" value="<%= locality._id %>"><%= locality.name %></option>
+                                                            <% }); %>
+                                                        <% }); %>
                                                     </select>
                                                     <!--====== End - Select Box ======-->
+                                                    <% } %>
                                                 </div>
+                                                
                                                 <div class="u-s-m-b-30">
-
-                                                    <label class="gl-label" for="shipping-zip">ZIP/POSTAL CODE *</label>
-
-                                                    <input class="input-text input-text--primary-style" type="text" id="shipping-zip" placeholder="Zip/Postal Code"></div>
-                                                <div class="u-s-m-b-30">
-
-                                                    <a class="f-cart__ship-link btn--e-transparent-brand-b-2" href="cart.html">CALCULER LES FRAIS DE LIVRAISON</a></div>
-
-                                                <span class="gl-text">Note: There are some countries where free shipping is available otherwise our flat rate charges or country delivery charges will be apply.</span>
+                                                    <a id="calculateShippingBtn" class="f-cart__ship-link btn--e-transparent-brand-b-2" href="#">CALCULER LES FRAIS DE LIVRAISON</a>
+                                                </div>
+                                                <span class="gl-text">Info: Notez que la livraison n'est pas encore disponible dans certaines  villes ou localités.
+                                                    Nous oeuvrons pour agrandir le plus possible la liste des lieux de livraison.   
+                                               .</span>
                                             </div>
                                         </div>
+                                        <% if (typeof(cost) !== "undefined" ) { %>
+                                            <div class="col-lg-4 col-md-6 u-s-m-b-30">
+                                                <div class="f-cart__pad-box">
+                                                    <div class="u-s-m-b-30">
+                                                        <table class="f-cart__table">
+                                                            <tbody>
+                                                                
+                                                                    <tr>
+                                                                        <td>TOTAL</td>
+                                                                        <td><%=`${total}`%> FCFA</td>
+                                                                    </tr>
+                                                                    <tr>
+                                                                        <td>LIVRAISON</td>
+                                                                        <td><%=`${cost}`%> FCFA</td>
+                                                                    </tr>
+                                                                    
+                                                                    <tr>
+                                                                        <td>GRAND TOTAL</td>
+                                                                        <td><%=`${grandTotal}`%> FCFA</td>
+                                                                    </tr>
+                                                            </tbody>
+                                                        </table>
+                                                    </div>
+                                                    <div>
+                                                        <button class="btn btn--e-brand-b-2" type="submit"> PASSER A LA CAISSE</button>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        <% }%>
                                         <div class="col-lg-4 col-md-6 u-s-m-b-30">
                                             <div class="f-cart__pad-box">
                                                 <h1 class="gl-h1">NOTE</h1>
@@ -210,35 +263,7 @@
                                                     <label for="f-cart-note"></label><textarea class="text-area text-area--primary-style" id="f-cart-note"></textarea></div>
                                             </div>
                                         </div>
-                                        <div class="col-lg-4 col-md-6 u-s-m-b-30">
-                                            <div class="f-cart__pad-box">
-                                                <div class="u-s-m-b-30">
-                                                    <table class="f-cart__table">
-                                                        <tbody>
-                                                            <tr>
-                                                                <td>LIVRAISON</td>
-                                                                <td>4.00 FCFA</td>
-                                                            </tr>
-                                                            <tr>
-                                                                <td>TAX</td>
-                                                                <td>0.00 FCFA</td>
-                                                            </tr>
-                                                            <tr>
-                                                                <td>SUBTOTAL</td>
-                                                                <td><%=`${total}`%> FCFA</td>
-                                                            </tr>
-                                                            <tr>
-                                                                <td>GRAND TOTAL</td>
-                                                                <td>379.00 FCFA</td>
-                                                            </tr>
-                                                        </tbody>
-                                                    </table>
-                                                </div>
-                                                <div>
-
-                                                    <button class="btn btn--e-brand-b-2" type="submit"> PASSER A LA CAISSE</button></div>
-                                            </div>
-                                        </div>
+                                        
                                     </div>
                                 </form>
                             </div>
@@ -260,5 +285,93 @@
 
     <!--====== Google Analytics: change UA-XXXXX-Y to be your site's ID ======-->
     <%- include("partials/scripts") %>
+    <script>
+        // Stocker toutes les localités au début
+        const allLocalities = Array.from(document.querySelectorAll('#shipping-locality option[data-city]'));
+
+        // JavaScript pour mettre à jour la liste des localités en fonction de la ville sélectionnée
+        document.getElementById('shipping-city').addEventListener('change', function () {
+            const selectedCity = this.value;
+            const localitySelect = document.getElementById('shipping-locality');
+
+            // Réinitialiser la liste des localités
+            localitySelect.innerHTML = '<option selected value="">Veuillez choisir une localité</option>';
+
+            // Filtrer les localités en fonction de la ville sélectionnée
+            allLocalities.forEach(function (locality) {
+                if (locality.getAttribute('data-city') === selectedCity) {
+                    localitySelect.appendChild(locality.cloneNode(true));
+                }
+            });
+
+            // Activer le champ des localités s'il y a une ville sélectionnée
+            localitySelect.disabled = !selectedCity;
+        });
+    </script>
+    <script>
+        // document.addEventListener('DOMContentLoaded', function () {
+        //     const localitySelect = document.getElementById('shipping-locality');
+        //     const calculateShippingBtn = document.getElementById('calculateShippingBtn');
+    
+        //     localitySelect.addEventListener('change', function () {
+        //         const selectedLocality = localitySelect.value;
+    
+        //         // Vérifiez si une localité est sélectionnée
+        //         if (selectedLocality) {
+        //             // Envoyez une requête POST vers la route spécifiée avec la valeur de la localité
+        //             fetch('/cost', {
+        //                 method: 'POST',
+        //                 headers: {
+        //                     'Content-Type': 'application/json',
+        //                 },
+        //                 body: JSON.stringify({ localityId: selectedLocality }),
+        //             })
+        //             .then(response => response.json())
+        //             .then(data => {
+        //                 // Traitez la réponse si nécessaire
+        //                 console.log(data);
+        //                 window.location.href = `/cart?cost=${data.cost}`;
+        //             })
+        //             .catch(error => console.error('Error:', error));
+        //         }
+        //     });
+    
+        //     // Ajoutez un gestionnaire d'événements pour le bouton de calcul
+        //     calculateShippingBtn.addEventListener('click', function (event) {
+        //         event.preventDefault(); // Empêche le comportement de lien par défaut
+        //         localitySelect.dispatchEvent(new Event('change')); // Déclenche le changement d'événement manuellement
+        //     });
+        // });
+        document.addEventListener('DOMContentLoaded', function () {
+        const localitySelect = document.getElementById('shipping-locality');
+        const calculateShippingBtn = document.getElementById('calculateShippingBtn');
+
+        calculateShippingBtn.addEventListener('click', function (event) {
+            event.preventDefault(); // Empêche le comportement de lien par défaut
+
+            const selectedLocality = localitySelect.value;
+
+            // Vérifiez si une localité est sélectionnée
+            if (selectedLocality) {
+                // Envoyez une requête POST vers la route spécifiée avec la valeur de la localité
+                fetch('/cost', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({ localityId: selectedLocality }),
+                })
+                .then(response => response.json())
+                .then(data => {
+                    // Traitez la réponse si nécessaire
+                    console.log(data);
+                    window.location.href = `/cart?cost=${data.cost}&chosen_city=${data.chosen_city}&chosen_locality=${data.chosen_locality}`;
+                })
+                .catch(error => console.error('Error:', error));
+            }
+        });
+    });
+
+    </script>
 </body>
 </html>

@@ -2,6 +2,7 @@ var express = require('express');
 var router = express.Router();
 var Orders= require('../Schema/Order_master_table');
 var Customer= require('../Schema/Customer_table');
+var Cart = require('../Schema/Cart')
 
 
 //display data

@@ -1,0 +1,98 @@
+<%-include('Admin_partial/header')-%>
+<!-- delivery_list.ejs -->
+<body>
+
+    <div class="main-panel">
+      <div class="content-wrapper">
+          <div class="page-header">
+              <h3 class="page-title" style="margin-left:200px;padding-top:20px">
+                  <b>Adresse de livraison</b>
+              </h3>
+              <a href="/delivery/create">
+                  <button style=" margin-top: 20px;margin-right: 100px" class="btn btn-rounded btn-fw btn-gradient-primary btn-fw">
+                      Ajouter un nouveau
+                  </button>
+              </a>
+          </div>
+          <div class="col-lg-12 stretch-card">
+              <div class="card">
+                  <div class="card-body">
+                    <% if (typeof errorMessage !== 'undefined' && errorMessage !== null) { %>
+                      <div class="error-message">
+                        <%= errorMessage %>
+                      </div>
+                    <% } %>
+                      <div class="table-responsive">
+                          <table class="table table-bordered">
+                              <thead>
+                                  <th>Index</th>
+                                  <th>Nom de la ville</th>
+                                  <th>Nom de la localité</th>
+                                  <th>Action</th>
+                              </thead>
+                              <% if (cities.length > 0) { %>
+                                <tbody>
+                                  <% cities.forEach((city, index) => { %>
+                                  <tr>
+                                    <td><%= index + 1 %></td>
+                                    <td><%= city.name %></td>
+                                    <td>
+                                      <% if (city.localities.length > 0) { %>
+                                        <ul class="list-group">
+                                          <% city.localities.forEach(locality => { %>
+                                            <li class="list-group-item">
+                                              <strong>Nom:</strong> <%= locality.name %>,
+                                              <strong>Frais de livraison:</strong> <%= locality.deliveryCost.value %> FCFA
+                                            </li>
+                                          <% }); %>
+                                        </ul>
+                                      <% } else { %>
+                                        <p>Pas de localités</p>
+                                      <% } %>
+                                    </td>
+                                    <td>
+                                      <a href="/delivery/show/<%= city._id %>">
+                                        <img title="montrer" src="/images/icons/show.png">
+                                      </a>
+                                      <a href="/delivery/edit/<%= city._id %>">
+                                        <img title="modifier" src="/images/icons/edit.png">
+                                      </a>
+                                      <a href="/delivery/delete/<%= city._id %>">
+                                        <img title="supprimer" src="/images/icons/delete.png">
+                                      </a>
+                                    </td>
+                                  </tr>
+                                  <% }); %>
+                                </tbody>
+                              <% } else { %>
+                                <td colspan="5">
+                                  <h2>Pas d'adresse de livraison enregistrée</h2>
+                                </td>
+                              <% } %>
+                          </table>
+                      </div>
+                  </div>
+              </div>
+          </div>
+      </div>
+    </div>
+
+    <script src="../../vendors/js/vendor.bundle.base.js"></script>
+    <script src="../../vendors/js/vendor.bundle.addons.js"></script>
+    <!-- endinject -->
+    <!-- Plugin js for this page-->
+    <!-- End plugin js for this page-->
+    <!-- inject:js -->
+    <script src="../../js/off-canvas.js"></script>
+    <script src="../../js/hoverable-collapse.js"></script>
+    <script src="../../js/misc.js"></script>
+    <script src="../../js/settings.js"></script>
+    <script src="../../js/todolist.js"></script>
+    <!-- endinject -->
+    <!-- Custom js for this page-->
+    <!-- End custom js for this page-->
+</body>
+  
+  
+  <!-- Mirrored from www.urbanui.com/gleam/pages/tables/basic-table.html by HTTrack Website Copier/3.x [XR&CO'2014], Mon, 10 Sep 2018 06:27:35 GMT -->
+  </html>

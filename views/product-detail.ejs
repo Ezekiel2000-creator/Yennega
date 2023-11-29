@@ -103,9 +103,9 @@
 										<div>
 											<div class="pd-detail__inline">
 
-												<span class="pd-detail__price">$<%=`${products.Pro_rentprice}`%></span>
+												<span class="pd-detail__price"><%=`${products.Pro_rentprice}`%> FCFA</span>
 
-												<span class="pd-detail__discount">(76% OFF)</span><del class="pd-detail__del">$<%=`${products.Pro_ammount}`%></del></div>
+												<del class="pd-detail__del"><%=`${products.Pro_ammount}`%> FCFA</del></div>
 										</div>
 										<div class="u-s-m-b-15">
 											<div class="pd-detail__rating gl-rating-style">
@@ -133,9 +133,9 @@
 										<div class="u-s-m-b-15">
 											<div class="pd-detail__inline">
 
-												<span class="pd-detail__stock"><%=`${products.Pro_quantity}`%> in stock</span>
+												<span class="pd-detail__stock"><%=`${products.Pro_quantity}`%> en stock</span>
 
-												<span class="pd-detail__left">Only <%=`${products.Pro_quantity}`%> left</span></div>
+												<span class="pd-detail__left">Il ne reste que <%=`${products.Pro_quantity}`%></span></div>
 										</div>
 										<div class="u-s-m-b-15">
 
@@ -145,7 +145,7 @@
 
 												<span class="pd-detail__click-wrap"><i class="far fa-heart u-s-m-r-6"></i>
 
-													<a href="signin.html">Add to Wishlist</a>
+													<a href="">Ajouter à la liste de souhait?</a>
 
 													<span class="pd-detail__click-count">(222)</span></span></div>
 										</div>
@@ -196,13 +196,11 @@
 											<ul class="pd-detail__policy-list">
 												<li><i class="fas fa-check-circle u-s-m-r-8"></i>
 
-													<span>Buyer Protection.</span></li>
+													<span>Protection d'achat.</span></li>
 												<li><i class="fas fa-check-circle u-s-m-r-8"></i>
 
-													<span>Full Refund if you don't receive your order.</span></li>
-												<li><i class="fas fa-check-circle u-s-m-r-8"></i>
-
-													<span>Returns accepted if product not as described.</span></li>
+													<span>Remboursement si colis non reçu.</span></li>
+					
 											</ul>
 										</div>
 									</form>
@@ -226,12 +224,15 @@
 												<a class="nav-link active" data-toggle="tab" href="#pd-desc">DESCRIPTION</a></li>
 											<li class="nav-item">
 
-												<a class="nav-link" data-toggle="tab" href="#pd-tag">TAGS</a></li>
-											<li class="nav-item">
+												<a class="nav-link" id="view-review" data-toggle="tab" href="#pd-rev">AVIS
 
-												<a class="nav-link" id="view-review" data-toggle="tab" href="#pd-rev">REVIEWS
-
-													<span>(23)</span></a></li>
+													<span>
+														<% if(products.Ratings) { %>
+															(<%= `${products.Ratings.length}`%>)
+														<% } %>
+												    </span>
+												</a>
+											</li>
 										</ul>
 									</div>
 									<div class="tab-content">
@@ -244,20 +245,18 @@
 												</div>
 												<div class="u-s-m-b-30"><iframe src="https://www.youtube.com/embed/qKqSBm07KZk" allowfullscreen></iframe></div>
 												<div class="u-s-m-b-30">
-													<ul>
-														<li><i class="fas fa-check u-s-m-r-8"></i>
-
-															<span>Buyer Protection.</span></li>
-														<li><i class="fas fa-check u-s-m-r-8"></i>
-
-															<span>Full Refund if you don't receive your order.</span></li>
-														<li><i class="fas fa-check u-s-m-r-8"></i>
-
-															<span>Returns accepted if product not as described.</span></li>
+													<ul class="pd-detail__policy-list">
+														<li><i class="fas fa-check-circle u-s-m-r-8"></i>
+		
+															<span>Protection d'achat.</span></li>
+														<li><i class="fas fa-check-circle u-s-m-r-8"></i>
+		
+															<span>Remboursement si colis non reçu.</span></li>
+							
 													</ul>
 												</div>
 												<div class="u-s-m-b-15">
-													<h4>PRODUCT INFORMATION</h4>
+													<h4>INFORMATIONS DU PRODUIT</h4>
 												</div>
 												<div class="u-s-m-b-15">
 													<div class="pd-table gl-scroll">
@@ -920,7 +919,7 @@
 
 												<span class="pd-detail__price">$6.99</span>
 
-												<span class="pd-detail__discount">(76% OFF)</span><del class="pd-detail__del">$28.97</del></div>
+												<del class="pd-detail__del">$28.97</del></div>
 										</div>
 										<div class="u-s-m-b-15">
 											<div class="pd-detail__rating gl-rating-style"><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star-half-alt"></i>
@@ -1003,13 +1002,11 @@
 											<ul class="pd-detail__policy-list">
 												<li><i class="fas fa-check-circle u-s-m-r-8"></i>
 
-													<span>Buyer Protection.</span></li>
+													<span>Protection d'achat.</span></li>
 												<li><i class="fas fa-check-circle u-s-m-r-8"></i>
 
-													<span>Full Refund if you don't receive your order.</span></li>
-												<li><i class="fas fa-check-circle u-s-m-r-8"></i>
-
-													<span>Returns accepted if product not as described.</span></li>
+													<span>Remboursement si colis non reçu.</span></li>
+					
 											</ul>
 										</div>
 									</div>

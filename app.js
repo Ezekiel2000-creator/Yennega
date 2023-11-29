@@ -24,6 +24,7 @@ var inqueryRouter  = require('./routes/Inquery');
 var orderRouter  = require('./routes/Order_master');
 var vendorRouter  = require('./routes/Vendor');
 var vendorRequestRouter  = require('./routes/Vendor_request');
+var AdressCostRouter  = require('./routes/Adress');
 
 var Cart  = require('./Schema/Cart');
 var Customer  = require('./Schema/Customer_table');
@@ -34,6 +35,9 @@ var Rating = require('./Schema/Rating_table');
 var Subcategory = require('./Schema/SubCategory_table');
 const VendorRequest = require('./Schema/Vendor_request');
 var Category = require('./Schema/Category_table');
+var Adress = require("./Schema/Adress");
+const { Locality } = require('./Schema/Adress');
+
 
 
 var app = express();
@@ -48,6 +52,7 @@ app.set('views', [path.join(__dirname, 'views'),
         path.join(__dirname,'/views/Orders'),
         path.join(__dirname,'/views/Vendor'),
         path.join(__dirname,'/views/Vendor_request'),
+        path.join(__dirname,'/views/Adress'),
       path.join(__dirname,'/views/Inquery')]);
 app.set('view engine', 'ejs');
 app.use(statusMonitor());
@@ -77,6 +82,7 @@ app.use('/inquery',inqueryRouter);
 app.use('/orders',orderRouter);
 app.use('/vendor',vendorRouter);
 app.use('/vendorRequest',vendorRequestRouter);
+app.use('/delivery',AdressCostRouter);
 
 //catch 404 and forward to error handler
 // app.use(function(req, res, next) {
@@ -339,6 +345,8 @@ app.post('/signin', async (req, res) => {
 
 
 app.get("/signin", (req, res) =>{
+  console.log("___________")
+  console.log (req.cookies)
   res.render("signin");
 });
 
@@ -505,20 +513,58 @@ app.post('/add-to-cart',requireAuth, async (req, res) => {
 app.get('/cart', requireAuth, async (req, res) => {
 	try {
 		const carts = res.locals.carts;
-		const total = res.locals.total;
-		console.log("ccccccccaaaaaaaa",carts)
-    console.log("TToooooooottttttttaaaaallllll",total)
-		if(carts.length === 0) {
-			res.render("empty-cart");
-		}else{
-			console.log("carts",carts)
-			res.status(201).render('cart', { carts , total });
+		const totalstr = res.locals.total;
+    const addresses = await Adress.find();
+    const coststr = req.query.cost;
+    const city_id = req.query.chosen_city;
+    console.log("cuiiii", city_id);
+    const locality_id = req.query.chosen_locality;
+    
+    console.log("couaaaaaaaa",locality_id);
+    const grandTotal= 0;
+    const total = parseInt(totalstr, 10) || 0;
+    const cost = parseInt(coststr, 10) || 0;
+    if (coststr) {
+      const city = await Adress.findOne({ 'localities._id': locality_id });
+      const locality = city.localities.id(locality_id);
+      const grandTotal = total + cost;
+      if(carts.length === 0) {
+        res.render("empty-cart");
+      }else{
+        console.log("carts",carts);
+        res.status(200).render('cart', { carts , total, addresses, cost , grandTotal, city, locality });
+      }
+    }else{
+      const cost = coststr;
+			console.log("carts",carts);
+			res.status(200).render('cart', { carts , total, addresses, cost , grandTotal });
 		}
 	} catch (error) {
 	res.status(500).json({ message: error.message });
 	}
 });	
+app.post("/cost" ,requireAuth, async (req, res) =>{
+  try{
+    const adress_id = req.body.localityId
+    console.log("adress_id",adress_id);
 
+    const city = await Adress.findOne({ 'localities._id': adress_id });
+    console.log("ccccccccci",city);
+    const cities = city._id;
+    console.log("ccccccccci",cities);
+    const locality = city.localities.id(adress_id);
+    const localities = locality._id;
+    console.log("localityyy",locality);
+    console.log("cityyy",city);
+    if (locality){
+      const cost = locality.deliveryCost.value;
+      res.status(200).json({ cost: cost, chosen_city:cities, chosen_locality:localities });
+    }
+  } catch (error) {
+    res.status(500).json({ message: error.message });
+  }
+    
+})
 app.delete('/cart/:productId', requireAuth, async (req, res) => {
 	try {
 	  const { productId } = req.params;
@@ -554,13 +600,20 @@ app.delete('/cart/:productId', requireAuth, async (req, res) => {
 
 app.post("/user/checkout", requireAuth, async (req, res) => {
   try {
+    const city = req.body.city; // Récupérez la valeur du champ city
+    const locality = req.body.locality; // Récupérez la valeur du champ locality
+    const note = req.body['f-cart-note']; // Récupérez la valeur du champ f-cart-note
+    req.session.city = city;
+    req.session.locality = locality;
     const carts = res.locals.carts;
     const total = res.locals.total;
-    console.log("ccccccccaaaaaaaa2",carts)
+    console.log("City:", city);
+    console.log("Locality:", locality);
+    console.log("Note:", note);
     if(carts.length === 0) {
       res.redirect("/cart");
     }else{
-      console.log("carts",carts)
+      console.log("carts",carts);
       res.status(201).redirect('/user/checkout');
     }
   }catch(error) {
@@ -572,8 +625,15 @@ app.get("/user/checkout", requireAuth, async (req, res) => {
   try {
     const carts = res.locals.carts;
     const total = res.locals.total;
-    console.log("ccccccccaaaaaaaa2",carts)
-    res.status(201).render('checkout', { carts , total });
+    const city_id = req.session.city;
+    console.log("city_id",req.session);
+    const locality = req.session.locality;
+    console.log("locality",locality);
+    const city = await Adress.findOne({ _id: city_id });
+
+    const locality_name = locality.name;
+    const city_name = city.name;
+    res.status(201).render('checkout', { carts , total, locality_name, city_name });
 
   }catch(error) {
     res.status(500).json({ message: error.message });
@@ -873,7 +933,20 @@ app.post("/vendor/request", requireAuth, async (req, res) => {
     res.status(500).json({ message: err.message });
   }
 });
-
+app.get("/about", async (req, res) => {
+  try {
+    res.render('about');
+  }catch(error) {
+    res.status(500).json({ message: error.message });
+  }
+});
+app.get("/contact", async (req, res) => {
+  try {
+    res.render('contact');
+  }catch(error) {
+    res.status(500).json({ message: error.message });
+  }
+});
 app.post('/signout', (req, res) => {
 	try {
 	  // Supprimez le cookie contenant le token

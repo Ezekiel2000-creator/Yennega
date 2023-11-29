@@ -39,9 +39,11 @@
                                             <% if ( typeof categories !== 'undefined' && categories.length > 0) { %>
 
                                                 <% categories.forEach(function(category) { %>
-                                                    <% category.subcategories.forEach(function(subcategory) { %>                                                 
-                                                        <a href="/articles?subcategoryId=<%= subcategory._id %>"><%= subcategory.subcate_name %></a>
-                                                    <% }) %>
+                                                    <% if ( typeof category.Pro_subcategory !== 'undefined' && category.Pro_subcategory.length > 0) {%>
+                                                        <% category.Pro_subcategory.forEach(function(subcategory) { %>                                                 
+                                                            <a href="/articles?subcategoryId=<%= subcategory._id %>"><%= subcategory.subcate_name %></a>
+                                                        <% }) %>
+                                                    <% } %>
                                                 <% }) %>
                                             <% } %>
                                         </span>

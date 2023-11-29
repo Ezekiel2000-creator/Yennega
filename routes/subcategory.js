@@ -2,12 +2,45 @@ var express= require('express');
 var router=express.Router();
 var categoryRouter=require('../Schema/Category_table');
 var subcategoryModel=  require('../Schema/SubCategory_table');
+var Cart= require('../Schema/Cart');
+const jwt = require('jsonwebtoken');
+const bcrypt = require('bcrypt');
+
+const requireAuth = (req, res, next) => {
+    const token = req.cookies.token;
+    console.log("vvvvvvvvvvv",token);
+    
+    if (token) {
+      jwt.verify(token, 'your_secret_key', (err, decodedToken) => {
+        if (err) {
+        if (err.name === 'TokenExpiredError') {
+          return res.status(401).redirect("/signin");
+        } else {
+          return res.status(401).json({ message: 'Token invalide' });
+        }
+        }
+        req.user = decodedToken;
+        try {
+        const userCart = Cart.findOne({ user: req.user.id }).populate('items');
+      
+        if (userCart === null || userCart.items === 0) {
+          const carts = [];
+          app.locals.carts = carts;
+        }
+        } catch (error) {
+        res.status(500).json({ message: error.message });
+        }
+        next();
+      });
+      } else {
+      req.session.returnTo = req.originalUrl;
+      res.status(401).redirect("/signin");
+      }
+};
+
+router.use(requireAuth);
 //add-subcategory
 router.get('/add_subcategory',function(req,res,next){
-    var mysessionvalue= req.session.Admin_email;
-    if(!mysessionvalue){
-        res.redirect('/');
-    }
     categoryRouter.find(function(err , db_category_array){
         if(err)
         {
@@ -44,10 +77,7 @@ router.post('/subcate_process', function(req, res, next) {
 //add-subcategory
 //data display
 router.get('/data_display',function(req,res,next){
-    var mysessionvalue= req.session.Admin_email;
-    if(!mysessionvalue){
-        res.redirect('/');
-    }
+    console.log("_________________",req.user);
     subcategoryModel.find(function(err, db_subcategory_array){
     console.log(db_subcategory_array);
     if (err) res.json({message: 'There are no posts here.'});
@@ -63,10 +93,6 @@ router.get('/data_display',function(req,res,next){
 //data display
 //delete data
 router.get('/delete/:id',function(req,res){
-    var mysessionvalue= req.session.Admin_email;
-    if(!mysessionvalue){
-        res.redirect('/');
-    }
     subcategoryModel.findByIdAndDelete(req.params.id,function(err,db_subcategory_array){
         if(err)
         console.log("Error");
@@ -80,10 +106,6 @@ router.get('/delete/:id',function(req,res){
 });
 //edit data
 router.get('/edit/:id',function(req,res,next){
-    var mysessionvalue= req.session.Admin_email;
-    if(!mysessionvalue){
-        res.redirect('/');
-    }
     subcategoryModel.findById(req.params.id,function(err,db_subcategory_array,){
         categoryRouter.find(function(err,db_category_array){
 
