@@ -30,10 +30,10 @@
                                 <ul class="breadcrumb__list">
                                     <li class="has-separator">
 
-                                        <a href="index.html">Home</a></li>
+                                        <a href="/accueil">Accuei</a></li>
                                     <li class="is-marked">
 
-                                        <a href="cart.html">Cart</a></li>
+                                        <a href="/cart">Panier</a></li>
                                 </ul>
                             </div>
                         </div>
@@ -184,7 +184,7 @@
                                                             <% }); %>
                                                         </select>
                                                         <label class="gl-label" for="shipping-locality">Localité *</label>
-                                                        <select class="select-box select-box--primary-style" id="shipping-locality" name="locality" disabled>
+                                                        <select class="select-box select-box--primary-style" id="shipping-locality" name="locality" readonly >
                                                             <option selected value="<%=locality._id%>"><%=locality.name%></option>
                                                             <% addresses.forEach(function(address) { %>
                                                                 <% address.localities.forEach(function(locality) { %>

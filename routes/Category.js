@@ -3,10 +3,7 @@ var router=express.Router();
 var categoryModel=  require('../Schema/Category_table');
 
 router.get('/add_category',function(req,res,next){
-    var mysessionvalue= req.session.Admin_email;
-    if(!mysessionvalue){
-        res.redirect('/');
-    }
+
     res.render('Add_Category');
 });
 
@@ -28,10 +25,6 @@ router.post('/cate_process',function(req,res,next){
 });
 //display data
 router.get('/data_display',function(req,res,next){
-    var mysessionvalue= req.session.Admin_email;
-    if(!mysessionvalue){
-        res.redirect('/');
-    }
     categoryModel.find(function(err,db_category_array){
         if(err)
         console.log("Error");
@@ -46,10 +39,6 @@ router.get('/data_display',function(req,res,next){
 
 //delete data
 router.get('/delete/:id',function(req,res){
-    var mysessionvalue= req.session.Admin_email;
-    if(!mysessionvalue){
-        res.redirect('/');
-    }
     categoryModel.findByIdAndDelete(req.params.id,function(err,db_category_array){
         if(err)
         console.log("Error");
@@ -64,10 +53,7 @@ router.get('/delete/:id',function(req,res){
 //delete data
 //edit data
 router.get('/edit/:id',function(req,res,next){
-    var mysessionvalue= req.session.Admin_email;
-    if(!mysessionvalue){
-        res.redirect('/');
-    }
+
     categoryModel.findById(req.params.id,function(err,db_category_array){
         if(err)
         console.log("Error");
@@ -97,10 +83,7 @@ router.post('/edit/:id',function(req,res){
 //edit data
 //single-record
 router.get('/show/:id',function(req,res){
-    var mysessionvalue= req.session.Admin_email;
-    if(!mysessionvalue){
-        res.redirect('/');
-    }
+
     console.log(req.params.id);
     categoryModel.findById(req.params.id,function(err,db_category_array){
         if(err)

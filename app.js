@@ -36,6 +36,7 @@ var Subcategory = require('./Schema/SubCategory_table');
 const VendorRequest = require('./Schema/Vendor_request');
 var Category = require('./Schema/Category_table');
 var Adress = require("./Schema/Adress");
+var deliveryAdress = require("./Schema/Order_master_table")
 const { Locality } = require('./Schema/Adress');
 
 
@@ -67,7 +68,7 @@ app.use(session({
   secret:'keyboard cat',
   resave:false,
   saveUninitialized:true,
-  cookie: { secure: true },
+  cookie: { secure: false },
   }));
 app.use(fileupload());
 app.use('/public/vendorRequest', express.static('public/vendorRequest'));
@@ -600,9 +601,9 @@ app.delete('/cart/:productId', requireAuth, async (req, res) => {
 
 app.post("/user/checkout", requireAuth, async (req, res) => {
   try {
-    const city = req.body.city; // Récupérez la valeur du champ city
-    const locality = req.body.locality; // Récupérez la valeur du champ locality
-    const note = req.body['f-cart-note']; // Récupérez la valeur du champ f-cart-note
+    const city = req.body.city;
+    const locality = req.body.locality;
+    const note = req.body['f-cart-note'];
     req.session.city = city;
     req.session.locality = locality;
     const carts = res.locals.carts;
@@ -610,35 +611,48 @@ app.post("/user/checkout", requireAuth, async (req, res) => {
     console.log("City:", city);
     console.log("Locality:", locality);
     console.log("Note:", note);
+    console.log(req.user);
     if(carts.length === 0) {
       res.redirect("/cart");
-    }else{
+    } else {
       console.log("carts",carts);
-      res.status(201).redirect('/user/checkout');
+      req.session.save(function(err) {
+        if (err) {
+          return res.status(500).json({ message: err.message });
+        }
+        console.log(req.session);
+        res.status(201).redirect('/user/checkout');
+      });
     }
-  }catch(error) {
+  } catch(error) {
     res.status(500).json({ message: error.message });
   }
 });
+
 
 app.get("/user/checkout", requireAuth, async (req, res) => {
   try {
     const carts = res.locals.carts;
     const total = res.locals.total;
     const city_id = req.session.city;
-    console.log("city_id",req.session);
-    const locality = req.session.locality;
-    console.log("locality",locality);
+    console.log("city_id",city_id);
+    const locality_id = req.session.locality;
+    console.log("locality",req.session);
     const city = await Adress.findOne({ _id: city_id });
-
+    const locality = city.localities.id(locality_id);
+    const cost = locality.deliveryCost.value;
+    const grandTotal = parseInt(cost, 10) + parseInt(total, 10);
     const locality_name = locality.name;
     const city_name = city.name;
-    res.status(201).render('checkout', { carts , total, locality_name, city_name });
+    const user_id = req.user.id;
+    const user = await Customer.findOne({ _id: user_id });
+    res.status(201).render('checkout', { grandTotal, cost, carts , total, locality_name, city_name, user});
 
   }catch(error) {
-    res.status(500).json({ message: error.message });
+    res.redirect("/cart");
   }
 });
+  
 
 app.post("/empty-cart", requireAuth, async (req, res) => {
   try {
@@ -658,54 +672,58 @@ app.post("/empty-cart", requireAuth, async (req, res) => {
   }
   });
 
-app.post('/place-order',requireAuth, async (req, res) => {
+app.post('/place-order', async (req, res) => {
   const total = res.locals.total;
-	// const cart = await Cart.findOne({ user: req.user.id });
   const user = req.user;
-  const cart  = res.locals.carts;
-  // // const customer = Customer.findById(user)
-  // const customer= user.Customer_name
-
-  // console.log("userrrrrrrrrrrrr",user)
-	console.log("cartssssssssssss",cart);
-  console.log("Totaaaaaaaaalllllllls",total)
-  // console.log("customersssssssssssss",customer)
+  const cart = res.locals.carts;
 
   try {
+    const city_id = req.session.city;
+    const locality_id = req.session.locality;
+    const city = await Adress.findOne({ _id: city_id });
+    const locality = city.localities.id(locality_id);
+    const cost = locality.deliveryCost.value;
+    const locality_name = locality.name;
+    const city_name = city.name;
+    const grandTotal = parseInt(cost, 10) + parseInt(total, 10);
 
-    // Get data from request body
-    const { 
-      deliveryAddress 
-    } = req.body;
-
-    // Create order
+    // Créez la commande
     const order = new Order({
       user: user.id,
       cart,
       date: new Date(), 
       total,
-      deliveryAddress,
-      status: 'pending'
+      grandTotal,
+      deliveryAddress: locality_name + "," + city_name,
+      status: 'en cours'
     });
 
-    // Save to database
+    // Enregistrez la commande dans la base de données
     await order.save();
-    console.log("oooooooooooooooooooooooooooooooo", cart)
+
+    // Mettez à jour les quantités de produits
     for (let item of cart) {
       await Product.findOneAndUpdate(
           { _id: item.product._id },
           { $inc: { Pro_quantity: -item.quantity } }
       );
-  }
-
+    }
+    const carts = await Cart.findOne({ user: req.user.id });
+    console.log('Aucun document trouvé avec ce critère.',carts);
+    if (carts) {
+      await carts.delete();
+      console.log('Documents supprimés avec succès.');
+    } else {
+      console.log('Aucun document trouvé avec ce critère.');
+    }
     res.status(201).json({
       message: 'Order created successfully!'
     });
 
   } catch (error) {
+    // En cas d'erreur, répondez avec un statut 500 et le message d'erreur
     res.status(500).json({ error }); 
   }
-
 });
 
 app.get("/user/dashboard", requireAuth, async (req, res) => {

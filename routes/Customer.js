@@ -5,10 +5,7 @@ var AdminModel= require('../Schema/Admin_table');
 const bcrypt = require('bcrypt');
 /* GET home page. */
 router.get('/registration', function(req, res, next) {
-    var mysessionvalue= req.session.Admin_email;
-    if(!mysessionvalue){
-        res.redirect('/');
-    }
+   
     res.render('Customer_registration');
 });
 router.post('/registration',async (req, res) => {

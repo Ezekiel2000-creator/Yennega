@@ -27,13 +27,13 @@ router.get('/list', async (req, res) => {
 
 //delete data
 router.get('/delete/:id',function(req,res){
-    inqueryModel.findByIdAndDelete(req.params.id,function(err,db_inquery_array){
+    Orders.findByIdAndDelete(req.params.id,function(err,db_inquery_array){
         if(err)
         console.log("Error in delete data");
         else
         {
             console.log(db_inquery_array);
-            res.redirect('/inquery/data_display');
+            res.redirect('/orders/list');
         }
     });
 });
@@ -45,7 +45,7 @@ router.get('/edit/:id',function(req,res,next){
         else
         {
             console.log("before edit display : ",db_inquery_array);
-            res.render('inquery_edit',{inquery_array:db_inquery_array});
+            res.render('Order_edit',{inquery_array:db_inquery_array});
         }
     });
 });
