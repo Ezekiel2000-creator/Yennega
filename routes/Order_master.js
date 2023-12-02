@@ -12,7 +12,8 @@ router.get('/list', async (req, res) => {
   
       // Populer l'utilisateur pour chaque commande
       const orders = await Orders.find({})
-       .populate("user");
+      .sort({date: -1})
+      .populate("user");
       console.log("orderssssssssssss",orders)
   
       res.render('order_display', {

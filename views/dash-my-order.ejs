@@ -67,12 +67,12 @@
                                                 <div class="m-order__select-wrapper">
 
                                                     <label class="u-s-m-r-8" for="my-order-sort">Afficher:</label><select class="select-box select-box--primary-style" id="my-order-sort">
-                                                        <option selected>Last 5 orders</option>
+                                                        <!-- <option selected>Last 5 orders</option>
                                                         <option>Last 15 days</option>
                                                         <option>Last 30 days</option>
                                                         <option>Last 6 months</option>
-                                                        <option>Orders placed in 2018</option>
-                                                        <option>All Orders</option>
+                                                        <option>Orders placed in 2018</option> -->
+                                                        <option selected>Toutes les commandes</option>
                                                     </select></div>
                                             </form>
                                             <div class="m-order__list" style="overflow-y: auto; max-height: 500px;">
@@ -119,7 +119,14 @@
 
                                                                 <span class="manage-o__text-2 u-c-silver">Total:
 
-                                                                    <span class="manage-o__text-2 u-c-secondary">$<%= order.total %></span></span></div>
+                                                                    <span class="manage-o__text-2 u-c-secondary"><%= order.total %> FCFA</span></span>
+                                                            </div>
+                                                            <div>
+
+                                                                <span class="manage-o__text-2 u-c-silver">Total + livraison:
+
+                                                                    <span class="manage-o__text-2 u-c-secondary"><%= order.grand_Total %> FCFA</span></span>
+                                                            </div>
                                                         <% } %>
                                                         
                                                     </div>

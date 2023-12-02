@@ -14,12 +14,13 @@
                     <table class="table table-bordered">
                             <thead>
                                 <tr>
-                                    <th>id</th>        
+                                    <th>Numéro</th>        
                                     <th>Client</th>
                                     <th>Produits</th>     
-                                    <th>Etats de la commande</th>
+                                
                                     <th>Date</th>          
-                                    <th>Prix total</th>     
+                                    <th>Prix total</th>
+                                    <th>Etats de la commande</th>    
                                     <th>Action</th>  
                             
                                 </tr>
@@ -40,9 +41,10 @@
                                        <br/>
                                     <% }) %>
                                   </td>
-                                  <td><%= order.status %></td>
-                                  <td><%= order.date %></td>
+                                  
+                                  <td><%= moment(order.date).format('DD/MM/YYYY à HH:mm') %><</td>
                                   <td><%= order.total %> FCFA</td>
+                                  <td><%= order.status %></td>
                                   <td>
                                     <a href="show/<%=order._id%>"><img title="montrer" src="/images/icons/show.png"></a>
                                     <a href="edit/<%=order._id%>"><img title="modifier" src="/images/icons/edit.png"></a>

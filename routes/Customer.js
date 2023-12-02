@@ -37,10 +37,7 @@ customerdata.save(function(err){
 
 //display data
 router.get('/data_display',function(req,res,next){
-    var mysessionvalue= req.session.Admin_email;
-    if(!mysessionvalue){
-        res.redirect('/');
-    }
+    
     customerModel.find(function(err,db_customer_array){
         if(err)
         console.log("Error");
@@ -55,10 +52,7 @@ router.get('/data_display',function(req,res,next){
 
 //delete data
 router.get('/delete/:id',function(req,res){
-    var mysessionvalue= req.session.Admin_email;
-    if(!mysessionvalue){
-        res.redirect('/');
-    }
+   
     customerModel.findByIdAndDelete(req.params.id,function(err,db_customer_array){
         if(err)
         console.log("Error in delete data");
@@ -72,10 +66,7 @@ router.get('/delete/:id',function(req,res){
 //delete data
 //edit data
 router.get('/edit/:id',function(req,res,next){
-    var mysessionvalue= req.session.Admin_email;
-    if(!mysessionvalue){
-        res.redirect('/');
-    }
+    
     customerModel.findById(req.params.id,function(err,db_customer_array){
         if(err)
         console.log("Error");
@@ -111,10 +102,7 @@ router.post('/edit/:id',function(req,res){
 //edit data
 //single-record
 router.get('/show/:id',function(req,res){
-    var mysessionvalue= req.session.Admin_email;
-    if(!mysessionvalue){
-        res.redirect('/');
-    }
+
     console.log(req.params.id);
     customerModel.findById(req.params.id,function(err,db_customer_array){
         if(err)

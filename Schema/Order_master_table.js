@@ -7,7 +7,7 @@ const OrderSchema = new Schema({
   cart: [],
   date: Date,
   total: Number,
-  grand_Toatal: Number,
+  grand_Total: Number,
   deliveryAddress: String,
   status: String
 });

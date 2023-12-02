@@ -755,19 +755,13 @@ app.get("/user/dashboard", requireAuth, async (req, res) => {
 });
 
 app.get("/user/dash-my-order", requireAuth, async (req, res) => {
-
   try {
-
-    // Get logged in user id from request
     const userId = req.user.id;
 
-    // Find Customer record by id
     let user = await Customer.findById(userId);
-    console.log("userRFRRRRRRRRRRRRRRRRRRR",user)
 
-    // Find any Orders where user id matches
-    let orders = await Order.find({user: userId});
-    console.log("ordersRRRRRRRRRRRRRRRRRRRRRRRRRRRRR",orders)
+    let orders = await Order.find({user: userId})
+      .sort({date: -1}); 
 
     res.status(200).render("dash-my-order",{
       user: user,
@@ -778,7 +772,6 @@ app.get("/user/dash-my-order", requireAuth, async (req, res) => {
   } catch (error) {
     res.status(500).json({ message: error.message });
   }
-
 });
 
 app.get("/user/dash-my-profile", requireAuth, async (req, res) => {
