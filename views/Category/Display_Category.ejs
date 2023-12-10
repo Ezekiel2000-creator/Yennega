@@ -3,9 +3,9 @@
     <div class="content-wrapper">
       <div class="page-header">
         <h3 class="page-title" style="margin-left:200px;padding-top:20px">
-          <b>Category Table</b>
+          <b>Liste des catégorie</b>
         </h3>
-        <a href="/category/add_category"><button style=" margin-top: 20px;margin-right: 100px"class="btn btn-rounded btn-fw btn-gradient-primary btn-fw">Add New</button> </a>
+        <a href="/category/add_category"><button style=" margin-top: 20px;margin-right: 100px"class="btn btn-rounded btn-fw btn-gradient-primary btn-fw">Ajouter nouveau</button> </a>
         </div>
         <div class="col-lg-12 stretch-card">
           <div class="card">
@@ -14,8 +14,8 @@
                 <table class="table table-bordered">
                             <thead>
                                     <th>Index</th>
-                                    <th>Category_id</th>        
-                                    <th>Category_name</th>       
+                                    <th>id de la catégorie</th>        
+                                    <th>Nom de la catégorie</th>       
                                     <th>Action</th>  
                             </thead>
                             <% if(category_array.length>0)  { %>
@@ -33,13 +33,23 @@
                                 </tr>
                                 <% } %>
                                 <%  }   else    {%>
-                                    <h2>No Records Found</h2>
+                                    <h2>Pas d'enregistrement trouvé</h2>
                                     <%  }   %>
                             </tbody>
                 </table>
               </div>
             </div>
           </div>
+        </div>
+      </div>
+    </div>
+    <div id="confirmModal" style="display: none;">
+      <div class="modal" >
+        <div class="modal-content">
+          <h2>Confirmation de suppression</h2>
+          <p>Êtes-vous sûr de vouloir supprimer cet élément ?</p>
+          <button id="confirmDelete" class="btn btn-primary btn-sm">Oui</button>
+          <button id="cancelDelete" class="btn btn-danger btn-sm">Non</button>
         </div>
       </div>
     </div>
@@ -52,6 +62,7 @@
     <script src="../../js/off-canvas.js"></script>
     <script src="../../js/hoverable-collapse.js"></script>
     <script src="../../js/misc.js"></script>
+<script src="/js/admin.js"></script>
     <script src="../../js/settings.js"></script>
     <script src="../../js/todolist.js"></script>
     <!-- endinject -->

@@ -38,126 +38,103 @@ const requireAuth = (req, res, next) => {
       }
 };
 
-router.use(requireAuth);
+// router.use(requireAuth);
 //add-subcategory
-router.get('/add_subcategory',function(req,res,next){
-    categoryRouter.find(function(err , db_category_array){
-        if(err)
-        {
-            console.log("Error");
-        }
-        else
-        {
-            console.log(db_category_array);
-            res.render('SubCategory_Add',{  category_array  : db_category_array  } );
-        }
-    });
+
+router.get('/add_subcategory', async (req, res, next) => {
+  try {
+    const db_category_array = await categoryModel.find();
+    console.log(db_category_array);
+    res.render('SubCategory_Add', { category_array: db_category_array });
+  } catch (err) {
+    console.log("Error");
+    next(err);
+  }
 });
 
-router.post('/subcate_process', function(req, res, next) {
-    console.log(req.body);
-    const subcategorydata={
-        subcate_id:req.body.subcate_id,
-        subcate_name:req.body.subcate_name,
-        _category:req.body._category
-    }
-    console.log(subcategorydata);
-    var subcatedata=subcategoryModel(subcategorydata);
-    subcatedata.save(function(err){
-        if(err)
-        console.log("Error In Subcategory");
-        else
-        {
-            console.log("Data Saved");
-            res.redirect('/subcategory/add_subcategory');
-        }
-        
-    });
+router.post('/subcate_process', async (req, res, next) => {
+  console.log(req.body);
+  const subcategorydata = {
+    subcate_id: req.body.subcate_id,
+    subcate_name: req.body.subcate_name,
+    _category: req.body._category
+  }
+  console.log(subcategorydata);
+  var subcatedata = categoryModel(subcategorydata);
+  try {
+    await subcatedata.save();
+    console.log("Data Saved");
+    res.redirect('/subcategory/add_subcategory');
+  } catch (err) {
+    console.log("Error In Subcategory");
+    next(err);
+  }
 });
-//add-subcategory
-//data display
-router.get('/data_display',function(req,res,next){
-    console.log("_________________",req.user);
-    subcategoryModel.find(function(err, db_subcategory_array){
+
+router.get('/data_display', async (req, res, next) => {
+  try {
+    const db_subcategory_array = await subcategoryModel.find().populate('_category');
     console.log(db_subcategory_array);
-    if (err) res.json({message: 'There are no posts here.'});
-    subcategoryModel.find({})
-    .populate('_category')
-    .exec(function(err,db_subcategory_array)    
-            {
-                console.log(db_subcategory_array);
-                res.render('SubCategory_display', { subcategory_array : db_subcategory_array});
-            })
-    });
+    res.render('SubCategory_display', { subcategory_array: db_subcategory_array });
+  } catch (err) {
+    console.log("Error");
+    next(err);
+  }
 });
-//data display
-//delete data
-router.get('/delete/:id',function(req,res){
-    subcategoryModel.findByIdAndDelete(req.params.id,function(err,db_subcategory_array){
-        if(err)
-        console.log("Error");
-        else
-        {
-            console.log("-------------------------");
-            console.log(db_subcategory_array);
-            res.redirect('/subcategory/data_display');
-        }
-    });
-});
-//edit data
-router.get('/edit/:id',function(req,res,next){
-    subcategoryModel.findById(req.params.id,function(err,db_subcategory_array,){
-        categoryRouter.find(function(err,db_category_array){
 
-            console.log('--------------------------------------------------');
-            console.log(db_subcategory_array);
-            if(err){
-                console.log("Error in Edit Subcategory");
-            }   
-            else     
-            {        
-                    console.log('--------------------------------------------------');
-                    console.log(db_subcategory_array);
-                    console.log(db_category_array);
-                    res.render('SubCategory_edit', { subcategory_array : db_subcategory_array,category_array:db_category_array});
-            }
-        })
-    });
+router.get('/delete/:id', async (req, res, next) => {
+  try {
+    await subcategoryModel.findByIdAndDelete(req.params.id);
+    console.log("-------------------------");
+    res.redirect('/subcategory/data_display');
+  } catch (err) {
+    console.log("Error");
+    next(err);
+  }
 });
-router.post('/edit/:id',function(req,res){
-    console.log("Edit ID is"+req.params.id);
-        const subcategory_data={
-            subcate_id              :     req.body.subcate_id,
-            subcate_name            :     req.body.subcate_name,
-            _category               :     req.body.category,
-            }
-        subcategoryModel.findByIdAndUpdate(req.params.id,subcategory_data,function(err){
-            if(err)
-            {
-            console.log(req.params.id);
-                console.log("Error in Record Update");
-            }
-        else
-            res.redirect('/subcategory/data_display');
-        });
-    }); 
-//edit data
+
+router.get('/edit/:id', async (req, res, next) => {
+  try {
+    const db_subcategory_array = await subcategoryModel.findById(req.params.id);
+    const db_category_array = await categoryModel.find();
+    console.log('--------------------------------------------------');
+    console.log(db_subcategory_array);
+    console.log(db_category_array);
+    res.render('SubCategory_edit', { subcategory_array: db_subcategory_array, category_array: db_category_array });
+  } catch (err) {
+    console.log("Error in Edit Subcategory");
+    next(err);
+  }
+});
+
+router.post('/edit/:id', async (req, res, next) => {
+  console.log("Edit ID is" + req.params.id);
+  const subcategory_data = {
+    subcate_id: req.body.subcate_id,
+    subcate_name: req.body.subcate_name,
+    _category: req.body.category,
+  }
+  try {
+    await subcategoryModel.findByIdAndUpdate(req.params.id, subcategory_data);
+    console.log("Record Updated");
+    res.redirect('/subcategory/data_display');
+  } catch (err) {
+    console.log("Error in Record Update");
+    next(err);
+  }
+});
+
+router.get('/show/:id', async (req, res, next) => {
+  try {
+    const db_subcategory_array = await subcategoryModel.findById(req.params.id).populate('_category');
+    console.log(db_subcategory_array);
+    res.render('SubCategory_singledata', { subcategory_array: db_subcategory_array });
+  } catch (err) {
+    console.log("Error in single Record Fetch");
+    next(err);
+  }
+});
+
+module.exports = router;
+
 //single-record
-router.get('/show/:id',function(req,res,next){
-    console.log(req.params.id);
-    subcategoryModel.findById(req.params.id,function(err,db_subcategory_array){     
-                    console.log('--------------------------------------------------');
-                    console.log(db_subcategory_array);
-                    if (err) res.json({message: 'There are no posts here.'});
-                    subcategoryModel.findOne({})
-                    .populate('_category')
-                    .exec(function(err,db_subcategory_array)    
-                            {        
-                            console.log('--------------------------------------------------');
-                            console.log(db_subcategory_array);
-                            res.render('SubCategory_singledata', { subcategory_array : db_subcategory_array});
-                        })
-                });  
-    });
-//single-record
-module.exports=router;

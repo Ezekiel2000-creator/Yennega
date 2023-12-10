@@ -6,21 +6,21 @@
         var z=document.forms["registration"]["Customer_contact_no"].value;
         
             if(x==y){
-                var phoneno = /[7-9]{1}[0-9]{9}/ ;
+                var phoneno = /[0-9]{1}[0-9]{9}/ ;
                     if((z.match(phoneno)))
                     {
-                        alert("Registred Successfully");
+                        alert("Nouvel Utilisateur enregistré avec succès");
                         return true;
                     }
                     else
                     {
-                    alert("Contact Number should be 10 letters");
+                    alert("Le  numéro de téléphone doit contenir 10 caractères");
                     return false;
                     }
                 
             }
             else{
-                alert("password don't match");
+                alert("Les mots de passe ne correspondent pas");
             return false;
             }
         }
@@ -43,48 +43,48 @@
                     <div class="card">
                     <div class="card-body">
                         <form method="POST" name="registration" onsubmit="return(passwordconfirm());">
-                                <label for="Customer_id" class=" form-control-label">Customer_id</label>
+                                <label for="Customer_id" class=" form-control-label">Utilisateur_id</label>
                                 <input type="text" placeholder="Enter Customer_Id" value="<%=customer_array.Customer_id%>" name="Customer_id" class="form-control">
-                                <label for="Customer_first_name" class=" form-control-label">Customer FIrst Name</label>
+                                <label for="Customer_first_name" class=" form-control-label">Prénom de l'utilisateur</label>
                                 <input type="text" placeholder="Enter Customer Name" value="<%=customer_array.Customer_first_name%>" name="Customer_first_name"class="form-control">
 
-                                <label for="Customer_last_name" class=" form-control-label">Customer Last Name</label>
+                                <label for="Customer_last_name" class=" form-control-label">Nom de l'utilisateur</label>
                                 <input type="text" placeholder="Enter Customer Last Name" value="<%=customer_array.Customer_last_name%>" name="Customer_last_name"class="form-control">
                                 
-                                <label for="Customer_contact_no" class=" form-control-label">Contact Number</label>
+                                <label for="Customer_contact_no" class=" form-control-label">Numéro de téléphone</label>
                                 <input type="text" placeholder="Enter Contact Number" name="Customer_contact_no" value="<%=customer_array.Customer_contact_no%>"  class="form-control">
                                 
                                 <label for="Customer_email" class=" form-control-label">Email</label>
                                 <input type="email" placeholder="Enter Email" value="<%=customer_array.Customer_email %>"name="Customer_email" class="form-control">
 
-                                <label for="Customer_address" class=" form-control-label">Customer_address</label>
+                                <label for="Customer_address" class=" form-control-label">Adresse de l'utilisateur</label>
                                 <textarea type="text" name="Customer_address"   class="form-control"><%=customer_array.Customer_address %></textarea>
                                 
-                                <label for="Customer_password" class=" form-control-label">Password</label>
+                                <label for="Customer_password" class=" form-control-label">Mot de passe</label>
                                 <input type="text"  value="<%=customer_array.Customer_password%>" name="Customer_password"  placeholder="Enter Password" class="form-control">
                                 
                                 <label for="Customer_confirm_password" class=" form-control-label">Confirm Password</label>
                                 <input type="text"  value="<%=customer_array.Customer_confirm_password%>" name="Customer_confirm_password" class="form-control">
                                 
                                 
-                                <label for="Customer_dob" class=" form-control-label">Date Of Birth</label>
+                                <label for="Customer_dob" class=" form-control-label">Jour de naissance</label>
                                 <input type="date"  value="<%=customer_array.Customer_dob%>"  name="Customer_dob"class="form-control">
 
                                         <div class="col col-md-5">
-                                            <label class=" form-control-label">Customer gender</label>
+                                            <label class=" form-control-label">Sexe de l'utilisateur</label>
                                             <div class="col col-md-9">
                                                 <div class="form-check-inline form-check" >
-                                                        <input type="radio"  name="Customer_gender" value="Male" class="form-check-input" checked>Male
-                                                        <input type="radio" name="Customer_gender" value="Female" class="form-check-input">Female
+                                                        <input type="radio"  name="Customer_gender" value="Male" class="form-check-input" checked>Homme
+                                                        <input type="radio" name="Customer_gender" value="Female" class="form-check-input">Femme
                                                 </div>
                                             </div>
                                         </div>
                                 
                 <button type="submit" class="btn btn-primary btn-sm">
-                                    <i class="fa fa-dot-circle-o"></i> Submit
+                                    <i class="fa fa-dot-circle-o"></i> Enregistrer
                                 </button>
                                 <button type="reset" class="btn btn-danger btn-sm">
-                                    <i class="fa fa-ban"></i> Reset
+                                    <i class="fa fa-ban"></i> Abandonner
                                 </button>
                                 </form>
 
@@ -116,6 +116,7 @@
     <script src="/js/off-canvas.js"></script>
     <script src="/js/hoverable-collapse.js"></script>
     <script src="/js/misc.js"></script>
+<script src="/js/admin.js"></script>
     <script src="/js/settings.js"></script>
     <script src="/js/todolist.js"></script>
     <!-- endinject -->

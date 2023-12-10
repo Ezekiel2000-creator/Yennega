@@ -9,34 +9,29 @@
                                     <div class="table-responsive m-b-40">
                                             <table class="table table-bordered table-data">
                                                     <tr>
-                                                        <td>Customer_id</td>
+                                                        <td>id de l'utilisateur</td>
                                                         <td><%=customer_array.Customer_id%></td>
                                                     </tr>
                                                     <tr>    
-                                                        <td>Customer Name</td>
-                                                        <td><%=customer_array.Customer_name%></td>
+                                                        <td>Nom de l'utilisateur</td>
+                                                        <td>
+                                                            <%=customer_array.Customer_first_name%>
+                                                            <%=customer_array.Customer_last_name%>
+                                                        </td>
                                                     </tr>    
                                                     <tr>
-                                                        <td>Contact Number</td>
+                                                        <td>NUméro de téléphone</td>
                                                         <td><%=customer_array.Customer_contact_no%></td>
-                                                    </tr>
-                                                    <tr>
-                                                        <td>Address</td>
-                                                        <td><%=customer_array.Customer_address%></td>
                                                     </tr>
                                                     <tr>    
                                                         <td>Email</td>
                                                         <td><%=customer_array.Customer_email%></td>
                                                     <tr>    
-                                                        <td>Password</td>
-                                                        <td><%=customer_array.Customer_password%></td>
-                                                    </tr>
-                                                    <tr>    
-                                                        <td>Date Of Birth</td>
+                                                        <td>Date de naissance</td>
                                                         <td><%=customer_array.Customer_dob %></td>
                                                     </tr>
                                                     <tr>    
-                                                        <td>Gender</td>
+                                                        <td>Sexe</td>
                                                         <td><%=customer_array.Customer_gender%></td>
                                                     </tr>
                                             </table>
@@ -56,6 +51,7 @@
    <script src="/js/off-canvas.js"></script>
    <script src="/js/hoverable-collapse.js"></script>
    <script src="/js/misc.js"></script>
+<script src="/js/admin.js"></script>
    <script src="/js/settings.js"></script>
    <script src="/js/todolist.js"></script>
    <!-- endinject -->

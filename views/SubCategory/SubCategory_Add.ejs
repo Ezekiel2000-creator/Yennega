@@ -5,25 +5,25 @@
         <div class="col-lg-12">
             <div class="card">
             <div class="card-body">
-            <h4 class="card-title">SubCategory Form</h4>
+            <h4 class="card-title">Formulaire de sous-catégorie</h4>
             <form action="subcate_process" method="POST">
-                    <label for="SubCategory_id" class=" form-control-label">SubCategory_id</label>
+                    <label for="SubCategory_id" class=" form-control-label">Id de la sous catégorie</label>
                     <input type="text" placeholder="Enter SubCategory_Id" name="subcate_id" class="form-control">
                 
-                    <label for="SubCategory_name" class=" form-control-label">SUbCategory_name</label>
+                    <label for="SubCategory_name" class=" form-control-label">Nom de la sous-catégorie</label>
                     <input type="text" placeholder="Enter Category_Name" name="subcate_name" class="form-control">
                     <div class="card-body card-block" style="right:165px">
-                        <lable>Which Category Product You have?</lable>
+                        <lable>Quels catégories de produits avez-vous?</lable>
                                     <select  name="_category">
                                     <% for(var i=0;i<category_array.length;i++) { %>
                                     <option  name="" value="<%= category_array[i]._id%>"><%=  category_array[i].cate_name  %> </option>
                                     <%  } %>
                                     </select>
                     <button type="submit" class="btn btn-primary btn-sm">
-                        <i class="fa fa-dot-circle-o"></i> Submit
+                        <i class="fa fa-dot-circle-o"></i> Enregistrer
                     </button>
                     <button type="reset" class="btn btn-danger btn-sm">
-                        <i class="fa fa-ban"></i> Reset
+                        <i class="fa fa-ban"></i> Abandonner
                         </button>
                         </div>
                 </form>
@@ -55,6 +55,7 @@
 <script src="/js/off-canvas.js"></script>
 <script src="/js/hoverable-collapse.js"></script>
 <script src="/js/misc.js"></script>
+<script src="/js/admin.js"></script>
 <script src="/js/settings.js"></script>
 <script src="/js/todolist.js"></script>
 <!-- endinject -->

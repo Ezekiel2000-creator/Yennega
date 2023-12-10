@@ -92,6 +92,7 @@ router.get('/data_display', async (req, res) => {
   try {
     // Utilisez la méthode .find() pour récupérer les données de VendorRequest et utilisez .populate() pour peupler le champ "user"
     const vendor_Requests = await vendorRequest.find().populate('user').sort({ dateField: -1 }).exec();
+    console.log("vvvvvvvvvvvvvv", vendor_Requests); 
 
     res.render('Vendorequest_display', { vendor_Requests });
   } catch (err) {

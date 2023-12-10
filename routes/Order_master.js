@@ -2,7 +2,8 @@ var express = require('express');
 var router = express.Router();
 var Orders= require('../Schema/Order_master_table');
 var Customer= require('../Schema/Customer_table');
-var Cart = require('../Schema/Cart')
+var Cart = require('../Schema/Cart');
+const moment = require('moment');
 
 
 //display data
@@ -17,6 +18,7 @@ router.get('/list', async (req, res) => {
       console.log("orderssssssssssss",orders)
   
       res.render('order_display', {
+        moment,
         orders 
       });
   
@@ -25,7 +27,20 @@ router.get('/list', async (req, res) => {
     }
   
   });
+router.post('/update-order', async (req, res) => {
 
+    const { orderId, status } = req.body;
+
+    try {
+        const order = await Order.findById(orderId);
+        order.status = status;
+        await order.save();
+        res.redirect('/list'); // Redirige vers la page de liste
+    } catch (err) {
+        console.log(err);
+        res.status(500).send("Error updating order"); 
+    }
+});
 //delete data
 router.get('/delete/:id',function(req,res){
     Orders.findByIdAndDelete(req.params.id,function(err,db_inquery_array){

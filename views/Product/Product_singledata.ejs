@@ -9,31 +9,40 @@
                                 <div class="table-responsive m-b-40">
                                     <table class="table table-bordered table-data">
                                             <tr>
-                                                <td>Product id</td>
+                                                <td>id du produit</td>
                                                 <td><%=product_array.Product_id%></td>
                                             </tr>
                                             <tr>    
-                                                <td>Product Name</td>
+                                                <td>Nom du produit</td>
                                                 <td><%=product_array.Pro_name%></td>
+                                            </tr>
+                                            <tr>    
+                                                <td>Vendeur du produit</td>
+                                                <td>
+                                                    <a href="/customer/show/<%=product_array.Pro_vendor._id %>">
+                                                        <%=product_array.Pro_vendor.Customer_first_name%> <%=product_array.Pro_vendor.Customer_last_name%> 
+                                                    </a>
+                                                    
+                                                </td>
                                             </tr>    
                                             <tr>
-                                                <td>Product Quantity</td>
+                                                <td>Quantité disponible</td>
                                                 <td><%=product_array.Pro_quantity%></td>
                                             </tr>
                                             <tr>
-                                                <td>Product Image</td>
+                                                <td>Image du produit</td>
                                                 <td><img width="100px" src="/Pro_upload/<%=product_array.Pro_image %>"> </td>
                                             </tr>
                                             <tr>
-                                                <td>Product Date</td>
+                                                <td>Date de création</td>
                                                 <td><%=product_array.Pro_date%></td>
                                             </tr>
                                             <tr>    
-                                                <td>Product Rentprice</td>
-                                                <td><%=product_array.Pro_rentprice%></td>
+                                                <td>Prix de vente</td>
+                                                <td><%=product_array.Pro_rentprice%> FCFA</td>
                                             <tr>    
-                                                <td>Product Amount</td>
-                                                <td><%=product_array.Pro_ammount%></td>
+                                                <td>Prix du produit</td>
+                                                <td><%=product_array.Pro_ammount%> FCFA</td>
                                             </tr>
                                     </table>
                                 </div>
@@ -51,6 +60,7 @@
   <script src="/js/off-canvas.js"></script>
   <script src="/js/hoverable-collapse.js"></script>
   <script src="/js/misc.js"></script>
+<script src="/js/admin.js"></script>
   <script src="/js/settings.js"></script>
   <script src="/js/todolist.js"></script>
   <!-- endinject -->

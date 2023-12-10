@@ -1,11 +1,11 @@
 <%-include('Admin_partial/header')-%>
-<div class="main-panel">
+    <div class="main-panel">
     <div class="content-wrapper">
       <div class="page-header">
         <h3 class="page-title" style="margin-left:200px;padding-top:20px">
-          <b>Customer Table</b>
+          <b>Liste des vendeurs</b>
         </h3>
-        <a href="/customer/registration"><button style=" margin-top: 20px;margin-right: 100px"class="btn btn-rounded btn-fw btn-gradient-primary btn-fw">Add New</button> </a>
+        <a href="/customer/registration"><button style=" margin-top: 20px;margin-right: 100px"class="btn btn-rounded btn-fw btn-gradient-primary btn-fw">Ajouter nouveau</button> </a>
         </div>
         <div class="col-lg-12 stretch-card">
           <div class="card">
@@ -15,14 +15,14 @@
                             <thead>
                                 <tr>
                                     <th>Index</th>
-                                    <th>id</th>        
-                                    <th>first name</th>
-                                    <th>last name</th>     
-                                    <th>contact_no</th>
+                                          
+                                    <th>Prénom</th>
+                                    <th>Nom</th>     
+                                    <th>Numéro de Tel</th>
                                     <th>email</th>          
-                                    <th>gender</th>    
-                                    <th>password</th>  
-                                    <th>Action</th>  
+                                    <th>Sexe</th>    
+                                    
+                                    <!-- <th>Action</th>   -->
                             
                                 </tr>
                             </thead>
@@ -31,28 +31,38 @@
                                 <%  for(var i=0;i<vendors.length;i++)  { %>
                                 <tr>
                                     <td><%=i+1  %></td>
-                                    <td><%=vendors[i].Customer_id %></td>
+                                    
                                     <td><%=vendors[i].Customer_first_name %></td>
                                     <td><%=vendors[i].Customer_last_name %></td>
                                     <td><%=vendors[i].Customer_contact_no %></td>
                                     <td><%=vendors[i].Customer_email %></td>
                                     <td><%=vendors[i].Customer_gender%></td>
-                                    <td><%=vendors[i].Customer_password%></td>
-                                    <td>
+                                    
+                                    <!-- <td>
                                             <a href="show/<%=vendors[i]._id%>"><img title="show" src="/images/icons/show.png"></a>
                                             <a href="edit/<%=vendors[i]._id%>"><img title="edit" src="/images/icons/edit.png"></a>
                                             <a href="delete/<%=vendors[i]._id%>"><img title="delete" src="/images/icons/delete.png"></a>
-                                    </td>
+                                    </td> -->
                                 </tr>
                                 <% } %>
                                 <%  }   else    {%>
-                                    <h2>No Records Found</h2>
+                                    <h2>Pas d'enregistrement trouvé</h2>
                                     <%  }   %>
                             </tbody>
                         </table>
               </div>
             </div>
           </div>
+        </div>
+      </div>
+    </div>
+    <div id="confirmModal" style="display: none;">
+      <div class="modal" >
+        <div class="modal-content">
+          <h2>Confirmation de suppression</h2>
+          <p>Êtes-vous sûr de vouloir supprimer cet élément ?</p>
+          <button id="confirmDelete" class="btn btn-primary btn-sm">Oui</button>
+          <button id="cancelDelete" class="btn btn-danger btn-sm">Non</button>
         </div>
       </div>
     </div>
@@ -65,6 +75,7 @@
     <script src="../../js/off-canvas.js"></script>
     <script src="../../js/hoverable-collapse.js"></script>
     <script src="../../js/misc.js"></script>
+<script src="/js/admin.js"></script>
     <script src="../../js/settings.js"></script>
     <script src="../../js/todolist.js"></script>
     <!-- endinject -->

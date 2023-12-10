@@ -9,7 +9,7 @@ async function getVendors() {
 
     const vendors = await Customer.find({
       isVendor: true
-    });
+    }).sort({ _id: -1 });
 
     return vendors;
 

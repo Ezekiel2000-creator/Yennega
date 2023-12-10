@@ -5,7 +5,7 @@
         <h3 class="page-title" style="margin-left:200px;padding-top:20px">
           <b>Liste des commandes</b>
         </h3>
-        <a href="/customer/registration"><button style=" margin-top: 20px;margin-right: 100px"class="btn btn-rounded btn-fw btn-gradient-primary btn-fw">Add New</button> </a>
+        <a href="/customer/registration"><button style=" margin-top: 20px;margin-right: 100px"class="btn btn-rounded btn-fw btn-gradient-primary btn-fw">Ajouter nouveau</button> </a>
         </div>
         <div class="col-lg-12 stretch-card">
           <div class="card">
@@ -42,13 +42,15 @@
                                     <% }) %>
                                   </td>
                                   
-                                  <td><%= moment(order.date).format('DD/MM/YYYY à HH:mm') %><</td>
+                                  <td><%= moment(order.date).format('DD/MM/YYYY à HH:mm') %></td>
                                   <td><%= order.total %> FCFA</td>
                                   <td><%= order.status %></td>
                                   <td>
-                                    <a href="show/<%=order._id%>"><img title="montrer" src="/images/icons/show.png"></a>
-                                    <a href="edit/<%=order._id%>"><img title="modifier" src="/images/icons/edit.png"></a>
-                                    <a href="delete/<%=order._id%>"><img title="suppromer" src="/images/icons/delete.png"></a>
+                                    <form method="POST">
+                                      <input type="hidden" name="orderId" value="<%= order._id %>">  
+                                      <button type="submit" name="status" value="confirmed" >Confirmer</button>
+                                      <button type="submit" name="status" value="abandoned" >Rejeter</button>
+                                    </form>
                                   </td>
                                 </tr>
                           
@@ -61,6 +63,16 @@
         </div>
       </div>
     </div>
+    <div id="confirmModal" style="display: none;">
+      <div class="modal" >
+        <div class="modal-content">
+          <h2>Confirmation de suppression</h2>
+          <p>Êtes-vous sûr de vouloir supprimer cet élément ?</p>
+          <button id="confirmDelete" class="btn btn-primary btn-sm">Oui</button>
+          <button id="cancelDelete" class="btn btn-danger btn-sm">Non</button>
+        </div>
+      </div>
+    </div>
     <script src="../../vendors/js/vendor.bundle.base.js"></script>
     <script src="../../vendors/js/vendor.bundle.addons.js"></script>
     <!-- endinject -->
@@ -70,6 +82,7 @@
     <script src="../../js/off-canvas.js"></script>
     <script src="../../js/hoverable-collapse.js"></script>
     <script src="../../js/misc.js"></script>
+<script src="/js/admin.js"></script>
     <script src="../../js/settings.js"></script>
     <script src="../../js/todolist.js"></script>
     <!-- endinject -->

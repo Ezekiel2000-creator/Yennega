@@ -3,9 +3,9 @@
     <div class="content-wrapper">
       <div class="page-header">
         <h3 class="page-title" style="margin-left:200px;padding-top:20px">
-          <b>Customer Table</b>
+          <b>Liste des utilisateurs</b>
         </h3>
-        <a href="/customer/registration"><button style=" margin-top: 20px;margin-right: 100px"class="btn btn-rounded btn-fw btn-gradient-primary btn-fw">Add New</button> </a>
+        <a href="/customer/registration"><button style=" margin-top: 20px;margin-right: 100px"class="btn btn-rounded btn-fw btn-gradient-primary btn-fw">Ajouter nouveau</button> </a>
         </div>
         <div class="col-lg-12 stretch-card">
           <div class="card">
@@ -14,14 +14,13 @@
                     <table class="table table-bordered">
                             <thead>
                                 <tr>
-                                    <th>Index</th>
-                                    <th>id</th>        
-                                    <th>first name</th>
-                                    <th>last name</th>     
-                                    <th>contact_no</th>
+                                    <th>Index</th>        
+                                    <th>Prenom</th>
+                                    <th>Nom de famille</th>
+                                    <th>Statut</th>     
+                                    <th>Numéro de téléphone</th>
                                     <th>email</th>          
-                                    <th>gender</th>    
-                                    <th>password</th>  
+                                    <th>Sexe</th>    
                                     <th>Action</th>  
                             
                                 </tr>
@@ -31,13 +30,21 @@
                                 <%  for(var i=0;i<customer_array.length;i++)  { %>
                                 <tr>
                                     <td><%=i+1  %></td>
-                                    <td><%=customer_array[i].Customer_id %></td>
+                              
                                     <td><%=customer_array[i].Customer_first_name %></td>
                                     <td><%=customer_array[i].Customer_last_name %></td>
+                                    <% if(customer_array[i].isAdmin && customer_array[i].isVendor)  { %>
+                                        <td>Vendeur</td>
+                                    <%}else if(customer_array[i].isAdmin){%>
+                                        <td>Administrateur</td>
+                                    <% } else if (customer_array[i].isVendor) { %>
+                                      <td>Administrateur et Vendeur</td>
+                                    <%} else{%>
+                                        <td>Simple utilisateur</td>
+                                    <%}%>
                                     <td><%=customer_array[i].Customer_contact_no %></td>
                                     <td><%=customer_array[i].Customer_email %></td>
                                     <td><%=customer_array[i].Customer_gender%></td>
-                                    <td><%=customer_array[i].Customer_password%></td>
                                     <td>
                                             <a href="show/<%=customer_array[i]._id%>"><img title="show" src="/images/icons/show.png"></a>
                                             <a href="edit/<%=customer_array[i]._id%>"><img title="edit" src="/images/icons/edit.png"></a>
@@ -46,13 +53,23 @@
                                 </tr>
                                 <% } %>
                                 <%  }   else    {%>
-                                    <h2>No Records Found</h2>
+                                    <h2>Pas d'enregistrement trouvé</h2>
                                     <%  }   %>
                             </tbody>
-                        </table>
+                    </table>
               </div>
             </div>
           </div>
+        </div>
+      </div>
+    </div>
+    <div id="confirmModal" style="display: none;">
+      <div class="modal" >
+        <div class="modal-content">
+          <h2>Confirmation de suppression</h2>
+          <p>Êtes-vous sûr de vouloir supprimer cet élément ?</p>
+          <button id="confirmDelete" class="btn btn-primary btn-sm">Oui</button>
+          <button id="cancelDelete" class="btn btn-danger btn-sm">Non</button>
         </div>
       </div>
     </div>
@@ -65,6 +82,7 @@
     <script src="../../js/off-canvas.js"></script>
     <script src="../../js/hoverable-collapse.js"></script>
     <script src="../../js/misc.js"></script>
+    <script src="/js/admin.js"></script>
     <script src="../../js/settings.js"></script>
     <script src="../../js/todolist.js"></script>
     <!-- endinject -->

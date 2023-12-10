@@ -79,7 +79,7 @@ const deleteCity = async (req, res) => {
 // Afficher la liste des lieux de livraison
 router.get('/list', async (req, res) => {
     try {
-      const cities = await City.find();
+      const cities = await City.find().sort({ _id: -1 });
       res.render('Display_Adress', { cities });
     } catch (error) {
       res.status(500).json({ message: error.message });
