@@ -1,6 +1,6 @@
 var express= require('express');
 var router=express.Router();
-var categoryRouter=require('../Schema/Category_table');
+var categoryModel=require('../Schema/Category_table');
 var subcategoryModel=  require('../Schema/SubCategory_table');
 var Cart= require('../Schema/Cart');
 const jwt = require('jsonwebtoken');

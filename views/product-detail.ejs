@@ -45,30 +45,36 @@
 										<div id="pd-o-initiate">
 											<div class="pd-o-img-wrap" data-src="/Pro_upload/<%=`${products.Pro_image}`%>">
 
-												<img class="u-img-fluid" src="/Pro_upload/<%=`${products.Pro_image}`%>" data-zoom-image="/Pro_upload/<%=`${products.Pro_image}`%>" alt=""></div>
-											<div class="pd-o-img-wrap" data-src="/images/product/product-d-2.jpg">
+												<img class="u-img-fluid" src="/Pro_upload/<%=`${products.Pro_image}`%>" data-zoom-image="/Pro_upload/<%=`${products.Pro_image}`%>" alt="">
+											</div>
+											<!-- <div class="pd-o-img-wrap" data-src="/images/product/product-d-2.jpg">
 
-												<img class="u-img-fluid" src="/images/product/product-d-2.jpg" data-zoom-image="/images/product/product-d-2.jpg" alt=""></div>
+												<img class="u-img-fluid" src="/images/product/product-d-2.jpg" data-zoom-image="/images/product/product-d-2.jpg" alt="">
+											</div>
 											<div class="pd-o-img-wrap" data-src="/images/product/product-d-3.jpg">
 
-												<img class="u-img-fluid" src="/images/product/product-d-3.jpg" data-zoom-image="/images/product/product-d-3.jpg" alt=""></div>
+												<img class="u-img-fluid" src="/images/product/product-d-3.jpg" data-zoom-image="/images/product/product-d-3.jpg" alt="">
+											</div>
 											<div class="pd-o-img-wrap" data-src="/images/product/product-d-4.jpg">
 
-												<img class="u-img-fluid" src="/images/product/product-d-4.jpg" data-zoom-image="/images/product/product-d-4.jpg" alt=""></div>
+												<img class="u-img-fluid" src="/images/product/product-d-4.jpg" data-zoom-image="/images/product/product-d-4.jpg" alt="">
+											</div>
 											<div class="pd-o-img-wrap" data-src="/images/product/product-d-5.jpg">
 
-												<img class="u-img-fluid" src="/images/product/product-d-5.jpg" data-zoom-image="/images/product/product-d-5.jpg" alt=""></div>
+												<img class="u-img-fluid" src="/images/product/product-d-5.jpg" data-zoom-image="/images/product/product-d-5.jpg" alt="">
+											</div> -->
 										</div>
 
-										<span class="pd-text">Click for larger zoom</span>
+										<span class="pd-text">Cliquez pour un zoom plus large</span>
 									</div>
 									<div class="u-s-m-t-15">
 										<div class="slider-fouc">
 											<div id="pd-o-thumbnail">
 												<div>
 
-													<img class="u-img-fluid" src="/Pro_upload/<%=`${products.Pro_image}`%>" alt=""></div>
-												<div>
+													<img class="u-img-fluid" src="/Pro_upload/<%=`${products.Pro_image}`%>" alt="<%=`${products.Pro_name}`%>">
+												</div>
+												<!-- <div>
 
 													<img class="u-img-fluid" src="/images/product/product-d-2.jpg" alt=""></div>
 												<div>
@@ -79,7 +85,7 @@
 													<img class="u-img-fluid" src="/images/product/product-d-4.jpg" alt=""></div>
 												<div>
 
-													<img class="u-img-fluid" src="/images/product/product-d-5.jpg" alt=""></div>
+													<img class="u-img-fluid" src="/images/product/product-d-5.jpg" alt=""></div> -->
 											</div>
 										</div>
 									</div>
@@ -303,7 +309,7 @@
 
 										<!--====== Tab 2 ======-->
 										<div class="tab-pane" id="pd-tag">
-											<div class="pd-tab__tag">
+											<!-- <div class="pd-tab__tag">
 												<h2 class="u-s-m-b-15">ADD YOUR TAGS</h2>
 												<div class="u-s-m-b-15">
 													<form>
@@ -314,7 +320,7 @@
 												</div>
 
 												<span class="gl-text">Use spaces to separate tags. Use single quotes (') for phrases.</span>
-											</div>
+											</div> -->
 										</div>
 										<!--====== End - Tab 2 ======-->
 
@@ -360,12 +366,13 @@
 																  
 																<% } %>
 															</div>
-															<div class="u-s-m-b-15">
+															<!-- <div class="u-s-m-b-15">
 
 																<label for="sort-review"></label><select class="select-box select-box--primary-style" id="sort-review">
 																	<option selected>Sort by: Best Rating</option>
 																	<option>Sort by: Worst Rating</option>
-																</select></div>
+																</select>
+															</div> -->
 														</div>
 														<div class="rev-f1__review">
 															<% products.Ratings.forEach((rating, index) => { %>
@@ -509,14 +516,14 @@
 															<div class="u-s-m-b-15">
 
 																<label class="gl-label" for="reviewer-text">VOTRE AVIS *</label>
-																<textarea class="text-area text-area--primary-style" id="reviewer-text" name="comment"></textarea>
+																<textarea class="text-area text-area--primary-style" id="reviewer-text" name="comment" required></textarea>
 															</div>
 															<div>
 																<p class="u-s-m-b-30">
 
 																	<label class="gl-label" for="reviewer-name">NOM *</label>
 
-																	<input class="input-text input-text--primary-style" type="text" id="reviewer-name"></p>
+																	<input class="input-text input-text--primary-style" type="text" id="reviewer-name" required></p>
 																<p class="u-s-m-b-30">
 
 																	<label class="gl-label" for="reviewer-email">EMAIL *</label>

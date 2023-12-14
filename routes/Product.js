@@ -87,7 +87,7 @@ router.post('/regi_process', async (req, res) => {
             Pro_rentprice  :  req.body.Pro_rentprice,   
             Pro_ammount    :  req.body.Pro_ammount,
             Pro_vendor     :  req.body.Pro_vendor,
-            Pro_description:  req.body.Pro_descrption,
+            Pro_description:  req.body.Pro_description,
             Pro_subcategory:  req.body.Pro_subcategory,
         }
       
@@ -212,7 +212,7 @@ router.post('/edit/:id', async function(req, res) {
           Pro_rentprice: req.body.Pro_rentprice,   
           Pro_ammount: req.body.Pro_ammount,
           Pro_vendor: req.body.Pro_vendor,
-          Pro_description: req.body.Pro_descrption,
+          Pro_description: req.body.Pro_description,
           Pro_subcategory: req.body.Pro_subcategory,
       }
       console.log("Update data is "+product_data);
@@ -236,7 +236,7 @@ router.get('/show/:id', async function(req, res) {
   console.log(req.params.id);
   try {
       const db_product_array = await productModel.findById(req.params.id).populate("Pro_vendor");
-      console.log(db_product_array);
+      console.log("iiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiii",db_product_array);
       res.render('Product_singledata', {product_array:db_product_array});
   } catch (err) {
       console.log("Error in single Record Fetch");

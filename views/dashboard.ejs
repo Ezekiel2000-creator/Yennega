@@ -477,8 +477,8 @@
             </h3>
             <nav aria-label="breadcrumb">
               <ol class="breadcrumb">
-                <li class="breadcrumb-item"><a href="#">Home</a></li>
-                <li class="breadcrumb-item active" aria-current="page">Dashboard</li>
+                <li class="breadcrumb-item"><a href="#">Accueil</a></li>
+                <li class="breadcrumb-item active" aria-current="page">Tableau de bord</li>
               </ol>
             </nav>
           </div>
@@ -504,8 +504,10 @@
                   <div class="d-flex align-items-start">
                     <i class="mdi mdi-cards-playing-outline mdi-48px"></i>
                     <div class="ml-4">
-                      <h2 class="mb-2"><%=category_array.length %></h2>
-                      <h4 class="mb-0">Total Vendeurs</h4>
+                      <a style="color: white" class="nav-link"href="/vendor/data_display">
+                        <h2 class="mb-2"><%=category_array.length %></h2>
+                        <h4 class="mb-0">Total Vendeurs</h4>
+                      </a>
                     </div>
                   </div>
                 </div>
@@ -517,8 +519,10 @@
                   <div class="d-flex align-items-start">
                     <i class="mdi mdi-cart mdi-48px"></i>
                     <div class="ml-4">
-                      <h2 class="mb-2">83,900</h2>
-                      <h4 class="mb-0">Total Commandes</h4>
+                      <a style="color: white" class="nav-link"href="/orders/list">
+                        <h2 class="mb-2"><%=order_array.length %></h2>
+                        <h4 class="mb-0">Total Commandes</h4>
+                      </a>
                     </div>
                   </div>
                 </div>
@@ -545,10 +549,12 @@
                 <div class="col-12 grid-margin stretch-card">
                   <div class="card">
                     <div class="card-body d-flex flex-column justify-content-center">
-                      <div class="d-flex mb-3 align-items-center">
-                        <h3 class="mb-0">34,789</h3>
-                        <span class="ml-auto">Demandes d'inscription</span>
-                      </div>
+                      <a href="/vendorRequest/data_display">
+                        <div class="d-flex mb-3 align-items-center">
+                          <h3 class="mb-0"><%=vendorRequest_array.length %></h3>
+                          <span class="ml-auto">Demandes d'inscription</span>
+                        </div>
+                      </a>
                       <div class="progress progress-sm">
                         <div class="progress-bar bg-gradient-info" role="progressbar" aria-valuenow="76" style="width: 76%" aria-valuemin="0" aria-valuemax="100"></div>
                       </div>
@@ -600,12 +606,15 @@
                 <div class="col-12 grid-margin stretch-card">
                   <div class="card">
                     <div class="card-body">
-                      <h4 class="card-title">Nouvelles demandes d'inscription(Vendeur)
-                        <span class="float-right text-primary text-small">
-                          Voir tout
-                        </span>
+                      <h4 class="card-title">Nouvelles commandes (Vendeur)
+                        <a href="/orders/list">
+                          <span class="float-right text-primary text-small">
+                            Voir tout
+                          </span>
+                        </a>
+                        
                       </h4>
-                      <div class="table-responsive">
+                      <div class="table-responsive"style="height: 600px; overflow-y: scroll">
                         <table class="table">
                           <thead>
                             <tr>
@@ -613,119 +622,39 @@
                                 Nom d'utilisateur
                               </th>
                               <th>
-                                Candidate ID
+                                Date
                               </th>
                               <th>
-                                Stream
+                                Prix total
                               </th>
                               <th>
-                                Statut de la demande
+                                Etats de la commande
                               </th>
                             </tr>
                           </thead>
-                          <tbody>
-                            <tr>
-                              <td>
-                                Gary Edison
-                              </td>
-                              <td>
-                                80363477
-                              </td>
-                              <td>
-                                Development
-                              </td>
-                              <td>
-                                <label class="badge badge-outline-success">Accepted</label>
-                              </td>
-                            </tr>
-                            <tr>
-                              <td>
-                                <div class="form-check">
-                                  <label class="form-check-label">
-                                    <input type="checkbox" class="form-check-input">
-                                  </label>
-                                </div>
-                              </td>
-                              <td>
-                                <img src="images/faces/face1.jpg" alt="image" class="img-sm rounded-circle mr-2"/>
-                                Watt Mark
-                              </td>
-                              <td>
-                                80363477
-                              </td>
-                              <td>
-                                Data analysis
-                              </td>
-                              <td>
-                                <label class="badge badge-outline-danger">Rejected</label>
-                              </td>
-                            </tr>
-                            <tr>
-                              <td>
-                                <div class="form-check">
-                                  <label class="form-check-label">
-                                    <input type="checkbox" class="form-check-input" checked>
-                                  </label>
-                                </div>
-                              </td>
-                              <td>
-                                <img src="images/faces/face12.jpg" alt="image" class="img-sm rounded-circle mr-2"/>
-                                James Disney
-                              </td>
-                              <td>
-                                80363477
-                              </td>
-                              <td>
-                                Designing
-                              </td>
-                              <td>
-                                <label class="badge badge-outline-warning">On hold</label>
-                              </td>
-                            </tr>
-                            <tr>
-                              <td>
-                                <div class="form-check">
-                                  <label class="form-check-label">
-                                    <input type="checkbox" class="form-check-input">
-                                  </label>
-                                </div>
-                              </td>
-                              <td>
-                                <img src="images/faces/face2.jpg" alt="image" class="img-sm rounded-circle mr-2"/>
-                                Genelia Perkins
-                              </td>
-                              <td>
-                                80363477
-                              </td>
-                              <td>
-                                Testing
-                              </td>
-                              <td>
-                                <label class="badge badge-outline-success">Accepted</label>
-                              </td>
-                            </tr>
-                            <tr>
-                              <td>
-                                <div class="form-check">
-                                  <label class="form-check-label">
-                                    <input type="checkbox" class="form-check-input">
-                                  </label>
-                                </div>
-                              </td>
-                              <td>
-                                <img src="images/faces/face9.jpg" alt="image" class="img-sm rounded-circle mr-2"/>
-                                Jay Morgan
-                              </td>
-                              <td>
-                                80363477
-                              </td>
-                              <td>
-                                Development
-                              </td>
-                              <td>
-                                <label class="badge badge-outline-warning">On hold</label>
-                              </td>
-                            </tr>
+                          <tbody >
+                            <% order_array.forEach(order => { %>
+                              <tr>
+                                <td>
+                                  <%=`${order.user.Customer_first_name}`%> <%=`${order.user.Customer_last_name }`%>
+                                </td>
+                                <td>
+                                  <%= moment(order.date).format('DD/MM/YYYY à HH:mm') %>
+                                </td>
+                                <td>
+                                  <%= order.total %> FCFA
+                                </td>
+                                <td>
+                                  <% if (order.status === 'validated'){ %>
+                                    <label class="badge badge-outline-success">Accepté</label>
+                                  <% } else if (order.status === 'pending'){ %>
+                                    <label class="badge badge-outline-warning">En cours</label>
+                                  <% } else if (order.status === 'rejected'){ %>
+                                    <label class="badge badge-outline-danger">Rejeté</label>
+                                  <% } %>
+                                </td>
+                              </tr>
+                            <%})%>
                           </tbody>
                         </table>
                       </div>
@@ -736,10 +665,12 @@
                 <div class="col-12 grid-margin stretch-card">
                   <div class="card">
                     <div class="card-body">
-                      <h4 class="card-title clearfix">Tickets
-                        <span class="float-right text-primary text-small">
-                          view all
-                        </span>
+                      <h4 class="card-title clearfix">Demande d'inscription (Vendeur)
+                        <a href="/vendorRequest/data_display">
+                          <span class="float-right text-primary text-small">
+                            Voir tout
+                          </span>
+                        </a>
                       </h4>
                       <div class="d-flex align-items-start border-bottom py-4">
                         <div class="form-check my-0">
@@ -818,9 +749,9 @@
                       <div class="d-lg-flex align-items-center text-center text-lg-left">
                         <img src="images/faces/face15.jpg" class="img-lg rounded-circle mr-lg-4 mb-3 mb-lg-0" alt="image"/>
                         <div>
-                          <p class="text-small mb-2">YOUR CONTACT</p>
+                          <p class="text-small mb-2">VOTRE CONTACT</p>
                           <h5>Ernest Estrada</h5>
-                          <p class="font-weight-light mb-0">Managing Director</p>
+                          <p class="font-weight-light mb-0">Administrateur</p>
                         </div>
                       </div>
                       <div class="mt-4 d-flex">

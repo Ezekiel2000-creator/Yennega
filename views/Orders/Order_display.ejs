@@ -46,10 +46,16 @@
                                   <td><%= order.total %> FCFA</td>
                                   <td><%= order.status %></td>
                                   <td>
-                                    <form method="POST">
+                                    <form class="confirmation-form" method="POST" action="/orders/update-order" id="form">
                                       <input type="hidden" name="orderId" value="<%= order._id %>">  
-                                      <button type="submit" name="status" value="confirmed" >Confirmer</button>
-                                      <button type="submit" name="status" value="abandoned" >Rejeter</button>
+                                      <button type="submit" name="status" onclick="togglePopup('confirmPopup', 'acceptée')" value="validated">
+                                        <i title="Valider" class="fas fa-check"></i> <!-- Icône de confirmation -->
+                                      </button>
+                                      
+                                      <button type="submit" name="status" onclick="togglePopup('rejectPopup', 'abandoned')" value="rejected">
+                                        <i title="Rejeter" class="fas fa-times"></i> <!-- Icône de rejet -->
+                                      </button>
+                                      </button>
                                     </form>
                                   </td>
                                 </tr>
@@ -68,11 +74,61 @@
         <div class="modal-content">
           <h2>Confirmation de suppression</h2>
           <p>Êtes-vous sûr de vouloir supprimer cet élément ?</p>
-          <button id="confirmDelete" class="btn btn-primary btn-sm">Oui</button>
-          <button id="cancelDelete" class="btn btn-danger btn-sm">Non</button>
+          <div class="modal-buttons">
+            <button id="confirmDelete" class="btn btn-primary btn-sm">Oui</button>
+            <button id="cancelDelete" class="btn btn-danger btn-sm">Non</button>
+          </div>
         </div>
       </div>
     </div>
+
+    <div id="confirmPopup" style="display: none;">
+      <div class="modal">
+          <div class="modal-content">
+              <h2>Confirmation de validation</h2>
+              <p>Êtes-vous sûr de vouloir valider cette commande ?</p>
+              <button class="btn btn-primary btn-sm" onclick="confirmAction('acceptée')">Oui</button>
+              <button class="btn btn-danger btn-sm" onclick="hidePopup('confirmPopup')">Non</button>
+          </div>
+      </div>
+    </div>
+  
+    <div id="rejectPopup" style="display: none;">
+        <div class="modal">
+            <div class="modal-content">
+                <h2>Confirmation de validation</h2>
+                <p>Êtes-vous sûr de vouloir rejeter cette commande ?</p>
+                <button class="btn btn-primary btn-sm" onclick="confirmAction('abandoned')">Oui</button>
+                <button class="btn btn-danger btn-sm" onclick="hidePopup('rejectPopup')">Non</button>
+            </div>
+        </div>
+    </div>
+    <script>
+      function togglePopup(popupId, status) {
+        event.preventDefault();
+        var popup = document.getElementById(popupId);
+        if (popup) {
+          popup.style.display = 'block';
+          document.getElementById(popupId + '-status').value = status;
+        }
+      }
+    
+      function hidePopup(popupId) {
+        var popup = document.getElementById(popupId);
+        if (popup) {
+          popup.style.display = 'none';
+        }
+      }
+    
+      function confirmAction() {
+        // Code pour soumettre le formulaire ou effectuer toute autre action nécessaire
+        var form = document.querySelector('.confirmation-form');
+        if (form) {
+          form.submit();
+        }
+      }
+    </script>
+    
     <script src="../../vendors/js/vendor.bundle.base.js"></script>
     <script src="../../vendors/js/vendor.bundle.addons.js"></script>
     <!-- endinject -->

@@ -421,7 +421,9 @@ app.get("/articles", async (req, res) => {
       var categories = Object.values(categoriesMap);
   
       let foundProducts;
-      let query = {};
+      let query = {
+        Pro_quantity: { $gt: 0 } 
+      };
       if (req.query.query) {
         var search = req.query.query;
         query.$or = [

@@ -184,7 +184,7 @@
             <div class="main__content">
                 <!-- ==================-->
                 <!-- Home Page -->
-                <div class="<%= section === 'home' ? 'home section' : 'home hide-item section' %>" data-section="home">
+                <div class="" data-section="home">
                     <h2 class="my-3">Overview Dashboard</h2>
 
                     <!-- TOP CARDS -->
@@ -361,7 +361,7 @@
 
                 <!-- ==================-->
                 <!-- Orders Page -->
-                <div class="<%= section === 'orders' ? 'orders section' : 'orders hide-item section' %>" data-section="orders">
+                <div class="" data-section="orders">
                     <h2 class="my-3">Orders</h2>
 
                     <div class="table card my-3">
@@ -767,7 +767,7 @@
 
                 <!-- ==================-->
                 <!-- Abandoned Orders Page -->
-                <div class="<%= section === 'abandoned' ? 'abandoned section' : 'abandoned hide-item section' %>" data-section="abandoned">
+                <div class="" data-section="abandoned">
                     <h2 class="my-3">Abandoned Checkouts</h2>
                     <div class="table card my-3">
                         <div class="table--filter mb-2">
@@ -947,7 +947,7 @@
 
                 <!-- ==================-->
                 <!-- Single Order Page -->
-                <div class="<%= section === 'singleOrder' ? 'singleOrder section' : 'singleOrder hide-item section' %>">
+                <div class="">
                     <div class="singleOrder__header">
                         <div class="breadcramb mt-3">
                             <i class="fas fa-angle-left mr-1"></i>Orders
@@ -4587,6 +4587,7 @@
             </div>
             <!-- End Main Content -->
         </main>
-        <script src="/./js/script.js"></script>
+        <%-include('Admin_partial/script')-%>
+        <script src="/js/script.js"></script>
     </body>
 </html>

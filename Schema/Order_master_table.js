@@ -9,6 +9,9 @@ const OrderSchema = new Schema({
   total: Number,
   grand_Total: Number,
   deliveryAddress: String,
-  status: String
+  status: {
+    type: String,
+    enum: ['pending', 'validated','rejected'],
+  }
 });
 module.exports = mongoose.model('Order', OrderSchema);

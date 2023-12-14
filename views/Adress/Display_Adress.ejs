@@ -51,13 +51,13 @@
                                       <% } %>
                                     </td>
                                     <td>
-                                      <a href="/delivery/show/<%= city._id %>">
+                                      <!-- <a href="/delivery/show/<%= city._id %>">
                                         <img title="montrer" src="/images/icons/show.png">
                                       </a>
                                       <a href="/delivery/edit/<%= city._id %>">
                                         <img title="modifier" src="/images/icons/edit.png">
-                                      </a>
-                                      <a href="/delivery/delete/<%= city._id %>">
+                                      </a> -->
+                                      <a href="delete/<%= city._id %>">
                                         <img title="supprimer" src="/images/icons/delete.png">
                                       </a>
                                     </td>
@@ -81,6 +81,7 @@
         <div class="modal-content">
           <h2>Confirmation de suppression</h2>
           <p>Êtes-vous sûr de vouloir supprimer cet élément ?</p>
+        <div class="modal-buttons">
           <button id="confirmDelete" class="btn btn-primary btn-sm">Oui</button>
           <button id="cancelDelete" class="btn btn-danger btn-sm">Non</button>
         </div>

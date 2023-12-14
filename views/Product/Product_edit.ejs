@@ -42,12 +42,15 @@
                               src="/Pro_upload/<%=product_array.Pro_image%>"
                               width="100px"
                               alt="img"
+                              required
                             />
                             <input
                               type="file"
+                              value="<%=product_array.Pro_image%>"
                               name="Pro_image"
                               class="form-control"
                               accept="image/*"
+                              required
                             />
                             <input
                               type="text"
@@ -55,6 +58,7 @@
                               name="past_image"
                               class="form-control"
                               hidden
+                              required
                             />
                   
                             <label for="Pro_descriptioin" class="form-control-label">Détails du produit</label>
@@ -62,12 +66,13 @@
                               placeholder="Veuillez entrer les détails concernant le produit"
                               name="Pro_description"
                               class="form-control"
+                              required
                             ><%=product_array.Pro_description %></textarea>
                           </div>
                   
                           <div class="col-md-6">
                             <label for="Pro_subcategory" class="form-control-label">Catégorie du produit</label>
-                            <select name="Pro_subcategory" class="form-control">
+                            <select name="Pro_subcategory" class="form-control" required>
                               <% categories.forEach(categorie => { %>
                               <option value="<%= categorie._id %>"><%= categorie.subcate_name %></option>
                               <% }); %>
@@ -87,6 +92,7 @@
                               name="Pro_quantity"
                               class="form-control"
                               value="<%=product_array.Pro_quantity %>"
+                              required
                             />
                   
                             <label for="Pro_rentprice" class="form-control-label">Prix de vente</label>
@@ -96,6 +102,7 @@
                               name="Pro_rentprice"
                               class="form-control"
                               value="<%=product_array.Pro_rentprice %>"
+                              required
                             />
                   
                             <label for="Pro_ammount" class="form-control-label">Prix de vente de comparaison</label>

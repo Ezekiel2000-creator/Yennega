@@ -28,6 +28,7 @@
                                       placeholder="Enter Product id"
                                       name="Product_id"
                                       class="form-control"
+                                      
                                     />
                               
                                     <label for="Pro_name" class="form-control-label">Nom du produit</label>
@@ -36,6 +37,7 @@
                                       placeholder="Enter Product Name"
                                       name="Pro_name"
                                       class="form-control"
+                                      required
                                     />
                               
                                     <label for="Pro_description" class="form-control-label">
@@ -45,21 +47,23 @@
                                       placeholder="Veuillez entrer les détails concernant le produit"
                                       name="Pro_description"
                                       class="form-control"
+                                      required
                                     ></textarea>
 
                                     <label for="Pro_subcategory" class="form-control-label">
                                         Catégorie du produit
                                       </label>
-                                      <select name="Pro_subcategory" class="form-control">
+                                      <select name="Pro_subcategory" class="form-control" required>
                                         <% categories.forEach(categorie => { %>
                                         <option value="<%= categorie._id %>"><%= categorie.subcate_name %></option>
                                         <% }); %>
+                                        
                                       </select>
                                   </div>
                               
                                   <div class="col-md-6">
                                     <label for="Pro_vendor" class="form-control-label">Vendeur</label>
-                                    <select name="Pro_vendor" class="form-control">
+                                    <select name="Pro_vendor" class="form-control" required>
                                       <% vendors.forEach(vendor => { %>
                                       <option value="<%= vendor._id %>"><%= vendor.Customer_first_name %> <%= vendor.Customer_last_name %></option>
                                       <% }); %>
@@ -68,9 +72,18 @@
                                     <label for="Product_image" class="form-control-label">
                                       Image du produit
                                     </label>
-                                    <input type="file" name="Pro_image" class="form-control" />
+                                    <input type="file" name="Pro_image" class="form-control" required/>
+
+                                    <label for="Pro_quantity" class="form-control-label">Quantité du produit</label>
+                                    <input
+                                      type="Number"
+                                      placeholder="Entrez la quantité du produit"
+                                      name="Pro_quantity"
+                                      class="form-control"
+                                      required
+                                    />
                               
-                                    <label for="Pro_rentprice" class="form-control-label">
+                                    <label for="Pro_rentprice" class="form-control-label" required>
                                       Prix de vente du produit actuelle
                                     </label>
                                     <input
@@ -78,9 +91,10 @@
                                       placeholder="Enter Product Rent Price"
                                       name="Pro_rentprice"
                                       class="form-control"
+                                      required
                                     />
                               
-                                    <label for="Pro_ammount" class="form-control-label">
+                                    <label for="Pro_ammount" class="form-control-label" required>
                                       Prix de comparaison du produit
                                     </label>
                                     <input
@@ -88,6 +102,7 @@
                                       placeholder="Enter Product Amount "
                                       name="Pro_ammount"
                                       class="form-control"
+                                      required
                                     />
                                   </div>
                                   <div class="form-group mt-5">

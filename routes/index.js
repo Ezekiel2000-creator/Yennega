@@ -1,8 +1,11 @@
 var express = require('express');
 var router = express.Router();
+const moment = require('moment');
 var AdminLoginModel=require('../Schema/Admin_table');
 var CustomerModel=require('../Schema/Customer_table');
 var CategoryModel=require('../Schema/Category_table');
+var OrderModel=require("../Schema/Order_master_table");
+var VendorRequest =require("../Schema/Vendor_request");
 /* GET home page. */ 
 router.get('/admin', async (req, res, next) => {
 
@@ -99,16 +102,32 @@ router.get('/forgotpassword', function(req, res, next) {
   res.render('forgot_password');
 });
 
-router.get('/dashboard', function(req, res, next) {
-  CustomerModel.find(function(err,db_customer_array){
+router.get('/dashboard', async (req, res, next) => {
+  try {
+    const db_customer_array = await CustomerModel.find();
 
-  CategoryModel.find(function(err,db_category_table){
-    if(err){
-      console.log("error");
-    }else{
-        res.render('dashboard',{customer_array:db_customer_array,category_array:db_category_table});
-      }
+    const db_category_table = await CategoryModel.find();
+
+    const db_order_table = await OrderModel.find()
+    .sort({_id:-1})
+    .populate("user");
+    
+    const db_vendorRequest_table = await VendorRequest.find()
+    .sort({_id:-1})
+    .populate("user");
+    
+
+    res.render('dashboard', {
+      moment,
+      customer_array: db_customer_array,
+      category_array: db_category_table,
+      order_array   : db_order_table,
+      vendorRequest_array : db_vendorRequest_table,
     });
-  });
+
+  } catch (error) {
+    console.log(error);
+    res.status(500).send("Erreur interne du serveur"); 
+  }
 });
 module.exports = router;

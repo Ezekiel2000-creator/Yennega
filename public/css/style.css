@@ -18308,40 +18308,35 @@ input:focus {
 
 @font-face {
   font-family: 'NunitoSans';
-  src: url("http://www.urbanui.com/");
-  src: url("../fonts/Nunito_Sans/NunitoSans-Lightd41d.eot?#iefix") format("embedded-opentype"), url("../fonts/Nunito_Sans/NunitoSans-Light.html") format("woff2"), url("../fonts/Nunito_Sans/NunitoSans-Light.woff") format("woff"), url("../fonts/Nunito_Sans/NunitoSans-Light.ttf") format("truetype");
+  src: url("https://fonts.googleapis.com/css2?family=Nunito+Sans:wght@300&display=swap");
   font-weight: 300;
   font-style: normal;
 }
 
 @font-face {
   font-family: 'NunitoSans';
-  src: url("../fonts/Nunito_Sans/NunitoSans-Regular.eot");
-  src: url("../fonts/Nunito_Sans/NunitoSans-Regulard41d.eot?#iefix") format("embedded-opentype"), url("../fonts/Nunito_Sans/NunitoSans-Regular.html") format("woff2"), url("../fonts/Nunito_Sans/NunitoSans-Regular.woff") format("woff"), url("../fonts/Nunito_Sans/NunitoSans-Regular.ttf") format("truetype");
+  src: url("https://fonts.googleapis.com/css2?family=Nunito+Sans:wght@400&display=swap");
   font-weight: normal;
+  font-style: normal; 
+}
+
+@font-face {
+  font-family: 'NunitoSans';
+  src: url("https://fonts.googleapis.com/css2?family=Nunito+Sans:wght@600&display=swap");
+  font-weight: 600; 
   font-style: normal;
 }
 
 @font-face {
   font-family: 'NunitoSans';
-  src: url("../fonts/Nunito_Sans/NunitoSans-SemiBold.eot");
-  src: url("../fonts/Nunito_Sans/NunitoSans-SemiBoldd41d.eot?#iefix") format("embedded-opentype"), url("../fonts/Nunito_Sans/NunitoSans-SemiBold.html") format("woff2"), url("../fonts/Nunito_Sans/NunitoSans-SemiBold.woff") format("woff"), url("../fonts/Nunito_Sans/NunitoSans-SemiBold.ttf") format("truetype");
-  font-weight: 600;
-  font-style: normal;
-}
-
-@font-face {
-  font-family: 'NunitoSans';
-  src: url("../fonts/Nunito_Sans/NunitoSans-Bold.eot");
-  src: url("../fonts/Nunito_Sans/NunitoSans-Boldd41d.eot?#iefix") format("embedded-opentype"), url("../fonts/Nunito_Sans/NunitoSans-Bold.html") format("woff2"), url("../fonts/Nunito_Sans/NunitoSans-Bold.woff") format("woff"), url("../fonts/Nunito_Sans/NunitoSans-Bold.ttf") format("truetype");
+  src: url("https://fonts.googleapis.com/css2?family=Nunito+Sans:wght@700&display=swap");
   font-weight: 700;
-  font-style: normal;
+  font-style: normal;  
 }
 
 @font-face {
   font-family: 'NunitoSans';
-  src: url("../fonts/Nunito_Sans/NunitoSans-Black.eot");
-  src: url("../fonts/Nunito_Sans/NunitoSans-Blackd41d.eot?#iefix") format("embedded-opentype"), url("../fonts/Nunito_Sans/NunitoSans-Black.html") format("woff2"), url("../fonts/Nunito_Sans/NunitoSans-Black.woff") format("woff"), url("../fonts/Nunito_Sans/NunitoSans-Black.ttf") format("truetype");
+  src: url("https://fonts.googleapis.com/css2?family=Nunito+Sans:wght@900&display=swap");
   font-weight: 900;
   font-style: normal;
 }
@@ -28988,13 +28983,14 @@ button[type="submit"]:hover {
   opacity: 0.8;
 }
 .modal {
-  position: fixed; 
+  display: none;
+  position: fixed;
   left: 0;
   top: 0;
-  width: 100%; 
-  height: 100%; 
-  overflow: auto; 
-  background-color: rgba(0,0,0,0.4); 
+  width: 100%;
+  height: 100%;
+  overflow: auto;
+  background-color: rgba(0,0,0,0.4);
   display: flex;
   align-items: center;
   justify-content: center;
@@ -29008,9 +29004,15 @@ button[type="submit"]:hover {
   text-align: center;
 }
 
+.modal-buttons {
+  display: flex;
+  justify-content: space-between;
+  margin: 17px;
+}
+
 @media (max-width: 600px) {
   .modal-content {
-    width: 100%; 
+    width: 80%; 
   }
 }
 

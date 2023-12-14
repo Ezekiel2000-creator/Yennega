@@ -32,10 +32,10 @@ router.post('/update-order', async (req, res) => {
     const { orderId, status } = req.body;
 
     try {
-        const order = await Order.findById(orderId);
+        const order = await Orders.findById(orderId);
         order.status = status;
         await order.save();
-        res.redirect('/list'); // Redirige vers la page de liste
+        res.redirect('/orders/list'); // Redirige vers la page de liste
     } catch (err) {
         console.log(err);
         res.status(500).send("Error updating order"); 
