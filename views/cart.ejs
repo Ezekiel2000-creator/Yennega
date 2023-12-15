@@ -82,19 +82,19 @@
 
                                                                 <span class="table-p__name">
 
-                                                                    <a href="product-detail.html"><%=`${carts_product.product.Pro_name}`%></a></span>
+                                                                    <a href="/articles/<%=`${carts_product.product._id}`%>"><%=`${carts_product.product.Pro_name}`%></a></span>
 
                                                                 <span class="table-p__category">
 
-                                                                    <a href="shop-side-version-2.html"><%=`${carts_product.product.Pro_category}`%></a></span>
-                                                                <ul class="table-p__variant-list">
+                                                                    <a href="/articles?subcategoryId=<%=`${carts_product.product.Pro_subcategory._id}`%>"><%=`${carts_product.product.Pro_subcategory.subcate_name}`%></a></span>
+                                                                <!-- <ul class="table-p__variant-list">
                                                                     <li>
 
                                                                         <span>Size: 22</span></li>
                                                                     <li>
 
                                                                         <span>Color: Red</span></li>
-                                                                </ul>
+                                                                </ul> -->
                                                             </div>
                                                         </div>
                                                     </td>

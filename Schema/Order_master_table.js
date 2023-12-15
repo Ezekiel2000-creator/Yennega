@@ -11,7 +11,8 @@ const OrderSchema = new Schema({
   deliveryAddress: String,
   status: {
     type: String,
-    enum: ['pending', 'validated','rejected'],
-  }
+    enum: ['pending', 'validated','rejected','delivered'],
+  },
+  delivery_date:Date
 });
 module.exports = mongoose.model('Order', OrderSchema);

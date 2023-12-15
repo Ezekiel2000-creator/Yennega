@@ -413,6 +413,7 @@ app.get("/articles", async (req, res) => {
         if (!categoriesMap[categoryId]) {
           categoriesMap[categoryId] = {
             name: subcategory._category.cate_name,
+            id: subcategory._category.id,
             subcategories: []
           };
         }
@@ -432,16 +433,24 @@ app.get("/articles", async (req, res) => {
         ];
       }
       if (categoryId) {
-        query['Pro_subcategory._category'] = mongoose.Types.ObjectId(categoryId);
+        const cate  = await Category.find({_id:categoryId})
+        query["Pro_subcategory.category"] = mongoose.Types.ObjectId(categoryId);
+        console.log("eeeeeeeeeeeeeeeeeee", query)
+        console.log("eeeeeeeeeeeeeeeeeee", cate)
+        var search = cate[0].cate_name
+
       }
       if (subcategoryId) {
         query.Pro_subcategory = mongoose.Types.ObjectId(subcategoryId);
+        const subcate  = await Subcategory.find({_id:subcategoryId})
+        var search = subcate[0].subcate_name
       }
+
       foundProducts = await Product.find(query)
-        .skip(skip)
-        .limit(options.limit)
-        .populate("Pro_subcategory")
-        .exec();
+      .populate("Pro_subcategory")
+      .skip(skip)
+      .limit(options.limit)
+      .exec();
       const randomCategories = [];
 
       while(randomCategories.length < 3) {
@@ -506,7 +515,7 @@ app.post('/add-to-cart',requireAuth, async (req, res) => {
 	Product.findById(productID)
 	.exec()
 	.then((products) =>{
-		res.status(201).render('product-detail', { isAdded : true, products } );
+		res.status(201).render('product-detail', { isAdded : true, products,moment } );
 	})
 	
   } catch (error) {
@@ -535,12 +544,12 @@ app.get('/cart', requireAuth, async (req, res) => {
         res.render("empty-cart");
       }else{
         console.log("carts",carts);
-        res.status(200).render('cart', { carts , total, addresses, cost , grandTotal, city, locality });
+        res.status(200).render('cart', { carts , total, addresses, cost , grandTotal, city, locality,moment });
       }
     }else{
       const cost = coststr;
 			console.log("carts",carts);
-			res.status(200).render('cart', { carts , total, addresses, cost , grandTotal });
+			res.status(200).render('cart', { carts , total, addresses, cost , grandTotal,moment });
 		}
 	} catch (error) {
 	res.status(500).json({ message: error.message });
@@ -680,28 +689,33 @@ app.post('/place-order', async (req, res) => {
   const cart = res.locals.carts;
 
   try {
+    console.log("ccccccccccaaarrtt", req.session);
     const city_id = req.session.city;
+    console.log("ccccccccccaaarrtt", city_id)
     const locality_id = req.session.locality;
+    console.log("ccccccccccaaarrtt", locality_id)
     const city = await Adress.findOne({ _id: city_id });
     const locality = city.localities.id(locality_id);
+    console.log("ccccccccccaaarrtt", locality)
     const cost = locality.deliveryCost.value;
     const locality_name = locality.name;
     const city_name = city.name;
-    const grandTotal = parseInt(cost, 10) + parseInt(total, 10);
-
+    const grand_Total = parseInt(cost, 10) + parseInt(total, 10);
+    console.log("ccccccccccaaarrtt", city_name)
     // Créez la commande
     const order = new Order({
       user: user.id,
       cart,
       date: new Date(), 
       total,
-      grandTotal,
+      grand_Total,
       deliveryAddress: locality_name + "," + city_name,
-      status: 'en cours'
+      status: 'pending'
     });
 
     // Enregistrez la commande dans la base de données
     await order.save();
+    console.log("Orderrrrrrrrrrtt", order)
 
     // Mettez à jour les quantités de produits
     for (let item of cart) {
@@ -741,7 +755,7 @@ app.get("/user/dashboard", requireAuth, async (req, res) => {
     let user = await Customer.findById(userId);
 
     // Find any Orders where user id matches
-    let orders = await Order.find({user: userId});
+    let orders = await Order.find({user: userId}).sort({date: -1});;
 
     res.status(200).render("dashboard_custom",{
       user: user,
@@ -767,6 +781,25 @@ app.get("/user/dash-my-order", requireAuth, async (req, res) => {
 
     res.status(200).render("dash-my-order",{
       user: user,
+      orders: orders,
+      moment: moment
+    });
+
+  } catch (error) {
+    res.status(500).json({ message: error.message });
+  }
+});
+app.get("/user/dash-manage-order/:id", requireAuth, async (req, res) => {
+  try {
+    const userId = req.user.id;
+    const order_id = req.params.id;
+    let user = await Customer.findById(userId);
+    let orders = await Order.find({user: userId});
+    let order = await Order.findById(order_id); 
+
+    res.status(200).render("dash-manage-order",{
+      user: user,
+      order: order,
       orders: orders,
       moment: moment
     });

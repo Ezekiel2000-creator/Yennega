@@ -1,0 +1,271 @@
+<!DOCTYPE html>
+<html class="no-js" lang="en">
+    <%- include("partials/head") %>
+<body class="config">
+    <div class="preloader is-active">
+        <div class="preloader__wrap">
+
+            <img class="preloader__img" src="/images/preloader.png" alt=""></div>
+    </div>
+
+    <!--====== Main App ======-->
+    <div id="app">
+
+        <!--====== Main Header ======-->
+        <%- include("partials/header") %>
+        <!--====== End - Main Header ======-->
+
+
+        <!--====== App Content ======-->
+        <div class="app-content">
+
+            <!--====== Section 1 ======-->
+            <div class="u-s-p-y-60">
+
+                <!--====== Section Content ======-->
+                <div class="section__content">
+                    <div class="container">
+                        <div class="breadcrumb">
+                            <div class="breadcrumb__wrap">
+                                <ul class="breadcrumb__list">
+                                    <li class="has-separator">
+
+                                        <a href="/accueil">Accueil</a></li>
+                                    <li class="is-marked">
+
+                                        <a href="#">Détail de la commande</a></li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!--====== End - Section 1 ======-->
+
+
+            <!--====== Section 2 ======-->
+            <div class="u-s-p-b-60">
+
+                <!--====== Section Content ======-->
+                <div class="section__content">
+                    <div class="dash">
+                        <div class="container">
+                            <div class="row">
+                                <div class="col-lg-3 col-md-12">
+
+                                    <!--====== Dashboard Features ======-->
+                                    <%- include("partials/dashboard_features") %>
+                                    <!--====== End - Dashboard Features ======-->
+                                </div>
+                                <div class="col-lg-9 col-md-12">
+                                    <h1 class="dash__h1 u-s-m-b-30">Détails de la commande</h1>
+                                    <div class="dash__box dash__box--shadow dash__box--radius dash__box--bg-white u-s-m-b-30">
+                                        <div class="dash__pad-2">
+                                            <div class="dash-l-r">
+                                                <div>
+                                                    <div class="manage-o__text-2 u-c-secondary">Commande #<%= order.id %></div>
+                                                    <div class="manage-o__text u-c-silver">
+                                                        Effectuée le <%= moment(order.date).format('DD/MM/YYYY à HH:mm') %>
+                                                    </div>
+                                                </div>
+                                                <div>
+                                                    <div class="manage-o__text-2 u-c-silver">Total:
+
+                                                        <span class="manage-o__text-2 u-c-secondary"><%= order.total %> FCFA</span></div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="dash__box dash__box--shadow dash__box--radius dash__box--bg-white u-s-m-b-30">
+                                        <div class="dash__pad-2">
+                                            <div class="manage-o">
+                                                <div class="manage-o__header u-s-m-b-30">
+                                                    <div class="manage-o__icon"><i class="fas fa-box u-s-m-r-5"></i>
+
+                                                        <span class="manage-o__text">Commande</span></div>
+                                                </div>
+                                                <div class="dash-l-r">
+                                                    <div class="manage-o__text u-c-secondary">Livré le  <%= order.delivery_date %></div>
+                                                    <div class="manage-o__icon"><i class="fas fa-truck u-s-m-r-5"></i>
+
+                                                        <span class="manage-o__text">Standard</span></div>
+                                                </div>
+                                                <% if (order.status === "pending" ) { %> 
+                                                    <div class="manage-o__timeline">
+                                                        <div class="timeline-row">
+                                                            <div class="col-lg-4 u-s-m-b-30">
+                                                                <div class="timeline-step">
+                                                                    <div class="timeline-l-i timeline-l-i--finish">
+
+                                                                        <span class="timeline-circle"></span></div>
+
+                                                                    <span class="timeline-text">En cours</span>
+                                                                </div>
+                                                            </div>
+                                                            <div class="col-lg-4 u-s-m-b-30">
+                                                                <div class="timeline-step">
+                                                                    <div class="timeline-l-i">
+
+                                                                        <span class="timeline-circle"></span></div>
+
+                                                                    <span class="timeline-text">Validé</span>
+                                                                </div>
+                                                            </div>
+                                                            <div class="col-lg-4 u-s-m-b-30">
+                                                                <div class="timeline-step">
+                                                                    <div class="timeline-l-i">
+
+                                                                        <span class="timeline-circle"></span></div>
+
+                                                                    <span class="timeline-text">Livré</span>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                <% } else if (order.status === "validated" ) { %>
+                                                    <div class="manage-o__timeline">
+                                                        <div class="timeline-row">
+                                                            <div class="col-lg-4 u-s-m-b-30">
+                                                                <div class="timeline-step">
+                                                                    <div class="timeline-l-i timeline-l-i--finish">
+
+                                                                        <span class="timeline-circle"></span></div>
+
+                                                                    <span class="timeline-text">En cours</span>
+                                                                </div>
+                                                            </div>
+                                                            <div class="col-lg-4 u-s-m-b-30">
+                                                                <div class="timeline-step">
+                                                                    <div class="timeline-l-i timeline-l-i--finish">
+
+                                                                        <span class="timeline-circle"></span></div>
+
+                                                                    <span class="timeline-text">Validé</span>
+                                                                </div>
+                                                            </div>
+                                                            <div class="col-lg-4 u-s-m-b-30">
+                                                                <div class="timeline-step">
+                                                                    <div class="timeline-l-i">
+
+                                                                        <span class="timeline-circle"></span></div>
+
+                                                                    <span class="timeline-text">Livré</span>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                <% } else if (order.status === "delivered" ) { %>
+                                                    <div class="manage-o__timeline">
+                                                        <div class="timeline-row">
+                                                            <div class="col-lg-4 u-s-m-b-30">
+                                                                <div class="timeline-step">
+                                                                    <div class="timeline-l-i timeline-l-i--finish">
+
+                                                                        <span class="timeline-circle"></span></div>
+
+                                                                    <span class="timeline-text">En cours</span>
+                                                                </div>
+                                                            </div>
+                                                            <div class="col-lg-4 u-s-m-b-30">
+                                                                <div class="timeline-step">
+                                                                    <div class="timeline-l-i timeline-l-i--finish">
+
+                                                                        <span class="timeline-circle"></span></div>
+
+                                                                    <span class="timeline-text">Validé</span>
+                                                                </div>
+                                                            </div>
+                                                            <div class="col-lg-4 u-s-m-b-30">
+                                                                <div class="timeline-step">
+                                                                    <div class="timeline-l-i timeline-l-i--finish">
+
+                                                                        <span class="timeline-circle"></span></div>
+
+                                                                    <span class="timeline-text">Livré</span>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                <% } %>
+                                                <% order.cart.forEach(item => { %>
+                                                    <div class="manage-o__description">
+                                                        <div class="description__container">
+                                                            <div class="description__img-wrap">
+
+                                                                <img class="u-img-fluid" src="/Pro_upload/<%=item.product.Pro_image %>" alt=""></div>
+                                                            <div class="description-title"><%= item.product.Pro_name %></div>
+                                                        </div>
+                                                        <div class="description__info-wrap">
+                                                            <div>
+
+                                                                <span class="manage-o__text-2 u-c-silver">Quantité:
+
+                                                                    <span class="manage-o__text-2 u-c-secondary"><%= item.quantity%></span></span></div>
+                                                            <div>
+
+                                                                <!-- <span class="manage-o__text-2 u-c-silver">Total:
+
+                                                                    <span class="manage-o__text-2 u-c-secondary"> FCFA</span></span></div> -->
+                                                        </div>
+                                                    </div>
+                                                <%})%>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-lg-6">
+                                            <div class="dash__box dash__box--bg-white dash__box--shadow u-s-m-b-30">
+                                                <div class="dash__pad-3">
+                                                    <h2 class="dash__h2 u-s-m-b-8"> Adresse de livraison</h2>
+                                                    <h2 class="dash__h2 u-s-m-b-8"><%= user.Customer_first_name %> <%= user.Customer_last_name %></h2>
+
+                                                    <span class="dash__text-2"><%= order.deliveryAddress %></span>
+
+                                                    <!-- <span class="dash__text-2">(+0) 900901904</span> -->
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-lg-6">
+                                            <div class="dash__box dash__box--bg-white dash__box--shadow u-h-100">
+                                                <div class="dash__pad-3">
+                                                    <h2 class="dash__h2 u-s-m-b-8">Compte Total</h2>
+                                                    <div class="dash-l-r u-s-m-b-8">
+                                                        <div class="manage-o__text-2 u-c-secondary">Total</div>
+                                                        <div class="manage-o__text-2 u-c-secondary"><%= order.total %> FCFA</div>
+                                                    </div>
+                                                    <!-- <div class="dash-l-r u-s-m-b-8">
+                                                        <div class="manage-o__text-2 u-c-secondary">Shipping Fee</div>
+                                                        <div class="manage-o__text-2 u-c-secondary">$16.00</div>
+                                                    </div> -->
+                                                    <div class="dash-l-r u-s-m-b-8">
+                                                        <div class="manage-o__text-2 u-c-secondary">Grand Total (avec les frais de livraison)</div>
+                                                        <div class="manage-o__text-2 u-c-secondary"><%= order.grand_Total %> FCFA</div>
+                                                    </div>
+
+                                                    <span class="dash__text-2">Payé à la livraison</span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!--====== End - Section Content ======-->
+            </div>
+            <!--====== End - Section 2 ======-->
+        </div>
+        <!--====== End - App Content ======-->
+
+
+        <!--====== Main Footer ======-->
+        <%- include("partials/footer") %>
+    </div>
+    <!--====== End - Main App ======-->
+
+
+    <!--====== Google Analytics: change UA-XXXXX-Y to be your site's ID ======-->
+    <%- include("partials/scripts") %>
+</body>
+</html>
