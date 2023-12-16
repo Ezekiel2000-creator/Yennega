@@ -9,44 +9,8 @@ var VendorRequest =require("../Schema/Vendor_request");
 /* GET home page. */ 
 
 
-const requireVendor = async (req, res, next) => {
-  const token = req.cookies.token;
-  
-  if (!token) {
-    req.session.returnTo = req.originalUrl;
-    return res.status(401).redirect("/signin");
-  }
-  
-  try {
-    const decodedToken = jwt.verify(token, 'your_secret_key');
-    req.user = decodedToken;
-    
-    const user = await mongoose.model('Customer').findOne({ _id: req.user.id });
-    if (!user.isVendor) {
-      return res.status(403).json({ message: 'Forbidden: User is not a vendor' });
-    }
-    
-    const products = await mongoose.model('Product').find({ Pro_vendor: user._id });
-    req.user.products = products;
-    
-    const userCart = await Cart.findOne({ user: req.user.id }).populate('items');
-    if (userCart === null || userCart.items === 0) {
-      const carts = [];
-      app.locals.carts = carts;
-    }
-    
-    next();
-  } catch (err) {
-    if (err.name === 'TokenExpiredError') {
-      return res.status(401).redirect("/signin");
-    } else {
-      return res.status(401).json({ message: 'Token invalide' });
-    }
-  }
-};
-
 // router.use(requireVendor);
-router.get('/admin',requireVendor, async (req, res, next) => {
+router.get('/admin', async (req, res, next) => {
 
   let admins;
 
