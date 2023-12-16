@@ -201,6 +201,10 @@ router.post('/fall/:id', async (req, res) => {
     }
 
     // Supprimer l'enregistrement de VendorRequest
+    // const products = await Product.find().populate('Pro_vendor')
+    const products = await Product.find({Pro_vendor:vendor_Request.user._id});
+    await Product.deleteMany({_id: { $in: products.map(function(product) { return product._id; })}});
+    
     await vendorRequest.findByIdAndRemove(vendor_Request._id);
 
     // Mettre à jour le champ request_state sur "rejected" pour VendorRequest (peut-être optionnel)

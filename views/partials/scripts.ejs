@@ -58,8 +58,8 @@
                 contentType: false,
                 success: function(data) {
                     $('#successModal').modal('show');
-                    setTimeout(function() { $('#successModal').modal('hide'); }, 9000);
-                    window.location.href = '/cart';
+                    setTimeout(function() { $('#successModal').modal('hide'); }, 10000);
+                    window.location.href = '/user/dashboard';
                 },
                 error: function(err) {
                     console.error(err);

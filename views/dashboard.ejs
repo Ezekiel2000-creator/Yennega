@@ -472,8 +472,8 @@
         <div class="content-wrapper">
           <div class="page-header">
             <h3 class="page-title">
-              Dashboard
-              <span class="ml-2 h6 font-weight-normal">Do big things with Gleam, the responsive bootstrap 4 admin template.</span>
+              Tableau de bord
+              <span class="ml-2 h6 font-weight-normal"></span>
             </h3>
             <nav aria-label="breadcrumb">
               <ol class="breadcrumb">
@@ -580,22 +580,59 @@
             </div>
             <div class="col-md-8 d-flex grid-margin stretch-card">
               <div class="card">
-                <div class="card-body d-flex flex-column">
-                  <div class="d-block d-lg-flex justify-content-between">
-                    <h4 class="card-title">Statistics</h4>                    
-                    <ul class="nav nav-pills nav-pills-primary border-bottom-0">
-                      <li class="nav-item">
-                        <a class="nav-link" href="#">Month</a>
-                      </li>
-                      <li class="nav-item">
-                        <a class="nav-link" href="#">Week</a>
-                      </li>
-                      <li class="nav-item">
-                        <a class="nav-link active" href="#">All Time</a>
-                      </li>
-                    </ul>
+                <div class="card-body">
+                  <h4 class="card-title">Nouvelles commandes
+                    <a href="/orders/list">
+                      <span class="float-right text-primary text-small">
+                        Voir tout
+                      </span>
+                    </a>
+                    
+                  </h4>
+                  <div class="table-responsive"style="height: 600px; overflow-y: scroll">
+                    <table class="table">
+                      <thead>
+                        <tr>
+                          <th>
+                            Nom d'utilisateur
+                          </th>
+                          <th>
+                            Date
+                          </th>
+                          <th>
+                            Prix total
+                          </th>
+                          <th>
+                            Etats de la commande
+                          </th>
+                        </tr>
+                      </thead>
+                      <tbody >
+                        <% order_array.forEach(order => { %>
+                          <tr>
+                            <td>
+                              <%=`${order.user.Customer_first_name}`%> <%=`${order.user.Customer_last_name }`%>
+                            </td>
+                            <td>
+                              <%= moment(order.date).format('DD/MM/YYYY à HH:mm') %>
+                            </td>
+                            <td>
+                              <%= order.total %> FCFA
+                            </td>
+                            <td>
+                              <% if (order.status === 'validated'){ %>
+                                <label class="badge badge-outline-success">Accepté</label>
+                              <% } else if (order.status === 'pending'){ %>
+                                <label class="badge badge-outline-warning">En cours</label>
+                              <% } else if (order.status === 'rejected'){ %>
+                                <label class="badge badge-outline-danger">Rejeté</label>
+                              <% } %>
+                            </td>
+                          </tr>
+                        <%})%>
+                      </tbody>
+                    </table>
                   </div>
-                  <canvas id="earning-chart" class="mt-auto"></canvas>
                 </div>
               </div>
             </div>
@@ -603,65 +640,6 @@
           <div class="row">
             <div class="col-md-8 d-flex align-items-stretch">
               <div class="row flex-grow-1 w-100">
-                <div class="col-12 grid-margin stretch-card">
-                  <div class="card">
-                    <div class="card-body">
-                      <h4 class="card-title">Nouvelles commandes (Vendeur)
-                        <a href="/orders/list">
-                          <span class="float-right text-primary text-small">
-                            Voir tout
-                          </span>
-                        </a>
-                        
-                      </h4>
-                      <div class="table-responsive"style="height: 600px; overflow-y: scroll">
-                        <table class="table">
-                          <thead>
-                            <tr>
-                              <th>
-                                Nom d'utilisateur
-                              </th>
-                              <th>
-                                Date
-                              </th>
-                              <th>
-                                Prix total
-                              </th>
-                              <th>
-                                Etats de la commande
-                              </th>
-                            </tr>
-                          </thead>
-                          <tbody >
-                            <% order_array.forEach(order => { %>
-                              <tr>
-                                <td>
-                                  <%=`${order.user.Customer_first_name}`%> <%=`${order.user.Customer_last_name }`%>
-                                </td>
-                                <td>
-                                  <%= moment(order.date).format('DD/MM/YYYY à HH:mm') %>
-                                </td>
-                                <td>
-                                  <%= order.total %> FCFA
-                                </td>
-                                <td>
-                                  <% if (order.status === 'validated'){ %>
-                                    <label class="badge badge-outline-success">Accepté</label>
-                                  <% } else if (order.status === 'pending'){ %>
-                                    <label class="badge badge-outline-warning">En cours</label>
-                                  <% } else if (order.status === 'rejected'){ %>
-                                    <label class="badge badge-outline-danger">Rejeté</label>
-                                  <% } %>
-                                </td>
-                              </tr>
-                            <%})%>
-                          </tbody>
-                        </table>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-        
                 <div class="col-12 grid-margin stretch-card">
                   <div class="card">
                     <div class="card-body">
@@ -750,7 +728,7 @@
                         <img src="images/faces/face15.jpg" class="img-lg rounded-circle mr-lg-4 mb-3 mb-lg-0" alt="image"/>
                         <div>
                           <p class="text-small mb-2">VOTRE CONTACT</p>
-                          <h5>Ernest Estrada</h5>
+                          <h5><%=customer_array.customer_first_name %> <%=customer_array.customer_last_name %></h5>
                           <p class="font-weight-light mb-0">Administrateur</p>
                         </div>
                       </div>
