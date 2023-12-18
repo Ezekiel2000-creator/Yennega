@@ -107,8 +107,8 @@ router.get('/forgotpassword', function(req, res, next) {
 
 router.get('/dashboard', async (req, res, next) => {
   try {
-    // const customer_id = req.user.id
-    const db_customer_array = await CustomerModel.findById();
+    // const customer_id = req.user.id 
+    const db_customer_array = await CustomerModel.find();
 
     const db_category_table = await CategoryModel.find();
 
