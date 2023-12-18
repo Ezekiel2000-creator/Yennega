@@ -17,7 +17,7 @@ router.get('/list', async (req, res) => {
       .populate("user");
       console.log("orderssssssssssss",orders)
   
-      res.render('order_display', {
+      res.render('Order_display', {
         moment,
         orders 
       });
