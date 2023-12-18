@@ -60,7 +60,7 @@ router.post('/subcate_process', async (req, res, next) => {
     _category: req.body._category
   }
   console.log(subcategorydata);
-  var subcatedata = categoryModel(subcategorydata);
+  var subcatedata = subcategoryModel(subcategorydata);
   try {
     await subcatedata.save();
     console.log("Data Saved");
@@ -73,7 +73,9 @@ router.post('/subcate_process', async (req, res, next) => {
 
 router.get('/data_display', async (req, res, next) => {
   try {
-    const db_subcategory_array = await subcategoryModel.find().populate('_category');
+    const db_subcategory_array = await subcategoryModel.find()
+    .populate('_category')
+    .sort({_id:-1});
     console.log(db_subcategory_array);
     res.render('SubCategory_display', { subcategory_array: db_subcategory_array });
   } catch (err) {

@@ -483,9 +483,22 @@ app.get("/articles/:id", requireAuth, async (req, res) => {
   try {
     const userID = req.user ? req.user.id : undefined;
     const carts = res.locals.carts;
+    
+    const query = {
+      Rate: { $gt: 0} 
+    };
+    const count = await Product.countDocuments(query);
+    const randomSkip = Math.floor(Math.random() * count);
 
+    const rated_products = await Product.find(query)
+                        .limit(8)
+                        .skip(randomSkip)  
+                        .populate('Ratings')
+                        .populate("Pro_subcategory");
+    
+    console.log("eeeeeeeeeeeeee",rated_products)
     const products = await Product.findById(req.params.id).populate('Ratings');
-    res.render("product-detail", { products, carts, moment });
+    res.render("product-detail", { products,rated_products, carts, moment });
   } catch (err) {
     res.status(500).json({ error: err });
   }
@@ -511,11 +524,22 @@ app.post('/add-to-cart',requireAuth, async (req, res) => {
       // Le produit n'existe pas dans le panier, l'ajoute
       cart.items.push({ product: productID, quantity });
     }
+    const query = {
+      Rate: { $gt: 0} 
+    };
+    const count = await Product.countDocuments(query);
+    const randomSkip = Math.floor(Math.random() * count);
+
+    const rated_products = await Product.find(query)
+                        .limit(8)
+                        .skip(randomSkip)  
+                        .populate('Ratings')
+                        .populate("Pro_subcategory");
     await cart.save();
 	Product.findById(productID)
 	.exec()
 	.then((products) =>{
-		res.status(201).render('product-detail', { isAdded : true, products,moment } );
+		res.status(201).render('product-detail', { isAdded : true, products,moment,rated_products } );
 	})
 	
   } catch (error) {

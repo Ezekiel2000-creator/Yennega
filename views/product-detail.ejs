@@ -127,19 +127,27 @@
 
 												<span class="pd-detail__review u-s-m-l-4">
 
-													<a data-click-scroll="#view-review">(<%=`${products.Rater}`%> Avis)</a>
+													<a data-click-scroll="#view-review">(<% if(products.Ratings) { %>
+														<%= `${products.Ratings.length}`%>
+													<% } %> Avis)</a>
 												</span></div>
 										</div>
 										<div class="u-s-m-b-15">
 											<div class="pd-detail__inline">
+												<% if(products.Pro_quantity > 10 ) { %>
+													<span class="pd-detail__stock"><%=`${products.Pro_quantity}`%> en stock</span>
+												<% } else { %>
+													<span class="pd-detail__left">Il ne reste que <%=`${products.Pro_quantity}`%></span>
+												<% } %>
 
-												<span class="pd-detail__stock"><%=`${products.Pro_quantity}`%> en stock</span>
+												
 
-												<span class="pd-detail__left">Il ne reste que <%=`${products.Pro_quantity}`%></span></div>
+												
+											</div>
 										</div>
 										<div class="u-s-m-b-15">
 
-											<span class="pd-detail__preview-desc"><%=`${products.description}`%></span></div>
+											<span class="pd-detail__preview-desc"><%=`${products.Pro_description}`%></span></div>
 										<div class="u-s-m-b-15">
 											<div class="pd-detail__inline">
 
@@ -147,7 +155,7 @@
 
 													<a href="">Ajouter à la liste de souhait?</a>
 
-													<span class="pd-detail__click-count">(222)</span></span></div>
+													<span class="pd-detail__click-count">()</span></span></div>
 										</div>
 										
 										<div class="u-s-m-b-15">
@@ -221,7 +229,8 @@
 										<ul class="nav pd-tab__list">
 											<li class="nav-item">
 
-												<a class="nav-link active" data-toggle="tab" href="#pd-desc">DESCRIPTION</a></li>
+												<a class="nav-link active" data-toggle="tab" href="#pd-desc">DESCRIPTION</a>
+											</li>
 											<li class="nav-item">
 
 												<a class="nav-link" id="view-review" data-toggle="tab" href="#pd-rev">AVIS
@@ -556,9 +565,9 @@
 							<div class="row">
 								<div class="col-lg-12">
 									<div class="section__text-wrap">
-										<h1 class="section__heading u-c-secondary u-s-m-b-12">CUSTOMER ALSO VIEWED</h1>
+										<h1 class="section__heading u-c-secondary u-s-m-b-12">LES UTILISATEURS ONT AUSSI VU</h1>
 
-										<span class="section__span u-c-grey">PRODUCTS THAT CUSTOMER VIEWED</span>
+										<span class="section__span u-c-grey">LES PRODUITS QUE LES CONSOMMATEURS ONT VU</span>
 									</div>
 								</div>
 							</div>
@@ -572,252 +581,74 @@
 						<div class="container">
 							<div class="slider-fouc">
 								<div class="owl-carousel product-slider" data-item="4">
-									<div class="u-s-m-b-30">
-										<div class="product-o product-o--hover-on">
-											<div class="product-o__wrap">
-
-												<a class="aspect aspect--bg-grey aspect--square u-d-block" href="product-detail.html">
-
-													<img class="aspect__img" src="images/product/electronic/product1.jpg" alt=""></a>
-												<div class="product-o__action-wrap">
-													<ul class="product-o__action-list">
-														<li>
-
-															<a data-modal="modal" data-modal-id="#quick-look" data-tooltip="tooltip" data-placement="top" title="Quick View"><i class="fas fa-search-plus"></i></a></li>
-														<li>
-
-															<a data-modal="modal" data-modal-id="#add-to-cart" data-tooltip="tooltip" data-placement="top" title="Add to Cart"><i class="fas fa-plus-circle"></i></a></li>
-														<li>
-
-															<a href="signin.html" data-tooltip="tooltip" data-placement="top" title="Add to Wishlist"><i class="fas fa-heart"></i></a></li>
-														<li>
-
-															<a href="signin.html" data-tooltip="tooltip" data-placement="top" title="Email me When the price drops"><i class="fas fa-envelope"></i></a></li>
-													</ul>
+									<% let i = 0; %>
+									<% let j = 0; %>
+									<% rated_products.forEach((products) =>{ %>
+												
+										<div class="u-s-m-b-30">
+											<div class="product-o product-o--hover-on">
+												<div class="product-o__wrap">
+													<a class="aspect aspect--bg-grey aspect--square u-d-block" href="/articles/<%= `${products.id}` %>">
+														<img class="aspect__img" src="/Pro_upload/<%=`${products.Pro_image}`%>" alt="">
+														<div class="product-o__action-wrap">
+															<ul class="product-o__action-list">
+																<li>
+		
+																	<form class="pd-detail__form" action="/add-to-cart" method="POST">
+																		<div class="product-m__add-cart">
+																			<input type="hidden" name="productID" value="<%= `${products.id}` %>">
+																			<input type="hidden" name="quantity" value="1">
+																			<button class="btn--e-brand" data-modal="modal" type="submit">Ajouter au panier</button>
+																		</div>
+																	</form>
+																</li>
+															</ul>
+														</div>
+													</a>
 												</div>
-											</div>
+										
+													<span class="product-o__category">
 
-											<span class="product-o__category">
+														<a href="/articles?subcategoryId=<%= products.Pro_subcategory._id %>">
+															<%= `${products.Pro_subcategory.subcate_name}` %>
+														</a>
+													</span>
+		                                       
+													<span class="product-o__name">
+												
+	
+													    <a href="/articles/<%= `${products.id}` %>"><%= `${products.Pro_name}` %></a>
+												    </span>
+												<div class="product-o__rating gl-rating-style">
+													<% let fullStars = Math.floor(products.Rate); %>
+															<% let halfStar = products.Rate % 1 !== 0 ? 1 : 0; %>
+															<% let emptyStars = 5 - fullStars - halfStar; %>
 
-												<a href="shop-side-version-2.html">Electronics</a></span>
+															<% for(let i = 0; i < fullStars; i++) { %>
+															<i class="fas fa-star"></i> <!-- Étoile pleine -->
+															<% } %>
 
-											<span class="product-o__name">
+															<% if(halfStar) { %>
+															<i class="fas fa-star-half-alt"></i> <!-- Étoile à moitié pleine -->
+															<% } %>
 
-												<a href="product-detail.html">Beats Bomb Wireless Headphone</a></span>
-											<div class="product-o__rating gl-rating-style"><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i>
-
-												<span class="product-o__review">(20)</span></div>
-
-											<span class="product-o__price">$125.00
-
-												<span class="product-o__discount">$160.00</span></span>
-										</div>
-									</div>
-									<div class="u-s-m-b-30">
-										<div class="product-o product-o--hover-on">
-											<div class="product-o__wrap">
-
-												<a class="aspect aspect--bg-grey aspect--square u-d-block" href="product-detail.html">
-
-													<img class="aspect__img" src="images/product/electronic/product2.jpg" alt=""></a>
-												<div class="product-o__action-wrap">
-													<ul class="product-o__action-list">
-														<li>
-
-															<a data-modal="modal" data-modal-id="#quick-look" data-tooltip="tooltip" data-placement="top" title="Quick View"><i class="fas fa-search-plus"></i></a></li>
-														<li>
-
-															<a data-modal="modal" data-modal-id="#add-to-cart" data-tooltip="tooltip" data-placement="top" title="Add to Cart"><i class="fas fa-plus-circle"></i></a></li>
-														<li>
-
-															<a href="signin.html" data-tooltip="tooltip" data-placement="top" title="Add to Wishlist"><i class="fas fa-heart"></i></a></li>
-														<li>
-
-															<a href="signin.html" data-tooltip="tooltip" data-placement="top" title="Email me When the price drops"><i class="fas fa-envelope"></i></a></li>
-													</ul>
+															<% for(let i = 0; i < emptyStars; i++) { %>
+															<i class="far fa-star"></i> <!-- Étoile vide -->
+															<% } %>
+	
+													<span class="product-m__review">(<%= `${products.Rate}` %>)</span>
 												</div>
+	
+												<span class="product-o__price"><%= `${products.Pro_rentprice}` %>FCFA
+
+													<span class="product-o__discount"><%= `${products.Pro_ammount}` %>FCFA</span>
+												</span>
+											
 											</div>
-
-											<span class="product-o__category">
-
-												<a href="shop-side-version-2.html">Electronics</a></span>
-
-											<span class="product-o__name">
-
-												<a href="product-detail.html">Red Wireless Headphone</a></span>
-											<div class="product-o__rating gl-rating-style"><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i>
-
-												<span class="product-o__review">(20)</span></div>
-
-											<span class="product-o__price">$125.00
-
-												<span class="product-o__discount">$160.00</span></span>
 										</div>
-									</div>
-									<div class="u-s-m-b-30">
-										<div class="product-o product-o--hover-on">
-											<div class="product-o__wrap">
-
-												<a class="aspect aspect--bg-grey aspect--square u-d-block" href="product-detail.html">
-
-													<img class="aspect__img" src="images/product/electronic/product3.jpg" alt=""></a>
-												<div class="product-o__action-wrap">
-													<ul class="product-o__action-list">
-														<li>
-
-															<a data-modal="modal" data-modal-id="#quick-look" data-tooltip="tooltip" data-placement="top" title="Quick View"><i class="fas fa-search-plus"></i></a></li>
-														<li>
-
-															<a data-modal="modal" data-modal-id="#add-to-cart" data-tooltip="tooltip" data-placement="top" title="Add to Cart"><i class="fas fa-plus-circle"></i></a></li>
-														<li>
-
-															<a href="signin.html" data-tooltip="tooltip" data-placement="top" title="Add to Wishlist"><i class="fas fa-heart"></i></a></li>
-														<li>
-
-															<a href="signin.html" data-tooltip="tooltip" data-placement="top" title="Email me When the price drops"><i class="fas fa-envelope"></i></a></li>
-													</ul>
-												</div>
-											</div>
-
-											<span class="product-o__category">
-
-												<a href="shop-side-version-2.html">Electronics</a></span>
-
-											<span class="product-o__name">
-
-												<a href="product-detail.html">Yellow Wireless Headphone</a></span>
-											<div class="product-o__rating gl-rating-style"><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i>
-
-												<span class="product-o__review">(20)</span></div>
-
-											<span class="product-o__price">$125.00
-
-												<span class="product-o__discount">$160.00</span></span>
-										</div>
-									</div>
-									<div class="u-s-m-b-30">
-										<div class="product-o product-o--hover-on">
-											<div class="product-o__wrap">
-
-												<a class="aspect aspect--bg-grey aspect--square u-d-block" href="product-detail.html">
-
-													<img class="aspect__img" src="images/product/electronic/product23.jpg" alt=""></a>
-												<div class="product-o__action-wrap">
-													<ul class="product-o__action-list">
-														<li>
-
-															<a data-modal="modal" data-modal-id="#quick-look" data-tooltip="tooltip" data-placement="top" title="Quick View"><i class="fas fa-search-plus"></i></a></li>
-														<li>
-
-															<a data-modal="modal" data-modal-id="#add-to-cart" data-tooltip="tooltip" data-placement="top" title="Add to Cart"><i class="fas fa-plus-circle"></i></a></li>
-														<li>
-
-															<a href="signin.html" data-tooltip="tooltip" data-placement="top" title="Add to Wishlist"><i class="fas fa-heart"></i></a></li>
-														<li>
-
-															<a href="signin.html" data-tooltip="tooltip" data-placement="top" title="Email me When the price drops"><i class="fas fa-envelope"></i></a></li>
-													</ul>
-												</div>
-											</div>
-
-											<span class="product-o__category">
-
-												<a href="shop-side-version-2.html">Electronics</a></span>
-
-											<span class="product-o__name">
-
-												<a href="product-detail.html">Razor Gear Ultra Slim 8GB Ram</a></span>
-											<div class="product-o__rating gl-rating-style"><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i>
-
-												<span class="product-o__review">(20)</span></div>
-
-											<span class="product-o__price">$125.00
-
-												<span class="product-o__discount">$160.00</span></span>
-										</div>
-									</div>
-									<div class="u-s-m-b-30">
-										<div class="product-o product-o--hover-on">
-											<div class="product-o__wrap">
-
-												<a class="aspect aspect--bg-grey aspect--square u-d-block" href="product-detail.html">
-
-													<img class="aspect__img" src="images/product/electronic/product26.jpg" alt=""></a>
-												<div class="product-o__action-wrap">
-													<ul class="product-o__action-list">
-														<li>
-
-															<a data-modal="modal" data-modal-id="#quick-look" data-tooltip="tooltip" data-placement="top" title="Quick View"><i class="fas fa-search-plus"></i></a></li>
-														<li>
-
-															<a data-modal="modal" data-modal-id="#add-to-cart" data-tooltip="tooltip" data-placement="top" title="Add to Cart"><i class="fas fa-plus-circle"></i></a></li>
-														<li>
-
-															<a href="signin.html" data-tooltip="tooltip" data-placement="top" title="Add to Wishlist"><i class="fas fa-heart"></i></a></li>
-														<li>
-
-															<a href="signin.html" data-tooltip="tooltip" data-placement="top" title="Email me When the price drops"><i class="fas fa-envelope"></i></a></li>
-													</ul>
-												</div>
-											</div>
-
-											<span class="product-o__category">
-
-												<a href="shop-side-version-2.html">Electronics</a></span>
-
-											<span class="product-o__name">
-
-												<a href="product-detail.html">Razor Gear Ultra Slim 12GB Ram</a></span>
-											<div class="product-o__rating gl-rating-style"><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i>
-
-												<span class="product-o__review">(20)</span></div>
-
-											<span class="product-o__price">$125.00
-
-												<span class="product-o__discount">$160.00</span></span>
-										</div>
-									</div>
-									<div class="u-s-m-b-30">
-										<div class="product-o product-o--hover-on">
-											<div class="product-o__wrap">
-
-												<a class="aspect aspect--bg-grey aspect--square u-d-block" href="product-detail.html">
-
-													<img class="aspect__img" src="images/product/electronic/product30.jpg" alt=""></a>
-												<div class="product-o__action-wrap">
-													<ul class="product-o__action-list">
-														<li>
-
-															<a data-modal="modal" data-modal-id="#quick-look" data-tooltip="tooltip" data-placement="top" title="Quick View"><i class="fas fa-search-plus"></i></a></li>
-														<li>
-
-															<a data-modal="modal" data-modal-id="#add-to-cart" data-tooltip="tooltip" data-placement="top" title="Add to Cart"><i class="fas fa-plus-circle"></i></a></li>
-														<li>
-
-															<a href="signin.html" data-tooltip="tooltip" data-placement="top" title="Add to Wishlist"><i class="fas fa-heart"></i></a></li>
-														<li>
-
-															<a href="signin.html" data-tooltip="tooltip" data-placement="top" title="Email me When the price drops"><i class="fas fa-envelope"></i></a></li>
-													</ul>
-												</div>
-											</div>
-
-											<span class="product-o__category">
-
-												<a href="shop-side-version-2.html">Electronics</a></span>
-
-											<span class="product-o__name">
-
-												<a href="product-detail.html">Razor Gear Ultra Slim 16GB Ram</a></span>
-											<div class="product-o__rating gl-rating-style"><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i>
-
-												<span class="product-o__review">(20)</span></div>
-
-											<span class="product-o__price">$125.00
-
-												<span class="product-o__discount">$160.00</span></span>
-										</div>
-									</div>
+										
+									<% }) %>
+									
 								</div>
 							</div>
 						</div>
